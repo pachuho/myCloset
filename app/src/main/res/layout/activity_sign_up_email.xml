@@ -9,8 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_height="50dp"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
@@ -24,8 +23,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="94"
+        android:layout_height="match_parent"
         android:background="@color/whiteBack">
 
         <LinearLayout
@@ -78,6 +76,8 @@
                 android:layout_marginBottom="15dp"
                 android:hint="영문 + 숫자 6~16자(대소문자 구별)"
                 android:textSize="14sp"
+                android:inputType="textPassword"
+                android:maxLength="16"
                 android:minHeight="50dp"
                 android:backgroundTint="@color/greenWhite2"/>
 
@@ -96,6 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:textSize="14sp"
+                android:inputType="textPassword"
+                android:maxLength="16"
                 android:minHeight="50dp"
                 android:backgroundTint="@color/greenWhite2"/>
 
@@ -145,8 +147,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:hint="ex)091010"
+                android:hint="ex) 091010"
                 android:textSize="14sp"
+                android:inputType="number"
+                android:maxLength="6"
                 android:minHeight="50dp"
                 android:backgroundTint="@color/greenWhite2"/>
 
@@ -169,19 +173,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="남성"/>
+                    android:text="남성"
+                    android:buttonTint="@color/greenWhite"/>
                 <RadioButton
                     android:id="@+id/rb_woman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="여성"/>
+                    android:text="여성"
+                    android:buttonTint="@color/greenWhite"/>
                 <RadioButton
                     android:id="@+id/rb_etc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="기타"/>
+                    android:text="기타"
+                    android:buttonTint="@color/greenWhite"/>
             </RadioGroup>
 
             <View
@@ -191,7 +198,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="5dp"
                 android:text="약관동의"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -205,7 +212,8 @@
                     android:id="@+id/cb_all"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:buttonTint="@color/greenWhite"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -213,7 +221,7 @@
                     android:layout_weight="9"
                     android:text="모든 운영방침에 동의합니다."
                     android:textSize="14sp"
-                    android:textColor="@color/black2"/>
+                    android:textColor="@color/black2" />
             </LinearLayout>
 
             <LinearLayout
@@ -224,7 +232,8 @@
                     android:id="@+id/cb_privacy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:buttonTint="@color/greenWhite"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -243,7 +252,8 @@
                     android:id="@+id/cb_use"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:buttonTint="@color/greenWhite"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -262,7 +272,8 @@
                     android:id="@+id/cb_pushAlarm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:buttonTint="@color/greenWhite"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -273,6 +284,17 @@
                     android:textColor="@color/black2"/>
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btn_signUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="회원가입"
+                android:textColor="@color/black2" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
 
         </LinearLayout>
 
