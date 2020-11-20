@@ -20,10 +20,18 @@ class SignUpEmailActivity : AppCompatActivity() {
         when (id) {
             android.R.id.home -> {
                 finish()
+                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onBackPressed() {
+        finish()
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+    }
+
+
 
 }

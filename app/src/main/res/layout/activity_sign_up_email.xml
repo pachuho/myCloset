@@ -279,7 +279,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
-                    android:text="푸시알림 수신에 동의합니다.(필수)"
+                    android:text="푸시알림 수신에 동의합니다.(선택)"
                     android:textSize="14sp"
                     android:textColor="@color/black2"/>
             </LinearLayout>
