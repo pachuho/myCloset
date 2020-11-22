@@ -45,7 +45,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:hint="이메일 입력" />
+                android:hint="이메일 입력"
+                android:singleLine="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -111,7 +112,7 @@
             android:padding="10dp"
             android:gravity="center"
             android:text="비밀번호를 잊어버리셨나요?"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -125,8 +126,8 @@
             android:id="@+id/tv_forgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="오늘의 나. All rights reserved"
-            android:textSize="11sp"
+            android:text="내일의 나. All rights reserved"
+            android:textSize="12sp"
             android:textStyle="bold"/>
     </LinearLayout>
 

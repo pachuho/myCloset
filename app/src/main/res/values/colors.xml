@@ -14,6 +14,7 @@
     <color name="greenWhite">#8BC34A</color>
     <color name="greenWhite2">#B5DA8B</color>
     <color name="greenBlack">#1E6020</color>
-    <color name="whiteBack">#F8F8F8</color>
+    <color name="whiteBack">#FCFCFC</color>
     <color name="grey">#C8C8C8</color>
+    <color name="red">#FF2121</color>
 </resources>
