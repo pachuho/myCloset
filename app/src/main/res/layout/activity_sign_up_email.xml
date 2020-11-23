@@ -198,24 +198,35 @@
                 android:textStyle="bold"
                 android:textColor="@color/black2"/>
 
-            <EditText
-                android:id="@+id/et_birthday"
+            <Button
+                android:id="@+id/button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="ex) 091010"
-                android:textSize="14sp"
-                android:inputType="number"
-                android:maxLength="6"
-                android:minHeight="40dp"
-                android:background="@drawable/edt_bg_selector"/>
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:text="생년월일 입력"
+                android:backgroundTint="@color/whiteBack"
+                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                android:elevation="0dp"
+                android:textColor="@color/black2"/>
 
-            <LinearLayout
-                android:id="@+id/ll_birthday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="25dp"
-                android:orientation="horizontal" />
+<!--            <EditText-->
+<!--                android:id="@+id/et_birthday"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="ex) 091010"-->
+<!--                android:textSize="14sp"-->
+<!--                android:inputType="number"-->
+<!--                android:maxLength="6"-->
+<!--                android:minHeight="40dp"-->
+<!--                android:background="@drawable/edt_bg_selector"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/ll_birthday"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginBottom="25dp"-->
+<!--                android:orientation="horizontal" />-->
 
             <TextView
                 android:layout_width="match_parent"

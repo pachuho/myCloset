@@ -1,18 +1,19 @@
 package com.example.mycloset
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.OrientationEventListener
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_sign_up_email.*
 
-class SignUpEmailActivity : AppCompatActivity() {
+class SignUpEmailActivity : AppCompatActivity(), View.OnClickListener {
     val symbolNickname : String = "[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝| ]*"
     val symbolBirthday : String = "[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1])"
 
@@ -80,15 +81,19 @@ class SignUpEmailActivity : AppCompatActivity() {
         })
 
         // 생년월일 입력 시
-        et_birthday.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        button.setOnClickListener(this)
 
-            override fun afterTextChanged(p0: Editable?) {
-                addHelper(et_birthday.length() > 1 && !et_birthday.text.matches(symbolBirthday.toRegex()), ll_birthday, "생년월일을 다시 확인 해주세요")
-            }
-        })
+//        et_birthday.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+//
+//            override fun afterTextChanged(p0: Editable?) {
+//                addHelper(et_birthday.length() > 1 && !et_birthday.text.matches(symbolBirthday.toRegex()), ll_birthday, "생년월일을 다시 확인 해주세요")
+//            }
+//        })
+
     }
 
     // 툴바 뒤로 가기 클릭 시
@@ -129,5 +134,17 @@ class SignUpEmailActivity : AppCompatActivity() {
         checkLength.text = "${editName.text.length}/${maxLength}"
         checkLength.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
         layout.addView(checkLength)
+    }
+
+    // 다이얼로그 생성
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            button.id -> {
+                val dialog = BirthdayDialog(this)
+                dialog.setOnOKClickedListener{ content -> button.text = content
+                }
+                dialog.start()
+            }
+        }
     }
 }
