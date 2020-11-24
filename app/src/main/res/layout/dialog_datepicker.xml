@@ -10,13 +10,35 @@
         android:orientation="vertical"
         android:layout_margin="8dp">
 
-        <DatePicker
-            android:id="@+id/datePicker"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false" />
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
 
+            <NumberPicker
+                android:id="@+id/np_year"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"/>
+            <View
+                android:layout_width="20dp"
+                android:layout_height="match_parent"/>
+            <NumberPicker
+                android:id="@+id/np_month"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"/>
+            <View
+                android:layout_width="20dp"
+                android:layout_height="match_parent"/>
+            <NumberPicker
+                android:id="@+id/np_day"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

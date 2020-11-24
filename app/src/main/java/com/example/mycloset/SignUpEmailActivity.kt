@@ -1,19 +1,26 @@
 package com.example.mycloset
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.OrientationEventListener
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_sign_up_email.*
+import kotlinx.android.synthetic.main.dialog_datepicker.*
+import java.time.Year
+import java.util.*
 
-class SignUpEmailActivity : AppCompatActivity(), View.OnClickListener {
+class SignUpEmailActivity : AppCompatActivity(){
+    // 정규식
     val symbolNickname : String = "[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝| ]*"
     val symbolBirthday : String = "[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1])"
 
@@ -81,8 +88,111 @@ class SignUpEmailActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         // 생년월일 입력 시
+        btn_birth.setOnClickListener {
+            val calendar : Calendar = Calendar.getInstance()
+            val cYear = calendar.get(Calendar.YEAR)
+            val cMonth = calendar.get(Calendar.MONTH)
+            val cDay = calendar.get(Calendar.DAY_OF_MONTH)
 
-        button.setOnClickListener(this)
+            val dialog = AlertDialog.Builder(this@SignUpEmailActivity).create()
+            val edialog : LayoutInflater = LayoutInflater.from(this@SignUpEmailActivity)
+            val mView : View = edialog.inflate(R.layout.dialog_datepicker,null)
+
+            var year : NumberPicker = mView.findViewById(R.id.np_year)
+            var month : NumberPicker = mView.findViewById(R.id.np_month)
+            var day : NumberPicker = mView.findViewById(R.id.np_day)
+            val cancel : TextView = mView.findViewById(R.id.tv_cancel)
+            val save : TextView = mView.findViewById(R.id.tv_ok)
+
+            //  순환 안되게 막기
+            year.wrapSelectorWheel = false
+            month.wrapSelectorWheel = false
+//            day.wrapSelectorWheel = false
+
+            //  최소값 설정
+            year.minValue = cYear - 100
+            month.minValue = 1
+            day.minValue = 1
+
+            //  최대값 설정
+            year.maxValue = cYear
+            month.maxValue = cMonth + 1
+            day.maxValue = cDay
+
+            // 보여질 값 설정
+            year.value = cYear
+            month.value = cMonth + 1
+            day.value = cDay
+
+            // 년도 변화 감지
+            year.setOnValueChangedListener{picker, oldVal, newVal ->
+                if(year.value == year.maxValue) month.maxValue = cMonth + 1
+                else month.maxValue = 12
+//                when(newVal) {
+//                cYear -> month.maxValue = cMonth + 1
+//                    else -> month.maxValue = 12
+//                }
+            }
+
+            // 월 변화 감지
+            month.setOnValueChangedListener{picker, oldVal, newVal ->
+                if (oldVal == 1 && newVal == month.maxValue) year.value -= 1
+                if (oldVal == month.maxValue && newVal == 1) year.value += 1
+                if (year.value == year.maxValue && oldVal == month.maxValue){
+                    month.wrapSelectorWheel = false
+                } else {
+                    month.wrapSelectorWheel = true
+                    month.maxValue = 12
+                }
+
+                when(newVal) {
+                    1, 3, 5, 7, 8, 10, 12 -> day.maxValue = 31
+                    2 -> day.maxValue = 28
+                    4, 6, 9, 11 -> day.maxValue = 30
+                    else -> print("error")
+                }
+            }
+            // 일 변화 감지
+            day.setOnValueChangedListener{picker, oldVal, newVal ->
+                if (oldVal == 1 && newVal == day.maxValue) month.value -= 1
+                if (oldVal == day.maxValue && newVal == 1) month.value += 1
+            }
+
+            //  취소 버튼 클릭 시
+            cancel.setOnClickListener {
+                dialog.dismiss()
+                dialog.cancel()
+            }
+
+            //  완료 버튼 클릭 시
+            save.setOnClickListener {
+                btn_birth.text = "${year.value}년 ${month.value}월 ${day.value}일"
+                dialog.dismiss()
+                dialog.cancel()
+            }
+
+            dialog.setView(mView)
+            dialog.create()
+            dialog.show()
+        }
+
+
+
+//        btn_birth.setOnClickListener{
+//            // 생년월일
+//            val c : Calendar = Calendar.getInstance()
+//            val year = c.get(Calendar.YEAR)
+//            val month = c.get(Calendar.MONTH)
+//            val day = c.get(Calendar.DAY_OF_MONTH)
+//            val dpd = DatePickerDialog(this,DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+//
+//                // Display Selected date in textbox
+//                btn_birth.setText("${year}년 ${monthOfYear - 1}월 ${dayOfMonth}일")
+//
+//            }, year, month, day)
+//
+//            dpd.show()
+//        }
 
 //        et_birthday.addTextChangedListener(object : TextWatcher {
 //            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -136,15 +246,4 @@ class SignUpEmailActivity : AppCompatActivity(), View.OnClickListener {
         layout.addView(checkLength)
     }
 
-    // 다이얼로그 생성
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            button.id -> {
-                val dialog = BirthdayDialog(this)
-                dialog.setOnOKClickedListener{ content -> button.text = content
-                }
-                dialog.start()
-            }
-        }
-    }
 }

@@ -6,6 +6,8 @@ import android.view.Window
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
+import android.widget.Toast
+import java.util.*
 
 class BirthdayDialog(context: Context) {
     private val dialog = Dialog(context)   //부모 액티비티의 context 가 들어감
@@ -17,7 +19,7 @@ class BirthdayDialog(context: Context) {
 //    fun start(content : String) {
     fun start() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
-        dialog.setContentView(R.layout.birthday_dialog)     //다이얼로그에 사용할 xml 파일을 불러옴
+        dialog.setContentView(R.layout.dialog_datepicker)     //다이얼로그에 사용할 xml 파일을 불러옴
 
         tvOk = dialog.findViewById(R.id.tv_ok)
         tvOk.setOnClickListener {
