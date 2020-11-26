@@ -107,7 +107,7 @@ class SignUpEmailActivity : AppCompatActivity(){
             //  순환 안되게 막기
             year.wrapSelectorWheel = false
             month.wrapSelectorWheel = false
-//            day.wrapSelectorWheel = false
+            day.wrapSelectorWheel = false
 
             //  최소값 설정
             year.minValue = cYear - 100
@@ -126,36 +126,60 @@ class SignUpEmailActivity : AppCompatActivity(){
 
             // 년도 변화 감지
             year.setOnValueChangedListener{picker, oldVal, newVal ->
-                if(year.value == year.maxValue) month.maxValue = cMonth + 1
-                else month.maxValue = 12
-//                when(newVal) {
-//                cYear -> month.maxValue = cMonth + 1
-//                    else -> month.maxValue = 12
-//                }
+                if(year.value == year.maxValue) {
+                    month.maxValue = cMonth + 1
+                    month.wrapSelectorWheel = false
+                    day.maxValue = cDay
+                    day.wrapSelectorWheel = false
+                }
+                else {
+                    month.maxValue = 12
+                    when(month.value) {
+                        1, 3, 5, 7, 8, 10, 12 -> day.maxValue = 31
+                        2 -> day.maxValue = 28
+                        4, 6, 9, 11 -> day.maxValue = 30
+                        else -> print("error")
+                    }
+
+                }
             }
 
             // 월 변화 감지
             month.setOnValueChangedListener{picker, oldVal, newVal ->
                 if (oldVal == 1 && newVal == month.maxValue) year.value -= 1
                 if (oldVal == month.maxValue && newVal == 1) year.value += 1
-                if (year.value == year.maxValue && oldVal == month.maxValue){
+                if (year.value == year.maxValue && month.value == cMonth + 1) {
+                    month.maxValue = cMonth + 1
                     month.wrapSelectorWheel = false
+                    day.maxValue = cDay
+                    day.wrapSelectorWheel = false
                 } else {
                     month.wrapSelectorWheel = true
-                    month.maxValue = 12
-                }
-
-                when(newVal) {
-                    1, 3, 5, 7, 8, 10, 12 -> day.maxValue = 31
-                    2 -> day.maxValue = 28
-                    4, 6, 9, 11 -> day.maxValue = 30
-                    else -> print("error")
+                    when(newVal) {
+                        1, 3, 5, 7, 8, 10, 12 -> day.maxValue = 31
+                        2 -> day.maxValue = 28
+                        4, 6, 9, 11 -> day.maxValue = 30
+                        else -> print("error")
+                    }
                 }
             }
+
             // 일 변화 감지
-            day.setOnValueChangedListener{picker, oldVal, newVal ->
+            day.setOnValueChangedListener { picker, oldVal, newVal ->
                 if (oldVal == 1 && newVal == day.maxValue) month.value -= 1
                 if (oldVal == day.maxValue && newVal == 1) month.value += 1
+                if (year.value == cYear && month.value == month.maxValue && day.value == cDay) {
+                    day.maxValue = cDay
+                    day.wrapSelectorWheel = false
+                } else {
+                    day.wrapSelectorWheel = true
+                    when(month.value) {
+                        1, 3, 5, 7, 8, 10, 12 -> day.maxValue = 31
+                        2 -> day.maxValue = 28
+                        4, 6, 9, 11 -> day.maxValue = 30
+                        else -> print("error")
+                    }
+                }
             }
 
             //  취소 버튼 클릭 시
