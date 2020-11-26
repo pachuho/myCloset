@@ -7,12 +7,13 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_sign_up_email.*
+import kotlinx.android.synthetic.main.activity_sign_up_email.et_email
+import kotlinx.android.synthetic.main.activity_sign_up_email.et_pwd
 import java.util.*
 
 class SignUpEmailActivity : AppCompatActivity(){
@@ -22,6 +23,15 @@ class SignUpEmailActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_email)
+
+        // textwatcher 지정
+        et_email.addTextChangedListener(loginTextWatcher)
+        et_pwd.addTextChangedListener(loginTextWatcher)
+        et_pwdConfirm.addTextChangedListener(loginTextWatcher)
+        et_nickName.addTextChangedListener(loginTextWatcher)
+        btn_birth.addTextChangedListener(loginTextWatcher)
+        cb_privacy.addTextChangedListener(loginTextWatcher)
+        cb_use.addTextChangedListener(loginTextWatcher)
 
         // 툴바 뒤로가기
         setSupportActionBar(toolbar)
@@ -91,7 +101,7 @@ class SignUpEmailActivity : AppCompatActivity(){
 
             val dialog = AlertDialog.Builder(this@SignUpEmailActivity).create()
             val edialog : LayoutInflater = LayoutInflater.from(this@SignUpEmailActivity)
-            val mView : View = edialog.inflate(R.layout.dialog_datepicker,null)
+            val mView : View = edialog.inflate(R.layout.dialog_datepicker, null)
 
             var year : NumberPicker = mView.findViewById(R.id.np_year)
             var month : NumberPicker = mView.findViewById(R.id.np_month)
@@ -120,7 +130,7 @@ class SignUpEmailActivity : AppCompatActivity(){
             day.value = cDay
 
             // 년도 변화 감지
-            year.setOnValueChangedListener{picker, oldVal, newVal ->
+            year.setOnValueChangedListener{ picker, oldVal, newVal ->
                 if(year.value == year.maxValue) {
                     month.maxValue = cMonth + 1
                     month.wrapSelectorWheel = false
@@ -140,7 +150,7 @@ class SignUpEmailActivity : AppCompatActivity(){
             }
 
             // 월 변화 감지
-            month.setOnValueChangedListener{picker, oldVal, newVal ->
+            month.setOnValueChangedListener{ picker, oldVal, newVal ->
                 if (oldVal == 1 && newVal == month.maxValue) year.value -= 1
                 if (oldVal == month.maxValue && newVal == 1) year.value += 1
                 if (year.value == year.maxValue && month.value == cMonth + 1) {
@@ -211,6 +221,10 @@ class SignUpEmailActivity : AppCompatActivity(){
         cb_pushAlarm.setOnClickListener { onCheckChanged(cb_pushAlarm) }
         cb_use.setOnClickListener { onCheckChanged(cb_use) }
 
+        // 회원가입 버튼 클릭 시
+        btn_signUp.setOnClickListener {
+
+        }
     }
 
     // 툴바 뒤로 가기 클릭 시
@@ -233,7 +247,7 @@ class SignUpEmailActivity : AppCompatActivity(){
     }
 
     // EditText 하단 도움말
-    fun addHelper(condition : Boolean, layout: LinearLayout, inputText: String? = "텍스트를 입력해주세요") {
+    fun addHelper(condition: Boolean, layout: LinearLayout, inputText: String? = "텍스트를 입력해주세요") {
         if (condition) {
             layout.removeAllViews()
             val helper = TextView(this@SignUpEmailActivity)
@@ -245,7 +259,7 @@ class SignUpEmailActivity : AppCompatActivity(){
     }
 
     // EditText 글자 수 체크
-    fun addLength(layout : LinearLayout, editName : EditText, maxLength : String? = "8") {
+    fun addLength(layout: LinearLayout, editName: EditText, maxLength: String? = "8") {
         layout.removeAllViews()
         val checkLength = TextView(this@SignUpEmailActivity)
         checkLength.text = "${editName.text.length}/${maxLength}"
@@ -261,7 +275,7 @@ class SignUpEmailActivity : AppCompatActivity(){
                     cb_privacy.isChecked = true
                     cb_pushAlarm.isChecked = true
                     cb_use.isChecked = true
-                }else {
+                } else {
                     cb_privacy.isChecked = false
                     cb_pushAlarm.isChecked = false
                     cb_use.isChecked = false
@@ -269,5 +283,21 @@ class SignUpEmailActivity : AppCompatActivity(){
             }
             else -> cb_all.isChecked = (cb_privacy.isChecked && cb_pushAlarm.isChecked && cb_use.isChecked)
         }
+    }
+
+    // 회원가입 버튼 활성화
+    private val loginTextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            val email = et_email.text.toString().trim { it <= ' ' }
+            val pwd = et_pwd.text.toString().trim { it <= ' ' }
+            val pwdconfirm = et_pwdConfirm.text.toString().trim { it <= ' ' }
+            val nickname = et_nickName.text.toString().trim { it <= ' ' }
+            val birth = btn_birth.text.toString().trim { it <= ' ' }
+            btn_signUp.isEnabled = !email.isEmpty() && !pwd.isEmpty() && !pwdconfirm.isEmpty()
+                    && !nickname.isEmpty() && !birth.isEmpty()
+        }
+
+        override fun afterTextChanged(s: Editable) {}
     }
 }
