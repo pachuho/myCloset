@@ -212,25 +212,6 @@
                 android:text="생년월일 입력"
                 android:textColor="@color/black2" />
 
-            <!--            <EditText-->
-            <!--                android:id="@+id/et_birthday"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:hint="ex) 091010"-->
-            <!--                android:textSize="14sp"-->
-            <!--                android:inputType="number"-->
-            <!--                android:maxLength="6"-->
-            <!--                android:minHeight="40dp"-->
-            <!--                android:background="@drawable/edt_bg_selector"/>-->
-
-            <!--            <LinearLayout-->
-            <!--                android:id="@+id/ll_birthday"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginTop="5dp"-->
-            <!--                android:layout_marginBottom="25dp"-->
-            <!--                android:orientation="horizontal" />-->
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -251,21 +232,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="남성" />
+                    android:text=" 남성"
+                    android:button="@null"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/custom_radiobutton"/>
 
                 <RadioButton
                     android:id="@+id/rb_woman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="여성" />
+                    android:text=" 여성"
+                    android:button="@null"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/custom_radiobutton"/>
 
                 <RadioButton
                     android:id="@+id/rb_etc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="기타" />
+                    android:text=" 기타"
+                    android:button="@null"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/custom_radiobutton"/>
             </RadioGroup>
 
             <View
