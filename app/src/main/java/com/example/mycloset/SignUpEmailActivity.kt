@@ -294,8 +294,11 @@ class SignUpEmailActivity : AppCompatActivity(){
             val pwdconfirm = et_pwdConfirm.text.toString().trim { it <= ' ' }
             val nickname = et_nickName.text.toString().trim { it <= ' ' }
             val birth = btn_birth.text.toString().trim { it <= ' ' }
-            btn_signUp.isEnabled = !email.isEmpty() && !pwd.isEmpty() && !pwdconfirm.isEmpty()
-                    && !nickname.isEmpty() && !birth.isEmpty()
+            val check1 = cb_privacy.isChecked
+            val check2 = cb_use.isChecked
+
+            btn_signUp.isEnabled = email.isNotEmpty() && pwd.isNotEmpty() && pwdconfirm.isNotEmpty()
+                    && nickname.isNotEmpty() && birth.isNotEmpty() && check1 && check2
         }
 
         override fun afterTextChanged(s: Editable) {}
