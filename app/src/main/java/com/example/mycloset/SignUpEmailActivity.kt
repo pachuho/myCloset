@@ -155,6 +155,7 @@ class SignUpEmailActivity : AppCompatActivity(){
                     day.wrapSelectorWheel = false
                 } else {
                     month.wrapSelectorWheel = true
+                    month.maxValue = 12
                     when(newVal) {
                         1, 3, 5, 7, 8, 10, 12 -> day.maxValue = 31
                         2 -> day.maxValue = 28
@@ -199,34 +200,6 @@ class SignUpEmailActivity : AppCompatActivity(){
             dialog.create()
             dialog.show()
         }
-
-
-
-//        btn_birth.setOnClickListener{
-//            // 생년월일
-//            val c : Calendar = Calendar.getInstance()
-//            val year = c.get(Calendar.YEAR)
-//            val month = c.get(Calendar.MONTH)
-//            val day = c.get(Calendar.DAY_OF_MONTH)
-//            val dpd = DatePickerDialog(this,DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-//
-//                // Display Selected date in textbox
-//                btn_birth.setText("${year}년 ${monthOfYear - 1}월 ${dayOfMonth}일")
-//
-//            }, year, month, day)
-//
-//            dpd.show()
-//        }
-
-//        et_birthday.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//
-//            override fun afterTextChanged(p0: Editable?) {
-//                addHelper(et_birthday.length() > 1 && !et_birthday.text.matches(symbolBirthday.toRegex()), ll_birthday, "생년월일을 다시 확인 해주세요")
-//            }
-//        })
 
     }
 
