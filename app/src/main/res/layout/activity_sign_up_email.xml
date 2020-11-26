@@ -222,40 +222,45 @@
                 android:textStyle="bold" />
 
             <RadioGroup
+                android:id="@+id/rg_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:checkedButton="@id/rb_man">
 
                 <RadioButton
                     android:id="@+id/rb_man"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=" 남성"
+                    android:text="남성"
                     android:button="@null"
                     android:background="@null"
-                    android:drawableLeft="@drawable/custom_radiobutton"/>
+                    android:drawableLeft="@drawable/custom_radiobutton"
+                    android:drawablePadding="5dp"/>
 
                 <RadioButton
                     android:id="@+id/rb_woman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=" 여성"
+                    android:text="여성"
                     android:button="@null"
                     android:background="@null"
-                    android:drawableLeft="@drawable/custom_radiobutton"/>
+                    android:drawableLeft="@drawable/custom_radiobutton"
+                    android:drawablePadding="5dp"/>
 
                 <RadioButton
                     android:id="@+id/rb_etc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=" 기타"
+                    android:text="기타"
                     android:button="@null"
                     android:background="@null"
-                    android:drawableLeft="@drawable/custom_radiobutton"/>
+                    android:drawableLeft="@drawable/custom_radiobutton"
+                    android:drawablePadding="5dp"/>
             </RadioGroup>
 
             <View
@@ -277,7 +282,11 @@
                 android:layout_height="wrap_content"
                 android:text="모든 운영방침에 동의합니다."
                 android:textColor="@color/black2"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:button="@null"
+                android:background="@null"
+                android:drawableLeft="@drawable/custom_radiobutton"
+                android:drawablePadding="5dp"/>
 
 
             <CheckBox
@@ -286,7 +295,11 @@
                 android:layout_height="wrap_content"
                 android:text="개인정보 취급방침에 동의합니다.(필수)"
                 android:textColor="@color/black2"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:button="@null"
+                android:background="@null"
+                android:drawableLeft="@drawable/custom_radiobutton"
+                android:drawablePadding="5dp"/>
 
             <CheckBox
                 android:id="@+id/cb_use"
@@ -294,7 +307,11 @@
                 android:layout_height="wrap_content"
                 android:text="이용약관에 동의합니다.(필수)"
                 android:textColor="@color/black2"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:button="@null"
+                android:background="@null"
+                android:drawableLeft="@drawable/custom_radiobutton"
+                android:drawablePadding="5dp"/>
 
             <CheckBox
                 android:id="@+id/cb_pushAlarm"
@@ -302,7 +319,11 @@
                 android:layout_height="wrap_content"
                 android:text="푸시알림 수신에 동의합니다.(선택)"
                 android:textColor="@color/black2"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:button="@null"
+                android:background="@null"
+                android:drawableLeft="@drawable/custom_radiobutton"
+                android:drawablePadding="5dp"/>
 
             <View
                 android:layout_width="match_parent"

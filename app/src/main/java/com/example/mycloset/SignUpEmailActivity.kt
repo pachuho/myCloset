@@ -22,7 +22,7 @@ import java.util.*
 class SignUpEmailActivity : AppCompatActivity(){
     // 정규식
     val symbolNickname : String = "[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝| ]*"
-
+    var gender : String = "man"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_email)
@@ -200,6 +200,21 @@ class SignUpEmailActivity : AppCompatActivity(){
             dialog.show()
         }
 
+        // 성별 선택 시
+        rg_gender.setOnCheckedChangeListener { radioGroup, i ->
+            when(i){
+                R.id.rb_man -> gender = "man"
+                R.id.rb_woman -> gender = "woman"
+                R.id.rb_etc -> gender = "etc"
+            }
+        }
+
+        // 약관동의 시
+        cb_all.setOnClickListener { onCheckChanged(cb_all) }
+        cb_privacy.setOnClickListener { onCheckChanged(cb_privacy) }
+        cb_pushAlarm.setOnClickListener { onCheckChanged(cb_pushAlarm) }
+        cb_use.setOnClickListener { onCheckChanged(cb_use) }
+
     }
 
     // 툴바 뒤로 가기 클릭 시
@@ -242,4 +257,21 @@ class SignUpEmailActivity : AppCompatActivity(){
         layout.addView(checkLength)
     }
 
+    // 체크박스
+    private fun onCheckChanged(compoundButton: CompoundButton) {
+        when(compoundButton.id) {
+            R.id.cb_all -> {
+                if (cb_all.isChecked) {
+                    cb_privacy.isChecked = true
+                    cb_pushAlarm.isChecked = true
+                    cb_use.isChecked = true
+                }else {
+                    cb_privacy.isChecked = false
+                    cb_pushAlarm.isChecked = false
+                    cb_use.isChecked = false
+                }
+            }
+            else -> cb_all.isChecked = (cb_privacy.isChecked && cb_pushAlarm.isChecked && cb_use.isChecked)
+        }
+    }
 }
