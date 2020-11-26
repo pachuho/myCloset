@@ -288,6 +288,11 @@
                 android:drawableLeft="@drawable/custom_radiobutton"
                 android:drawablePadding="5dp"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/greywhite"/>
+
 
             <CheckBox
                 android:id="@+id/cb_privacy"

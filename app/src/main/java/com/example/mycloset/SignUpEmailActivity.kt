@@ -1,22 +1,18 @@
 package com.example.mycloset
 
-import android.app.DatePickerDialog
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.OrientationEventListener
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_sign_up_email.*
-import kotlinx.android.synthetic.main.dialog_datepicker.*
-import java.time.Year
 import java.util.*
 
 class SignUpEmailActivity : AppCompatActivity(){
@@ -257,7 +253,7 @@ class SignUpEmailActivity : AppCompatActivity(){
         layout.addView(checkLength)
     }
 
-    // 체크박스
+    // 이용약관 체크박스
     private fun onCheckChanged(compoundButton: CompoundButton) {
         when(compoundButton.id) {
             R.id.cb_all -> {
