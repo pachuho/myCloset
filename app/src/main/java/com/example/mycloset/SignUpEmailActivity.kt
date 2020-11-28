@@ -215,18 +215,18 @@ class SignUpEmailActivity : AppCompatActivity() {
         }
 
         // 약관동의 시
-        cb_all.setOnClickListener { onCheckChanged(cb_all) }
+        cb_all.setOnClickListener {
+            onCheckChanged(cb_all)
+            btn_signUp.isEnabled = cb_all.isChecked
+        }
         cb_privacy.setOnClickListener {
             onCheckChanged(cb_privacy)
-            if (cb_privacy.isChecked) btn_signUp.isEnabled = true else btn_signUp.isEnabled = false
-
-//            if (cb_use.isChecked) {
-//                Toast.makeText(this, "연결되잇넹", Toast.LENGTH_SHORT).show()
-//                loginTextWatcher
-//            }
-
+            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked
         }
-        cb_use.setOnClickListener { onCheckChanged(cb_use) }
+        cb_use.setOnClickListener {
+            onCheckChanged(cb_use)
+            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked
+        }
         cb_pushAlarm.setOnClickListener { onCheckChanged(cb_pushAlarm) }
 
         // 회원가입 버튼 클릭 시
@@ -302,19 +302,12 @@ class SignUpEmailActivity : AppCompatActivity() {
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             val email = et_email.text.toString().trim { it <= ' ' }
             val pwd = et_pwd.text.toString().trim { it <= ' ' }
-            val pwdconfirm = et_pwdConfirm.text.toString().trim { it <= ' ' }
+            val pwdConfirm = et_pwdConfirm.text.toString().trim { it <= ' ' }
             val nickname = et_nickName.text.toString().trim { it <= ' ' }
             val birth = btn_birth.text.toString().trim { it <= ' ' }
 
-
-//            cb_privacy.setOnCheckedChangeListener{compoundButton, check ->
-//
-//            }
-
-
-            btn_signUp.isEnabled = email.isNotEmpty() && pwd.isNotEmpty() && pwdconfirm.isNotEmpty()
-                    && nickname.isNotEmpty() && birth != "생년월일 입력"
-
+            btn_signUp.isEnabled = email.isNotEmpty() && pwd.isNotEmpty() && pwdConfirm.isNotEmpty()
+                    && nickname.isNotEmpty() && birth != "생년월일 입력" && cb_privacy.isChecked && cb_use.isChecked
         }
     }
 }
