@@ -139,13 +139,8 @@ class SignUpEmailActivity : AppCompatActivity() {
             month.maxValue = cMonth + 1
             day.maxValue = cDay
 
-            // 보여질 값 설정
-            year.value = cYear
-            month.value = cMonth + 1
-            day.value = cDay
-
-            // 년도 변화 감지
-            year.setOnValueChangedListener { picker, oldVal, newVal ->
+            // 연도 조건
+            fun yearCondition() : Unit{
                 if (year.value == year.maxValue) {
                     month.maxValue = cMonth + 1
                     month.wrapSelectorWheel = false
@@ -159,14 +154,11 @@ class SignUpEmailActivity : AppCompatActivity() {
                         4, 6, 9, 11 -> day.maxValue = 30
                         else -> print("error")
                     }
-
                 }
             }
 
-            // 월 변화 감지
-            month.setOnValueChangedListener { picker, oldVal, newVal ->
-                if (oldVal == 1 && newVal == month.maxValue) year.value -= 1
-                if (oldVal == month.maxValue && newVal == 1) year.value += 1
+            // 월 조건
+            fun monthCondition() : Unit {
                 if (year.value == year.maxValue && month.value == cMonth + 1) {
                     month.maxValue = cMonth + 1
                     month.wrapSelectorWheel = false
@@ -175,7 +167,7 @@ class SignUpEmailActivity : AppCompatActivity() {
                 } else {
                     month.wrapSelectorWheel = true
                     month.maxValue = 12
-                    when (newVal) {
+                    when (month.value) {
                         1, 3, 5, 7, 8, 10, 12 -> day.maxValue = 31
                         2 -> day.maxValue = 28
                         4, 6, 9, 11 -> day.maxValue = 30
@@ -184,10 +176,8 @@ class SignUpEmailActivity : AppCompatActivity() {
                 }
             }
 
-            // 일 변화 감지
-            day.setOnValueChangedListener { picker, oldVal, newVal ->
-                if (oldVal == 1 && newVal == day.maxValue) month.value -= 1
-                if (oldVal == day.maxValue && newVal == 1) month.value += 1
+            // 일 조건
+            fun dayCondition() : Unit {
                 if (year.value == cYear && month.value == month.maxValue && day.value == cDay) {
                     day.maxValue = cDay
                     day.wrapSelectorWheel = false
@@ -200,6 +190,43 @@ class SignUpEmailActivity : AppCompatActivity() {
                         else -> print("error")
                     }
                 }
+            }
+
+            // 보여질 값 설정
+            if (birthCheck)
+            {
+                val valueTemp = btn_birth.text.split("년 ", "월 ", "일")
+                year.value = valueTemp[0].toInt()
+                month.value = valueTemp[1].toInt()
+                day.value = valueTemp[2].toInt()
+
+                yearCondition()
+                monthCondition()
+                dayCondition()
+
+            } else {
+                year.value = cYear
+                month.value = cMonth + 1
+                day.value = cDay
+            }
+
+            // 년도 변화 감지
+            year.setOnValueChangedListener { picker, oldVal, newVal ->
+                yearCondition()
+            }
+
+            // 월 변화 감지
+            month.setOnValueChangedListener { picker, oldVal, newVal ->
+                if (oldVal == 1 && newVal == month.maxValue) year.value -= 1
+                if (oldVal == month.maxValue && newVal == 1) year.value += 1
+                monthCondition()
+            }
+
+            // 일 변화 감지
+            day.setOnValueChangedListener { picker, oldVal, newVal ->
+                if (oldVal == 1 && newVal == day.maxValue) month.value -= 1
+                if (oldVal == day.maxValue && newVal == 1) month.value += 1
+                dayCondition()
             }
 
             //  취소 버튼 클릭 시
@@ -292,8 +319,6 @@ class SignUpEmailActivity : AppCompatActivity() {
         }
     }
 
-
-
     // EditText 글자 수 체크
     fun addLength(layout: LinearLayout, editName: EditText, maxLength: String? = "8") {
         layout.removeAllViews()
@@ -324,12 +349,9 @@ class SignUpEmailActivity : AppCompatActivity() {
     // 회원가입 버튼 활성화
     private val loginTextWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable) {
             btn_signUp.isEnabled = emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck && cb_privacy.isChecked && cb_use.isChecked
         }
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-
     }
 }
-
-
