@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edt_bg_selector"
-                android:hint="영문 + 숫자 6~16자(대소문자 구별)"
+                android:hint="영문 + 숫자 8~16자(대소문자 구별)"
                 android:inputType="textPassword"
                 android:maxLength="16"
                 android:minHeight="40dp"

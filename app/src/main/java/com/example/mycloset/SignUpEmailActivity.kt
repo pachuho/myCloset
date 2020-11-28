@@ -20,6 +20,11 @@ class SignUpEmailActivity : AppCompatActivity() {
     // 정규식
     val symbolNickname: String = "[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝| ]*"
     var gender: String = "man"
+    var emailCheck = false
+    var pwdCheck = false
+    var pwdConfirmCheck = false
+    var nickNameCheck = false
+    var birthCheck = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +48,13 @@ class SignUpEmailActivity : AppCompatActivity() {
         et_email.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                emailCheck = addHelper(et_email.length() > 0 && !android.util.Patterns.EMAIL_ADDRESS.matcher(et_email.text.toString()).matches(),
+                        ll_email, "이메일 주소를 다시 확인 해주세요", et_email)
+            }
 
             override fun afterTextChanged(p0: Editable?) {
-                addHelper(et_email.length() > 0 && !android.util.Patterns.EMAIL_ADDRESS.matcher(et_email.text.toString()).matches(), ll_email, "이메일 주소를 다시 확인 해주세요")
+
             }
         })
 
@@ -56,26 +64,31 @@ class SignUpEmailActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 addLength(ll_pwdLength, et_pwd, "16")
+                pwdCheck = addHelper(et_pwd.length() in 1..7, ll_pwd, "비밀번호 8~16자를 입력해주세요", et_pwd)
+
+                // 비밀번호 확인 입력 후 비밀번호 입력창 입력 시
+                pwdCheck = addHelper(et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
+                        ll_pwdConfirm, "비밀번호가 일치하지 않아요", et_pwd)
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                addHelper(et_pwd.length() in 1..7, ll_pwd, "비밀번호 8~16자를 입력해주세요")
 
-                // 비밀번호 확인 입력 후 비밀번호 입력창 입력 시
-                addHelper(et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(), ll_pwdConfirm, "비밀번호가 일치하지 않아요")
             }
         })
 
         // 비밀번호 확인 입력 시
         et_pwdConfirm.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 addLength(ll_pwdConfirmLength, et_pwdConfirm, "16")
+                pwdConfirmCheck = addHelper(et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
+                        ll_pwdConfirm, "비밀번호가 일치하지 않아요", et_pwdConfirm)
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                addHelper(et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(), ll_pwdConfirm, "비밀번호가 일치하지 않아요")
+
             }
         })
 
@@ -85,10 +98,12 @@ class SignUpEmailActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 addLength(ll_nickNameLength, et_nickName, "8")
+                nickNameCheck = addHelper(et_nickName.length() == 1 || !et_nickName.text.matches(symbolNickname.toRegex()),
+                        ll_nickName, "특수문자 제외 2~8자를 입력해주세요", et_nickName)
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                addHelper(et_nickName.length() == 1 || !et_nickName.text.matches(symbolNickname.toRegex()), ll_nickName, "특수문자 제외 2~8자를 입력해주세요")
+
             }
         })
 
@@ -196,6 +211,7 @@ class SignUpEmailActivity : AppCompatActivity() {
             //  완료 버튼 클릭 시
             save.setOnClickListener {
                 btn_birth.text = "${year.value}년 ${month.value}월 ${day.value}일"
+                birthCheck = true
                 dialog.dismiss()
                 dialog.cancel()
             }
@@ -217,15 +233,17 @@ class SignUpEmailActivity : AppCompatActivity() {
         // 약관동의 시
         cb_all.setOnClickListener {
             onCheckChanged(cb_all)
-            btn_signUp.isEnabled = cb_all.isChecked
+            btn_signUp.isEnabled = cb_all.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck
+//            Toast.makeText(this, "email:$emailCheck \npwd:$pwdCheck \n" +
+//                    "pwdConfirm:$pwdConfirmCheck \nnickName:$nickNameCheck \nbirth:$birthCheck \nprivacy:${cb_privacy.isChecked}\nuse:${cb_use.isChecked}", Toast.LENGTH_SHORT).show()
         }
         cb_privacy.setOnClickListener {
             onCheckChanged(cb_privacy)
-            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked
+            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck
         }
         cb_use.setOnClickListener {
             onCheckChanged(cb_use)
-            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked
+            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck
         }
         cb_pushAlarm.setOnClickListener { onCheckChanged(cb_pushAlarm) }
 
@@ -256,7 +274,7 @@ class SignUpEmailActivity : AppCompatActivity() {
     }
 
     // EditText 하단 도움말
-    fun addHelper(condition: Boolean, layout: LinearLayout, inputText: String? = "텍스트를 입력해주세요") {
+    fun addHelper(condition: Boolean, layout: LinearLayout, inputText: String? = "텍스트를 입력해주세요", target : EditText): Boolean {
         if (condition) {
             layout.removeAllViews()
             val helper = TextView(this@SignUpEmailActivity)
@@ -264,8 +282,17 @@ class SignUpEmailActivity : AppCompatActivity() {
             helper.setTextColor(ContextCompat.getColor(this@SignUpEmailActivity, R.color.red))
             helper.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11F)
             layout.addView(helper)
-        } else layout.removeAllViews()
+            return false
+        } else if(target.text.isEmpty()) {
+            layout.removeAllViews()
+            return false
+        } else {
+            layout.removeAllViews()
+            return true
+        }
     }
+
+
 
     // EditText 글자 수 체크
     fun addLength(layout: LinearLayout, editName: EditText, maxLength: String? = "8") {
@@ -284,7 +311,6 @@ class SignUpEmailActivity : AppCompatActivity() {
                     cb_privacy.isChecked = true
                     cb_use.isChecked = true
                     cb_pushAlarm.isChecked = true
-
                 } else {
                     cb_privacy.isChecked = false
                     cb_use.isChecked = false
@@ -298,17 +324,11 @@ class SignUpEmailActivity : AppCompatActivity() {
     // 회원가입 버튼 활성화
     private val loginTextWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-        override fun afterTextChanged(s: Editable) {}
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            val email = et_email.text.toString().trim { it <= ' ' }
-            val pwd = et_pwd.text.toString().trim { it <= ' ' }
-            val pwdConfirm = et_pwdConfirm.text.toString().trim { it <= ' ' }
-            val nickname = et_nickName.text.toString().trim { it <= ' ' }
-            val birth = btn_birth.text.toString().trim { it <= ' ' }
-
-            btn_signUp.isEnabled = email.isNotEmpty() && pwd.isNotEmpty() && pwdConfirm.isNotEmpty()
-                    && nickname.isNotEmpty() && birth != "생년월일 입력" && cb_privacy.isChecked && cb_use.isChecked
+        override fun afterTextChanged(s: Editable) {
+            btn_signUp.isEnabled = emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck && cb_privacy.isChecked && cb_use.isChecked
         }
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
     }
 }
 
