@@ -142,11 +142,13 @@ class SignUpEmailActivity : AppCompatActivity() {
             // 연도 조건
             fun yearCondition() : Unit{
                 if (year.value == year.maxValue) {
-                    month.maxValue = cMonth + 1
                     month.wrapSelectorWheel = false
-                    day.maxValue = cDay
                     day.wrapSelectorWheel = false
+                    month.maxValue = cMonth + 1
+                    day.maxValue = cDay
                 } else {
+                    month.wrapSelectorWheel = true
+                    day.wrapSelectorWheel = true
                     month.maxValue = 12
                     when (month.value) {
                         1, 3, 5, 7, 8, 10, 12 -> day.maxValue = 31
@@ -160,12 +162,13 @@ class SignUpEmailActivity : AppCompatActivity() {
             // 월 조건
             fun monthCondition() : Unit {
                 if (year.value == year.maxValue && month.value == cMonth + 1) {
-                    month.maxValue = cMonth + 1
                     month.wrapSelectorWheel = false
-                    day.maxValue = cDay
                     day.wrapSelectorWheel = false
+                    month.maxValue = cMonth + 1
+                    day.maxValue = cDay
                 } else {
                     month.wrapSelectorWheel = true
+                    day.wrapSelectorWheel = true
                     month.maxValue = 12
                     when (month.value) {
                         1, 3, 5, 7, 8, 10, 12 -> day.maxValue = 31
