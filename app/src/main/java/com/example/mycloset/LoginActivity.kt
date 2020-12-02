@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mycloset.Retrofit.Common
-import com.example.mycloset.Retrofit.Login
+import com.example.mycloset.Retrofit.SignIn
 import com.example.mycloset.Retrofit.RetrofitService
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
@@ -16,24 +16,24 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     var lastBackPressedTime: Long = 0
-    var login:Login? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val loginService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+
 
         // 로그인 버튼
         btn_login.setOnClickListener {
+            val signInService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
             val inputEmail = login_et_email.text.toString()
             val inputPwd = login_et_pwd.text.toString()
 
-            loginService.requestLogin(inputEmail,inputPwd).enqueue(object: Callback<Login> {
+            signInService.requestSignIn(inputEmail,inputPwd).enqueue(object: Callback<SignIn> {
                 // 통신 성공
-                override fun onResponse(call: Call<Login>, response: Response<Login>) {
-                    login = response.body()
+                override fun onResponse(call: Call<SignIn>, response: Response<SignIn>) {
+                    val signIn = response.body()
                     // 로그인 성공(회원정보 있으면)
-                    if (login?.success == true) {
+                    if (signIn?.success == true) {
                         Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
 
 
@@ -43,8 +43,8 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 // 통신 실패
-                override fun onFailure(call: Call<Login>, t: Throwable) {
-                    Log.e("LOGIN", t.message.toString())
+                override fun onFailure(call: Call<SignIn>, t: Throwable) {
+                    Log.e("signIn", t.message.toString())
                     Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
                 }
             })

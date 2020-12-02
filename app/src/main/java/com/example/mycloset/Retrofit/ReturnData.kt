@@ -1,6 +1,6 @@
 package com.example.mycloset.Retrofit
 
-data class Login(
+data class SignIn(
     val success : Boolean,
     val email: String,
     val pwd: String,
@@ -8,5 +8,9 @@ data class Login(
     val birthday: String,
     val gender: String,
     val checkAlarm: String
+)
+
+data class SignUp(
+    val success : Boolean
 )
 

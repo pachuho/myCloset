@@ -9,12 +9,17 @@ interface RetrofitService {
     // 로그인
     @FormUrlEncoded
     @POST("signIn.php")
-    fun requestLogin(@Field("email") email:String,
-                     @Field("pwd") pwd:String ) : Call<Login>
+    fun requestSignIn(@Field("email") email:String,
+                      @Field("pwd") pwd:String ) : Call<SignIn>
 
     // 회원가입
     @FormUrlEncoded
     @POST("signUp.php")
-    fun requestRegister(@Field("email") email:String,
-                        @Field("pwd") pwd:String ) : Call<Login>
+    fun requestSignUp(@Field("email") email:String,
+                      @Field("pwd") pwd:String,
+                      @Field("nickName") nickName:String,
+                      @Field("birthday") birthday:String,
+                      @Field("gender") gender:String,
+                      @Field("checkAlarm") checkAlarm:String,
+                      @Field("signUpDate") signUpDate:String) : Call<SignUp>
 }

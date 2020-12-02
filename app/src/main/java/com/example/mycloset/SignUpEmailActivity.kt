@@ -3,33 +3,44 @@ package com.example.mycloset
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import android.widget.CompoundButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.mycloset.Retrofit.Common
+import com.example.mycloset.Retrofit.RetrofitService
+import com.example.mycloset.Retrofit.SignUp
 import kotlinx.android.synthetic.main.activity_sign_up_email.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 
 class SignUpEmailActivity : AppCompatActivity() {
     // 정규식
     val symbolNickname: String = "[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝| ]*"
-    var gender: String = "man"
+
+    // 입력 여부 확인
     var emailCheck = false
     var pwdCheck = false
     var pwdConfirmCheck = false
     var nickNameCheck = false
     var birthCheck = false
 
+    // 기타 변수 선언
+    var gender: String = "man"
+    var birthday: String = "2020-01-01"
+    var signUpDate: String = "2020-01-01"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_email)
-
 
         // textwatcher 지정
         et_email.addTextChangedListener(loginTextWatcher)
@@ -113,6 +124,9 @@ class SignUpEmailActivity : AppCompatActivity() {
             val cYear = calendar.get(Calendar.YEAR)
             val cMonth = calendar.get(Calendar.MONTH)
             val cDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+            // 가입일자
+            signUpDate = "${cYear}-${cMonth + 1}-${cDay}"
 
             val dialog = AlertDialog.Builder(this@SignUpEmailActivity).create()
             val edialog: LayoutInflater = LayoutInflater.from(this@SignUpEmailActivity)
@@ -240,6 +254,8 @@ class SignUpEmailActivity : AppCompatActivity() {
 
             //  완료 버튼 클릭 시
             save.setOnClickListener {
+                birthday = "${year.value}-${month.value}-${day.value}"
+
                 btn_birth.text = "${year.value}년 ${month.value}월 ${day.value}일"
                 birthCheck = true
                 dialog.dismiss()
@@ -279,7 +295,32 @@ class SignUpEmailActivity : AppCompatActivity() {
 
         // 회원가입 버튼 클릭 시
         btn_signUp.setOnClickListener {
+            val signUpService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
 
+            val email = et_email.text.toString()
+            val pwd = et_pwd.text.toString()
+            val nickName = et_nickName.text.toString()
+            val checkAlarm = cb_use.isChecked.toString()
+
+
+            signUpService.requestSignUp(email, pwd, nickName, birthday, gender,
+                    checkAlarm, signUpDate).enqueue(object: Callback<SignUp> {
+                override fun onResponse(call: Call<SignUp>, response: Response<SignUp>) {
+                    val signUp = response.body()
+                    // 회원가입 성공
+                    if (signUp?.success == true) {
+                        Toast.makeText(this@SignUpEmailActivity, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    else Toast.makeText(this@SignUpEmailActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(call: Call<SignUp>, t: Throwable) {
+                    Log.e("signUp", t.message.toString())
+                    Toast.makeText(this@SignUpEmailActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                }
+
+            })
         }
 
     }
@@ -358,3 +399,4 @@ class SignUpEmailActivity : AppCompatActivity() {
         }
     }
 }
+
