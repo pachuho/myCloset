@@ -4,16 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mycloset.Retrofit.Common
 import com.example.mycloset.Retrofit.Login
-import com.example.mycloset.Retrofit.LoginService
+import com.example.mycloset.Retrofit.RetrofitService
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class LoginActivity : AppCompatActivity() {
@@ -23,38 +21,31 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://52.79.235.161/myCloset/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        var loginService: LoginService = retrofit.create(LoginService::class.java)
-
-
+        val loginService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
 
         // 로그인 버튼
         btn_login.setOnClickListener {
-            var inputEmail = login_et_email.text.toString()
-            var inputPwd = login_et_pwd.text.toString()
+            val inputEmail = login_et_email.text.toString()
+            val inputPwd = login_et_pwd.text.toString()
 
             loginService.requestLogin(inputEmail,inputPwd).enqueue(object: Callback<Login> {
-                override fun onFailure(call: Call<Login>, t: Throwable) {
-                    Log.e("LOGIN", t.message.toString())
-                    var dialog = AlertDialog.Builder(this@LoginActivity)
-                    dialog.setTitle("에러")
-                    dialog.setMessage("호출실패했습니다.")
-                    dialog.show()
-                }
-
+                // 통신 성공
                 override fun onResponse(call: Call<Login>, response: Response<Login>) {
                     login = response.body()
-                    Log.d("LOGIN","success : "+login?.success)
-                    Log.d("LOGIN","email : "+login?.email)
-                    Log.d("LOGIN","nickName : "+login?.nickName)
-                    Log.d("LOGIN","birthday : "+login?.birthday)
-                    Log.d("LOGIN","gender : "+login?.gender)
-                    Log.d("LOGIN","checkAlarm : "+login?.checkAlarm)
-                    Toast.makeText(this@LoginActivity, "${login?.success}", Toast.LENGTH_SHORT).show()
+                    // 로그인 성공(회원정보 있으면)
+                    if (login?.success == true) {
+                        Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
 
+
+                    }
+                    // 로그인 실패(회원정보 없으면)
+                    else Toast.makeText(this@LoginActivity, "회원 정보를 확인해주세요", Toast.LENGTH_SHORT).show()
+                }
+
+                // 통신 실패
+                override fun onFailure(call: Call<Login>, t: Throwable) {
+                    Log.e("LOGIN", t.message.toString())
+                    Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
                 }
             })
         }
@@ -82,8 +73,8 @@ class LoginActivity : AppCompatActivity() {
     // 뒤로가기
     override fun onBackPressed() {
         val currentTime = System.currentTimeMillis()
-        val DifferenceTime = currentTime - lastBackPressedTime
-        if (DifferenceTime in 0..2000) {
+        val differenceTime = currentTime - lastBackPressedTime
+        if (differenceTime in 0..2000) {
             finish()
         } else {
             lastBackPressedTime = currentTime
