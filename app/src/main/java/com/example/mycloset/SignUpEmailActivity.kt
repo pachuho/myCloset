@@ -12,9 +12,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.mycloset.Retrofit.Common
-import com.example.mycloset.Retrofit.RetrofitService
-import com.example.mycloset.Retrofit.SignUp
+import com.example.mycloset.Retrofit.*
 import kotlinx.android.synthetic.main.activity_sign_up_email.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,7 +40,7 @@ class SignUpEmailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_email)
 
-        // textwatcher 지정
+        // textWatcher 지정
         et_email.addTextChangedListener(loginTextWatcher)
         et_pwd.addTextChangedListener(loginTextWatcher)
         et_pwdConfirm.addTextChangedListener(loginTextWatcher)
@@ -61,7 +59,7 @@ class SignUpEmailActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 emailCheck = addHelper(et_email.length() > 0 && !android.util.Patterns.EMAIL_ADDRESS.matcher(et_email.text.toString()).matches(),
-                        ll_email, "이메일 주소를 다시 확인 해주세요", et_email)
+                        ll_email,et_email, "이메일 주소를 다시 확인 해주세요")
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -69,17 +67,22 @@ class SignUpEmailActivity : AppCompatActivity() {
             }
         })
 
+        // 이메일 중복 확인
+        et_email.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (emailCheck && !hasFocus) checkEmail(true, ll_email, et_email,
+                "이미 사용중인 이메일입니다.", "사용 가능한 이메일입니다.") }
+
         // 비밀번호 입력 시
         et_pwd.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 addLength(ll_pwdLength, et_pwd, "16")
-                pwdCheck = addHelper(et_pwd.length() in 1..7, ll_pwd, "비밀번호 8~16자를 입력해주세요", et_pwd)
+                pwdCheck = addHelper(et_pwd.length() in 1..7, ll_pwd, et_pwd, "비밀번호 8~16자를 입력해주세요")
 
                 // 비밀번호 확인 입력 후 비밀번호 입력창 입력 시
                 pwdCheck = addHelper(et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
-                        ll_pwdConfirm, "비밀번호가 일치하지 않아요", et_pwd)
+                        ll_pwdConfirm, et_pwd, "비밀번호가 일치하지 않아요")
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -95,7 +98,7 @@ class SignUpEmailActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 addLength(ll_pwdConfirmLength, et_pwdConfirm, "16")
                 pwdConfirmCheck = addHelper(et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
-                        ll_pwdConfirm, "비밀번호가 일치하지 않아요", et_pwdConfirm)
+                        ll_pwdConfirm, et_pwdConfirm, "비밀번호가 일치하지 않아요")
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -110,13 +113,18 @@ class SignUpEmailActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 addLength(ll_nickNameLength, et_nickName, "8")
                 nickNameCheck = addHelper(et_nickName.length() == 1 || !et_nickName.text.matches(symbolNickname.toRegex()),
-                        ll_nickName, "특수문자 제외 2~8자를 입력해주세요", et_nickName)
+                        ll_nickName, et_nickName, "특수문자 제외 2~8자를 입력해주세요")
             }
 
             override fun afterTextChanged(p0: Editable?) {
 
             }
         })
+
+        // 닉네임 중복 확인
+        et_nickName.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (nickNameCheck && !hasFocus) checkNickName(true, ll_nickName, et_nickName,
+                "이미 사용중인 닉네임입니다.", "사용 가능한 닉네임입니다.") }
 
         // 생년월일 입력 시
         btn_birth.setOnClickListener {
@@ -302,10 +310,9 @@ class SignUpEmailActivity : AppCompatActivity() {
             val nickName = et_nickName.text.toString()
             val checkAlarm = cb_use.isChecked.toString()
 
-
             signUpService.requestSignUp(email, pwd, nickName, birthday, gender,
-                    checkAlarm, signUpDate).enqueue(object: Callback<SignUp> {
-                override fun onResponse(call: Call<SignUp>, response: Response<SignUp>) {
+                    checkAlarm, signUpDate).enqueue(object: Callback<Success> {
+                override fun onResponse(call: Call<Success>, response: Response<Success>) {
                     val signUp = response.body()
                     // 회원가입 성공
                     if (signUp?.success == true) {
@@ -315,7 +322,7 @@ class SignUpEmailActivity : AppCompatActivity() {
                     else Toast.makeText(this@SignUpEmailActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onFailure(call: Call<SignUp>, t: Throwable) {
+                override fun onFailure(call: Call<Success>, t: Throwable) {
                     Log.e("signUp", t.message.toString())
                     Toast.makeText(this@SignUpEmailActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
                 }
@@ -345,12 +352,12 @@ class SignUpEmailActivity : AppCompatActivity() {
     }
 
     // EditText 하단 도움말
-    fun addHelper(condition: Boolean, layout: LinearLayout, inputText: String? = "텍스트를 입력해주세요", target : EditText): Boolean {
+    fun addHelper(condition: Boolean, layout: LinearLayout, target : EditText, inputText: String?, color: Int = R.color.red): Boolean {
         if (condition) {
             layout.removeAllViews()
             val helper = TextView(this@SignUpEmailActivity)
             helper.text = " $inputText"
-            helper.setTextColor(ContextCompat.getColor(this@SignUpEmailActivity, R.color.red))
+            helper.setTextColor(ContextCompat.getColor(this@SignUpEmailActivity, color))
             helper.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11F)
             layout.addView(helper)
             return false
@@ -397,6 +404,44 @@ class SignUpEmailActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable) {
             btn_signUp.isEnabled = emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck && cb_privacy.isChecked && cb_use.isChecked
         }
+    }
+
+    // 이메일 중복 체크
+    private fun checkEmail(condition: Boolean, layout: LinearLayout, target : EditText, inputText1: String?, inputText2: String?) {
+        val checkEmailService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+
+        checkEmailService.requestCheckEmail(target.text.toString()).enqueue(object: Callback<Success> {
+            override fun onResponse(call: Call<Success>, response: Response<Success>) {
+                if (response.body()?.success == true)
+                emailCheck = addHelper(response.body()?.success == condition, layout, target, inputText1)
+                else addHelper(response.body()?.success == !condition, layout, target, inputText2, R.color.green)
+            }
+
+            override fun onFailure(call: Call<Success>, t: Throwable) {
+                Log.e("checkEmail", t.message.toString())
+                Toast.makeText(this@SignUpEmailActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    // 닉네임 중복 체크
+    private fun checkNickName(condition: Boolean, layout: LinearLayout, target : EditText, inputText1: String?, inputText2: String?) {
+        val checkNicknameService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+
+        checkNicknameService.requestCheckEmail(target.text.toString()).enqueue(object: Callback<Success> {
+            override fun onResponse(call: Call<Success>, response: Response<Success>) {
+                if (response.body()?.success == true)
+                    nickNameCheck = addHelper(response.body()?.success == condition, layout, target, inputText1)
+                else addHelper(response.body()?.success == !condition, layout, target, inputText2, R.color.green)
+            }
+
+            override fun onFailure(call: Call<Success>, t: Throwable) {
+                Log.e("checkNickName", t.message.toString())
+                Toast.makeText(this@SignUpEmailActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 }
 

@@ -10,7 +10,6 @@ data class SignIn(
     val checkAlarm: String
 )
 
-data class SignUp(
+data class Success(
     val success : Boolean
 )
-

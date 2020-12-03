@@ -21,5 +21,15 @@ interface RetrofitService {
                       @Field("birthday") birthday:String,
                       @Field("gender") gender:String,
                       @Field("checkAlarm") checkAlarm:String,
-                      @Field("signUpDate") signUpDate:String) : Call<SignUp>
+                      @Field("signUpDate") signUpDate:String) : Call<Success>
+
+    // 이메일 중복확인
+    @FormUrlEncoded
+    @POST("checkEmail.php")
+    fun requestCheckEmail(@Field("email") email:String) : Call<Success>
+
+    // 닉네임 중복확인
+    @FormUrlEncoded
+    @POST("checkNickName.php")
+    fun requestCheckNickName(@Field("nickName") nickName: String) : Call<Success>
 }
