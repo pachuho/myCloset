@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.mycloset.Retrofit.*
 import kotlinx.android.synthetic.main.activity_sign_up_email.*
+import kotlinx.android.synthetic.main.dialog_datepicker.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -163,13 +164,14 @@ class SignUpEmailActivity : AppCompatActivity() {
             var year: NumberPicker = mView.findViewById(R.id.np_year)
             var month: NumberPicker = mView.findViewById(R.id.np_month)
             var day: NumberPicker = mView.findViewById(R.id.np_day)
+
             val cancel: TextView = mView.findViewById(R.id.tv_cancel)
             val save: TextView = mView.findViewById(R.id.tv_ok)
 
             //  순환 안되게 막기
             year.wrapSelectorWheel = false
-            month.wrapSelectorWheel = false
-            day.wrapSelectorWheel = false
+//            month.wrapSelectorWheel = false
+//            day.wrapSelectorWheel = false
 
             //  최소값 설정
             year.minValue = cYear - 100
@@ -180,6 +182,7 @@ class SignUpEmailActivity : AppCompatActivity() {
             year.maxValue = cYear
             month.maxValue = cMonth + 1
             day.maxValue = cDay
+
 
             // 연도 조건
             fun yearCondition() : Unit{
@@ -241,19 +244,30 @@ class SignUpEmailActivity : AppCompatActivity() {
             if (birthCheck)
             {
                 val valueTemp = btn_birth.text.split("년 ", "월 ", "일")
-                year.value = valueTemp[0].toInt()
-                month.value = valueTemp[1].toInt()
-                day.value = valueTemp[2].toInt()
+
+                Log.d("dayprint", "전체 ${btn_birth.text}\n")
+                Log.d("dayprint", "년: ${year.value}\n")
+                Log.d("dayprint", "월: ${month.value}\n")
+                Log.d("dayprint", "일: ${day.value}\n")
 
                 yearCondition()
                 monthCondition()
                 dayCondition()
 
+                year.value = valueTemp[0].toInt()
+                month.value = valueTemp[1].toInt()
+                day.value = valueTemp[2].toInt()
+
             } else {
                 year.value = cYear
-                month.value = cMonth + 1
-                day.value = cDay
+                month.value = 1
+                day.value = 1
+
+                yearCondition()
+                monthCondition()
+                dayCondition()
             }
+
 
             // 년도 변화 감지
             year.setOnValueChangedListener { picker, oldVal, newVal ->
@@ -282,6 +296,10 @@ class SignUpEmailActivity : AppCompatActivity() {
 
             //  완료 버튼 클릭 시
             save.setOnClickListener {
+                if (year.hasFocus()) year.clearFocus()
+                if (month.hasFocus()) month.clearFocus()
+                if (day.hasFocus()) day.clearFocus()
+
                 birthday = "${year.value}-${month.value}-${day.value}"
 
                 btn_birth.text = "${year.value}년 ${month.value}월 ${day.value}일"
@@ -526,5 +544,6 @@ class SignUpEmailActivity : AppCompatActivity() {
 
         })
     }
+
 }
 

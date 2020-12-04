@@ -20,14 +20,14 @@
                 android:id="@+id/np_year"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                />
+                android:nextFocusDown="@id/np_month"/>
             <View
                 android:layout_width="20dp"
                 android:layout_height="match_parent"/>
             <NumberPicker
                 android:id="@+id/np_month"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"/>
+                android:layout_height="200dp" />
             <View
                 android:layout_width="20dp"
                 android:layout_height="match_parent"/>
