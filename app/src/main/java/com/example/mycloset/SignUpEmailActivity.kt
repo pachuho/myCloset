@@ -22,6 +22,8 @@ import kotlinx.android.synthetic.main.dialog_datepicker.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -34,12 +36,10 @@ class SignUpEmailActivity : AppCompatActivity() {
     var pwdCheck = false
     var pwdConfirmCheck = false
     var nickNameCheck = false
-    var birthCheck = false
 
     // 기타 변수 선언
     var gender: String = "man"
-    var birthday: String = "2020-01-01"
-    var signUpDate: String = "2020-01-01"
+    var birthday: String = "0000-00-00"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,10 +64,10 @@ class SignUpEmailActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 emailCheck = addHelper(
-                    et_email.length() > 0 && !android.util.Patterns.EMAIL_ADDRESS.matcher(
-                        et_email.text.toString()
-                    ).matches(),
-                    ll_email, et_email, "이메일 주소를 다시 확인 해주세요"
+                        et_email.length() > 0 && !android.util.Patterns.EMAIL_ADDRESS.matcher(
+                                et_email.text.toString()
+                        ).matches(),
+                        ll_email, et_email, "이메일 주소를 다시 확인 해주세요"
                 )
             }
 
@@ -79,8 +79,8 @@ class SignUpEmailActivity : AppCompatActivity() {
         // 이메일 중복 확인
         et_email.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (emailCheck && !hasFocus) checkEmail(
-                true, ll_email, et_email,
-                "이미 사용중인 이메일입니다.", "사용 가능한 이메일입니다."
+                    true, ll_email, et_email,
+                    "이미 사용중인 이메일입니다.", "사용 가능한 이메일입니다."
             ) }
 
         // 비밀번호 입력 시
@@ -93,8 +93,8 @@ class SignUpEmailActivity : AppCompatActivity() {
 
                 // 비밀번호 확인 입력 후 비밀번호 입력창 입력 시
                 pwdCheck = addHelper(
-                    et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
-                    ll_pwdConfirm, et_pwd, "비밀번호가 일치하지 않아요"
+                        et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
+                        ll_pwdConfirm, et_pwd, "비밀번호가 일치하지 않아요"
                 )
             }
 
@@ -111,8 +111,8 @@ class SignUpEmailActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 addLength(ll_pwdConfirmLength, et_pwdConfirm, "16")
                 pwdConfirmCheck = addHelper(
-                    et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
-                    ll_pwdConfirm, et_pwdConfirm, "비밀번호가 일치하지 않아요"
+                        et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
+                        ll_pwdConfirm, et_pwdConfirm, "비밀번호가 일치하지 않아요"
                 )
             }
 
@@ -128,10 +128,10 @@ class SignUpEmailActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 addLength(ll_nickNameLength, et_nickName, "8")
                 nickNameCheck = addHelper(
-                    et_nickName.length() == 1 || !et_nickName.text.matches(
-                        symbolNickname.toRegex()
-                    ),
-                    ll_nickName, et_nickName, "특수문자 제외 2~8자를 입력해주세요"
+                        et_nickName.length() == 1 || !et_nickName.text.matches(
+                                symbolNickname.toRegex()
+                        ),
+                        ll_nickName, et_nickName, "특수문자 제외 2~8자를 입력해주세요"
                 )
             }
 
@@ -143,8 +143,8 @@ class SignUpEmailActivity : AppCompatActivity() {
         // 닉네임 중복 확인
         et_nickName.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (nickNameCheck && !hasFocus) checkNickName(
-                true, ll_nickName, et_nickName,
-                "이미 사용중인 닉네임입니다.", "사용 가능한 닉네임입니다."
+                    true, ll_nickName, et_nickName,
+                    "이미 사용중인 닉네임입니다.", "사용 가능한 닉네임입니다."
             ) }
 
         // 생년월일 입력 시
@@ -153,9 +153,6 @@ class SignUpEmailActivity : AppCompatActivity() {
             val cYear = calendar.get(Calendar.YEAR)
             val cMonth = calendar.get(Calendar.MONTH)
             val cDay = calendar.get(Calendar.DAY_OF_MONTH)
-
-            // 가입일자
-            signUpDate = "${cYear}-${cMonth + 1}-${cDay}"
 
             val dialog = AlertDialog.Builder(this@SignUpEmailActivity).create()
             val edialog: LayoutInflater = LayoutInflater.from(this@SignUpEmailActivity)
@@ -241,14 +238,14 @@ class SignUpEmailActivity : AppCompatActivity() {
             }
 
             // 보여질 값 설정
-            if (birthCheck)
+            if (btn_birth.text.toString() != "생년월일 입력")
             {
                 val valueTemp = btn_birth.text.split("년 ", "월 ", "일")
 
-                Log.d("dayprint", "전체 ${btn_birth.text}\n")
-                Log.d("dayprint", "년: ${year.value}\n")
-                Log.d("dayprint", "월: ${month.value}\n")
-                Log.d("dayprint", "일: ${day.value}\n")
+//                Log.d("dayprint", "전체 ${btn_birth.text}\n")
+//                Log.d("dayprint", "년: ${year.value}\n")
+//                Log.d("dayprint", "월: ${month.value}\n")
+//                Log.d("dayprint", "일: ${day.value}\n")
 
                 yearCondition()
                 monthCondition()
@@ -303,7 +300,6 @@ class SignUpEmailActivity : AppCompatActivity() {
                 birthday = "${year.value}-${month.value}-${day.value}"
 
                 btn_birth.text = "${year.value}년 ${month.value}월 ${day.value}일"
-                birthCheck = true
                 dialog.dismiss()
                 dialog.cancel()
             }
@@ -325,17 +321,17 @@ class SignUpEmailActivity : AppCompatActivity() {
         // 약관동의 시
         cb_all.setOnClickListener {
             onCheckChanged(cb_all)
-            btn_signUp.isEnabled = cb_all.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck
+            btn_signUp.isEnabled = cb_all.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck
 //            Toast.makeText(this, "email:$emailCheck \npwd:$pwdCheck \n" +
 //                    "pwdConfirm:$pwdConfirmCheck \nnickName:$nickNameCheck \nbirth:$birthCheck \nprivacy:${cb_privacy.isChecked}\nuse:${cb_use.isChecked}", Toast.LENGTH_SHORT).show()
         }
         cb_privacy.setOnClickListener {
             onCheckChanged(cb_privacy)
-            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck
+            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck
         }
         cb_use.setOnClickListener {
             onCheckChanged(cb_use)
-            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck
+            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck
         }
         cb_pushAlarm.setOnClickListener { onCheckChanged(cb_pushAlarm) }
 
@@ -346,21 +342,20 @@ class SignUpEmailActivity : AppCompatActivity() {
             val email = et_email.text.toString()
             val pwd = et_pwd.text.toString()
             val nickName = et_nickName.text.toString()
-            val checkAlarm = cb_use.isChecked.toString()
+            val checkAlarm = cb_pushAlarm.isChecked.toString()
+            val signUpDate = signUpTime()
 
             signUpService.requestSignUp(
-                email, pwd, nickName, birthday, gender,
-                checkAlarm, signUpDate
+                    email, pwd, nickName, birthday, gender,
+                    checkAlarm, signUpDate
             ).enqueue(object : Callback<Success> {
                 override fun onResponse(call: Call<Success>, response: Response<Success>) {
                     val signUp = response.body()
                     // 회원가입 성공
                     if (signUp?.success == true) {
-                        Toast.makeText(this@SignUpEmailActivity, "회원가입 성공", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(this@SignUpEmailActivity, "회원가입 성공", Toast.LENGTH_SHORT).show()
                         finish()
-                    } else Toast.makeText(this@SignUpEmailActivity, "회원가입 실패", Toast.LENGTH_SHORT)
-                        .show()
+                    } else Toast.makeText(this@SignUpEmailActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onFailure(call: Call<Success>, t: Throwable) {
@@ -392,7 +387,7 @@ class SignUpEmailActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
 
-    // EditText에서 외부 클릭 시 포커스 해제
+     // EditText에서 외부 클릭 시 포커스 해제
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             val v = currentFocus
@@ -412,11 +407,11 @@ class SignUpEmailActivity : AppCompatActivity() {
 
     // EditText 하단 도움말
     fun addHelper(
-        condition: Boolean,
-        layout: LinearLayout,
-        target: EditText,
-        inputText: String?,
-        color: Int = R.color.red
+            condition: Boolean,
+            layout: LinearLayout,
+            target: EditText,
+            inputText: String?,
+            color: Int = R.color.red
     ): Boolean {
         if (condition) {
             layout.removeAllViews()
@@ -467,36 +462,36 @@ class SignUpEmailActivity : AppCompatActivity() {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable) {
-            btn_signUp.isEnabled = emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && birthCheck && cb_privacy.isChecked && cb_use.isChecked
+            btn_signUp.isEnabled = emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && cb_privacy.isChecked && cb_use.isChecked
         }
     }
 
     // 이메일 중복 체크
     private fun checkEmail(
-        condition: Boolean,
-        layout: LinearLayout,
-        target: EditText,
-        inputText1: String?,
-        inputText2: String?
+            condition: Boolean,
+            layout: LinearLayout,
+            target: EditText,
+            inputText1: String?,
+            inputText2: String?
     ) {
         val checkEmailService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
 
         checkEmailService.requestCheckEmail(target.text.toString()).enqueue(object :
-            Callback<Success> {
+                Callback<Success> {
             override fun onResponse(call: Call<Success>, response: Response<Success>) {
                 if (response.body()?.success == true)
                     emailCheck = addHelper(
-                        response.body()?.success == condition,
-                        layout,
-                        target,
-                        inputText1
+                            response.body()?.success == condition,
+                            layout,
+                            target,
+                            inputText1
                     )
                 else addHelper(
-                    response.body()?.success == !condition,
-                    layout,
-                    target,
-                    inputText2,
-                    R.color.green
+                        response.body()?.success == !condition,
+                        layout,
+                        target,
+                        inputText2,
+                        R.color.green
                 )
             }
 
@@ -510,30 +505,30 @@ class SignUpEmailActivity : AppCompatActivity() {
 
     // 닉네임 중복 체크
     private fun checkNickName(
-        condition: Boolean,
-        layout: LinearLayout,
-        target: EditText,
-        inputText1: String?,
-        inputText2: String?
+            condition: Boolean,
+            layout: LinearLayout,
+            target: EditText,
+            inputText1: String?,
+            inputText2: String?
     ) {
         val checkNicknameService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
 
         checkNicknameService.requestCheckNickName(target.text.toString()).enqueue(object :
-            Callback<Success> {
+                Callback<Success> {
             override fun onResponse(call: Call<Success>, response: Response<Success>) {
                 if (response.body()?.success == true)
                     nickNameCheck = addHelper(
-                        response.body()?.success == condition,
-                        layout,
-                        target,
-                        inputText1
+                            response.body()?.success == condition,
+                            layout,
+                            target,
+                            inputText1
                     )
                 else addHelper(
-                    response.body()?.success == !condition,
-                    layout,
-                    target,
-                    inputText2,
-                    R.color.green
+                        response.body()?.success == !condition,
+                        layout,
+                        target,
+                        inputText2,
+                        R.color.green
                 )
             }
 
@@ -545,5 +540,15 @@ class SignUpEmailActivity : AppCompatActivity() {
         })
     }
 
+    // 가입일자
+    private fun signUpTime() : String{
+        val tz : TimeZone
+        var dateFormat : DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
+        tz = TimeZone.getTimeZone("Asia/Seoul")
+        dateFormat.timeZone = tz
+
+        val date = Date()
+        return dateFormat.format(date)
+    }
 }
 

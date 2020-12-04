@@ -192,7 +192,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="생년월일"
+                android:text="생년월일 (선택)"
                 android:textColor="@color/black2"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -269,65 +269,79 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:text="약관동의"
                 android:textColor="@color/greenBlack"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/cb_all"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="모든 운영방침에 동의합니다."
-                android:textColor="@color/black2"
-                android:textSize="14sp"
-                android:button="@null"
-                android:background="@null"
-                android:drawableLeft="@drawable/custom_radiobutton"
-                android:drawablePadding="5dp"/>
+                android:orientation="vertical"
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/greywhite"/>
+                app:backgroundTint="@null"
+                android:background="@drawable/btn_custom">
+
+                <CheckBox
+                    android:id="@+id/cb_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="모든 운영방침에 동의합니다."
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:button="@null"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/custom_radiobutton"
+                    android:drawablePadding="5dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greywhite"/>
 
 
-            <CheckBox
-                android:id="@+id/cb_privacy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="개인정보 취급방침에 동의합니다.(필수)"
-                android:textColor="@color/black2"
-                android:textSize="14sp"
-                android:button="@null"
-                android:background="@null"
-                android:drawableLeft="@drawable/custom_radiobutton"
-                android:drawablePadding="5dp"/>
+                <CheckBox
+                    android:id="@+id/cb_privacy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="개인정보 취급방침에 동의합니다.(필수)"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:button="@null"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/custom_radiobutton"
+                    android:drawablePadding="5dp"/>
 
-            <CheckBox
-                android:id="@+id/cb_use"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="이용약관에 동의합니다.(필수)"
-                android:textColor="@color/black2"
-                android:textSize="14sp"
-                android:button="@null"
-                android:background="@null"
-                android:drawableLeft="@drawable/custom_radiobutton"
-                android:drawablePadding="5dp"/>
+                <CheckBox
+                    android:id="@+id/cb_use"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="이용약관에 동의합니다.(필수)"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:button="@null"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/custom_radiobutton"
+                    android:drawablePadding="5dp"/>
 
-            <CheckBox
-                android:id="@+id/cb_pushAlarm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="푸시알림 수신에 동의합니다.(선택)"
-                android:textColor="@color/black2"
-                android:textSize="14sp"
-                android:button="@null"
-                android:background="@null"
-                android:drawableLeft="@drawable/custom_radiobutton"
-                android:drawablePadding="5dp"/>
+                <CheckBox
+                    android:id="@+id/cb_pushAlarm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="푸시알림 수신에 동의합니다.(선택)"
+                    android:textColor="@color/black2"
+                    android:textSize="14sp"
+                    android:button="@null"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/custom_radiobutton"
+                    android:drawablePadding="5dp"/>
+            </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
