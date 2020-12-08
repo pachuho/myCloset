@@ -340,13 +340,15 @@ class SignUpEmailActivity : AppCompatActivity() {
             val signUpService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
 
             val email = et_email.text.toString()
+            val kakaoId = "Null"
+            val googleId = "Null"
             val pwd = et_pwd.text.toString()
             val nickName = et_nickName.text.toString()
             val checkAlarm = cb_pushAlarm.isChecked.toString()
             val signUpDate = signUpTime()
 
             signUpService.requestSignUp(
-                    email, pwd, nickName, birthday, gender,
+                    email, kakaoId, googleId, pwd, nickName, birthday, gender,
                     checkAlarm, signUpDate
             ).enqueue(object : Callback<Success> {
                 override fun onResponse(call: Call<Success>, response: Response<Success>) {
@@ -411,8 +413,7 @@ class SignUpEmailActivity : AppCompatActivity() {
             layout: LinearLayout,
             target: EditText,
             inputText: String?,
-            color: Int = R.color.red
-    ): Boolean {
+            color: Int = R.color.red): Boolean {
         if (condition) {
             layout.removeAllViews()
             val helper = TextView(this@SignUpEmailActivity)

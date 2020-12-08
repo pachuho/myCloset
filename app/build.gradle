@@ -51,5 +51,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.0' // 레트로핏
     implementation 'com.google.code.gson:gson:2.8.5' // gson
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0' // 컨버터
-
+    implementation "com.kakao.sdk:v2-user:2.0.6" // 카카오 로그인
 }

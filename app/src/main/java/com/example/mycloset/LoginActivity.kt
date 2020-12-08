@@ -1,13 +1,20 @@
 package com.example.mycloset
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mycloset.R.string.kakao_app_key
 import com.example.mycloset.Retrofit.Common
 import com.example.mycloset.Retrofit.SignIn
 import com.example.mycloset.Retrofit.RetrofitService
+import com.kakao.sdk.auth.LoginClient
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,8 +26,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-
 
         // 로그인 버튼
         btn_login.setOnClickListener {
@@ -52,7 +57,31 @@ class LoginActivity : AppCompatActivity() {
 
         // 회원가입-카카오톡 버튼
         btn_signUpKaKao.setOnClickListener {
-            Toast.makeText(this, "업데이트 예정", Toast.LENGTH_SHORT).show()
+            val TAG = "카카오"
+
+             // 로그인 공통 callback 구성
+            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+                if (error != null) {
+                    Log.e(TAG, "로그인 실패", error)
+                }
+                else if (token != null) {
+                    Log.i(TAG, "로그인 성공 ${token.accessToken}")
+                }
+            }
+
+            // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+            if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
+                LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
+            } else {
+                LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
+            }
+
+
+
+
+
+
+
         }
 
         // 회원가입-페이스북 버튼
@@ -62,7 +91,6 @@ class LoginActivity : AppCompatActivity() {
 
         // 회원가입-이메일 버튼
         btn_signUpEmail.setOnClickListener {
-            // Check if we're running on Android 5.0 or higher
             val intent = Intent(this, SignUpEmailActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);

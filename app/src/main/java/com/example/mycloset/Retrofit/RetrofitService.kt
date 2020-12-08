@@ -16,6 +16,8 @@ interface RetrofitService {
     @FormUrlEncoded
     @POST("signUp.php")
     fun requestSignUp(@Field("email") email:String,
+                      @Field("kakaoId") kakaoId:String,
+                      @Field("googleId") googleId:String,
                       @Field("pwd") pwd:String,
                       @Field("nickName") nickName:String,
                       @Field("birthday") birthday:String,

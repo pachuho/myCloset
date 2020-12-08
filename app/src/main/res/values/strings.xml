@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">내일의코디</string>
+    <string name="kakao_app_key">08632a605e7f0ffb6b605f9098bbad0d</string>
 </resources>
