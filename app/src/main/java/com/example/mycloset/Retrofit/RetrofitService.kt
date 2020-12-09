@@ -23,7 +23,8 @@ interface RetrofitService {
                       @Field("birthday") birthday:String,
                       @Field("gender") gender:String,
                       @Field("checkAlarm") checkAlarm:String,
-                      @Field("signUpDate") signUpDate:String) : Call<Success>
+                      @Field("signUpDate") signUpDate:String,
+                      @Field("manager") manager:String) : Call<Success>
 
     // 이메일 중복확인
     @FormUrlEncoded
@@ -34,4 +35,9 @@ interface RetrofitService {
     @FormUrlEncoded
     @POST("checkNickName.php")
     fun requestCheckNickName(@Field("nickName") nickName: String) : Call<Success>
+
+    // 카카오 정보 조회
+    @FormUrlEncoded
+    @POST("checkKakaoId.php")
+    fun requestCheckKakaoId(@Field("kakaoId") kakaoId: String) : Call<Check>
 }

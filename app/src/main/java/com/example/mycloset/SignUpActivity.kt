@@ -1,6 +1,7 @@
 package com.example.mycloset
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
@@ -27,14 +28,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class SignUpEmailActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
     // 정규식
     val symbolNickname: String = "[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝| ]*"
 
     // 입력 여부 확인
     var emailCheck = false
-    var pwdCheck = false
-    var pwdConfirmCheck = false
     var nickNameCheck = false
 
     // 기타 변수 선언
@@ -50,10 +49,18 @@ class SignUpEmailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        if(intent.hasExtra("kakaoId")) {
+            kakaoId = intent.getStringExtra("kakaoId").toString()
+            Toast.makeText(this, kakaoId, Toast.LENGTH_SHORT).show()
+        } else if (intent.hasExtra("googleId")){
+            googleId = intent.getStringExtra("googleId").toString()
+        }
+
+        // 비밀번호 레이아웃 제거
+        ll_TotalPwd.removeAllViews()
+
         // textWatcher 지정
         et_email.addTextChangedListener(loginTextWatcher)
-        et_pwd.addTextChangedListener(loginTextWatcher)
-        et_pwdConfirm.addTextChangedListener(loginTextWatcher)
         et_nickName.addTextChangedListener(loginTextWatcher)
         btn_birth.addTextChangedListener(loginTextWatcher)
 
@@ -84,35 +91,6 @@ class SignUpEmailActivity : AppCompatActivity() {
                     "이미 사용중인 이메일입니다.", "사용 가능한 이메일입니다."
             )}
 
-        // 비밀번호 입력 시
-        et_pwd.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                addLength(ll_pwdLength, et_pwd, "16")
-                pwdCheck = addHelper(et_pwd.length() in 1..7, ll_pwd, et_pwd, "비밀번호 8~16자를 입력해주세요")
-
-                // 비밀번호 확인 입력 후 비밀번호 입력창 입력 시
-                pwdCheck = addHelper(
-                        et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
-                        ll_pwdConfirm, et_pwd, "비밀번호가 일치하지 않아요"
-                )
-            }
-        })
-
-        // 비밀번호 확인 입력 시
-        et_pwdConfirm.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                addLength(ll_pwdConfirmLength, et_pwdConfirm, "16")
-                pwdConfirmCheck = addHelper(
-                        et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
-                        ll_pwdConfirm, et_pwdConfirm, "비밀번호가 일치하지 않아요"
-                )
-            }
-        })
-
         // 닉네임 입력 시
         et_nickName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -142,8 +120,8 @@ class SignUpEmailActivity : AppCompatActivity() {
             val cMonth = calendar.get(Calendar.MONTH)
             val cDay = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val dialog = AlertDialog.Builder(this@SignUpEmailActivity).create()
-            val edialog: LayoutInflater = LayoutInflater.from(this@SignUpEmailActivity)
+            val dialog = AlertDialog.Builder(this@SignUpActivity).create()
+            val edialog: LayoutInflater = LayoutInflater.from(this@SignUpActivity)
             val mView: View = edialog.inflate(R.layout.dialog_datepicker, null)
 
             var year: NumberPicker = mView.findViewById(R.id.np_year)
@@ -307,17 +285,17 @@ class SignUpEmailActivity : AppCompatActivity() {
         // 약관동의 시
         cb_all.setOnClickListener {
             onCheckChanged(cb_all)
-            btn_signUp.isEnabled = cb_all.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck
+            btn_signUp.isEnabled = cb_all.isChecked && emailCheck && nickNameCheck
 //            Toast.makeText(this, "email:$emailCheck \npwd:$pwdCheck \n" +
 //                    "pwdConfirm:$pwdConfirmCheck \nnickName:$nickNameCheck \nbirth:$birthCheck \nprivacy:${cb_privacy.isChecked}\nuse:${cb_use.isChecked}", Toast.LENGTH_SHORT).show()
         }
         cb_privacy.setOnClickListener {
             onCheckChanged(cb_privacy)
-            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck
+            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && nickNameCheck
         }
         cb_use.setOnClickListener {
             onCheckChanged(cb_use)
-            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck
+            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && nickNameCheck
         }
         cb_pushAlarm.setOnClickListener { onCheckChanged(cb_pushAlarm) }
 
@@ -326,7 +304,7 @@ class SignUpEmailActivity : AppCompatActivity() {
             val signUpService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
 
             val email = et_email.text.toString()
-            val pwd = et_pwd.text.toString()
+            val pwd = "Null"
             val nickName = et_nickName.text.toString()
             val checkAlarm = cb_pushAlarm.isChecked.toString()
             val signUpDate = signUpTime()
@@ -339,14 +317,19 @@ class SignUpEmailActivity : AppCompatActivity() {
                     val signUp = response.body()
                     // 회원가입 성공
                     if (signUp?.success == true) {
-                        Toast.makeText(this@SignUpEmailActivity, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignUpActivity, "회원가입 성공", Toast.LENGTH_SHORT).show()
                         finish()
-                    } else Toast.makeText(this@SignUpEmailActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                        // 메인화면으로 전환
+                        val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                        intent.putExtra("email", email)
+                        startActivity(intent)
+
+                    } else Toast.makeText(this@SignUpActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onFailure(call: Call<Success>, t: Throwable) {
                     Log.e("signUp", t.message.toString())
-                    Toast.makeText(this@SignUpEmailActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignUpActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
                 }
 
             })
@@ -399,9 +382,9 @@ class SignUpEmailActivity : AppCompatActivity() {
             color: Int = R.color.red): Boolean {
         if (condition) {
             layout.removeAllViews()
-            val helper = TextView(this@SignUpEmailActivity)
+            val helper = TextView(this@SignUpActivity)
             helper.text = " $inputText"
-            helper.setTextColor(ContextCompat.getColor(this@SignUpEmailActivity, color))
+            helper.setTextColor(ContextCompat.getColor(this@SignUpActivity, color))
             helper.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11F)
             layout.addView(helper)
             return false
@@ -417,7 +400,7 @@ class SignUpEmailActivity : AppCompatActivity() {
     // EditText 글자 수 체크
     fun addLength(layout: LinearLayout, editName: EditText, maxLength: String? = "8") {
         layout.removeAllViews()
-        val checkLength = TextView(this@SignUpEmailActivity)
+        val checkLength = TextView(this@SignUpActivity)
         checkLength.text = "${editName.text.length}/${maxLength}"
         checkLength.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
         layout.addView(checkLength)
@@ -446,7 +429,7 @@ class SignUpEmailActivity : AppCompatActivity() {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable) {
-            btn_signUp.isEnabled = emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && cb_privacy.isChecked && cb_use.isChecked
+            btn_signUp.isEnabled = emailCheck && nickNameCheck && cb_privacy.isChecked && cb_use.isChecked
         }
     }
 
@@ -481,7 +464,7 @@ class SignUpEmailActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<Success>, t: Throwable) {
                 Log.e("checkEmail", t.message.toString())
-                Toast.makeText(this@SignUpEmailActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SignUpActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -518,7 +501,7 @@ class SignUpEmailActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<Success>, t: Throwable) {
                 Log.e("checkNickName", t.message.toString())
-                Toast.makeText(this@SignUpEmailActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SignUpActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
             }
 
         })

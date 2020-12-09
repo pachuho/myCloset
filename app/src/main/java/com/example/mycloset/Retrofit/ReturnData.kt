@@ -9,9 +9,15 @@ data class SignIn(
     val nickName: String,
     val birthday: String,
     val gender: String,
-    val checkAlarm: String
+    val checkAlarm: String,
+    val manager: String
 )
 
 data class Success(
     val success : Boolean
+)
+
+data class Check(
+    val success : Boolean,
+    val email: String
 )

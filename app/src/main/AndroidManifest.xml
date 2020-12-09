@@ -14,6 +14,8 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyCloset">
+        <activity android:name=".SignUpActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".SignUpEmailActivity"
             android:windowSoftInputMode="adjustResize"/>
 
