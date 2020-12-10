@@ -2,6 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@drawable/google_symbol"
-        android:width="22dp"
-        android:height="22dp" />
+        android:width="21dp"
+        android:height="21dp" />
 </layer-list>
