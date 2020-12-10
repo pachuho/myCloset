@@ -1,9 +1,18 @@
 package com.example.mycloset
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_ENTER
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +20,7 @@ import com.example.mycloset.Retrofit.*
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_sign_in.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +31,19 @@ class LoginActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_sign_in)
+
+        // textWatcher 지정
+        login_et_email.addTextChangedListener(TextWatcher)
+        login_et_pwd.addTextChangedListener(TextWatcher)
+
+        // editText에서 완료 클릭 시
+        login_et_pwd.setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+                btn_login.performClick()
+            }
+            true
+        }
 
         // 로그인 버튼
         btn_login.setOnClickListener {
@@ -40,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         intent.putExtra("email", inputEmail)
                         startActivity(intent)
+                        finish()
 
                     }
                     // 로그인 실패(회원정보 없으면)
@@ -125,6 +147,33 @@ class LoginActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
         }
 
+    }
+
+    // 회원가입 버튼 활성화
+    private val TextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable) {
+            btn_login.isEnabled = !login_et_email.text.isNullOrEmpty() && !login_et_pwd.text.isNullOrEmpty()
+        }
+    }
+
+    // EditText에서 외부 클릭 시 포커스 해제
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm: InputMethodManager =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
     // 뒤로가기

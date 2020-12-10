@@ -38,6 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
+            app:boxStrokeColor="@color/green"
+            app:boxStrokeWidthFocused="1dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -53,6 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
+            app:boxStrokeColor="@color/green"
+            app:boxStrokeWidthFocused="1dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -73,7 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="로그인"
-            android:textColor="@color/black2"/>
+            android:textColor="@color/black2"
+            android:enabled="false"/>
 
         <View
             android:layout_width="300dp"
@@ -87,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/kakao"
+            android:paddingVertical="5dp"
             android:text="카카오 계정으로 시작하기"
             android:textColor="@color/black2"
             android:drawableLeft="@drawable/kakako_symbol_custom"/>
@@ -96,6 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/white"
+            android:paddingVertical="5dp"
             android:text="구글 계정으로 시작하기"
             android:textColor="@color/black2"
             android:drawableLeft="@drawable/google_symbol_custom"/>
@@ -104,6 +111,7 @@
             android:id="@+id/btn_signUpEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingVertical="5dp"
             android:text="이메일로 시작하기"
             android:textColor="@color/black2"
             android:drawableLeft="@drawable/email_symbol_custom"/>

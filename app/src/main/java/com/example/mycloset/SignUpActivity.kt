@@ -60,9 +60,9 @@ class SignUpActivity : AppCompatActivity() {
         ll_TotalPwd.removeAllViews()
 
         // textWatcher 지정
-        et_email.addTextChangedListener(loginTextWatcher)
-        et_nickName.addTextChangedListener(loginTextWatcher)
-        btn_birth.addTextChangedListener(loginTextWatcher)
+        et_email.addTextChangedListener(TextWatcher)
+        et_nickName.addTextChangedListener(TextWatcher)
+        btn_birth.addTextChangedListener(TextWatcher)
 
         // 툴바 뒤로가기
         setSupportActionBar(toolbar)
@@ -425,7 +425,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     // 회원가입 버튼 활성화
-    private val loginTextWatcher: TextWatcher = object : TextWatcher {
+    private val TextWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable) {
