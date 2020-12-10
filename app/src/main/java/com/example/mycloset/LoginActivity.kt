@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
             })
         }
 
-        // 회원가입-카카오톡 버튼
+        // 회원가입-카카오 버튼
         btn_signUpKakao.setOnClickListener {
             val TAG = "카카오"
 
@@ -133,8 +133,8 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // 회원가입-페이스북 버튼
-        btn_signUpFacebook.setOnClickListener {
+        // 회원가입-구글 버튼
+        btn_signUpGoogle.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             intent.putExtra("googleId", "test")
             startActivity(intent)

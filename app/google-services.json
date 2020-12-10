@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "59867261037",
+    "project_id": "mycloset-517de",
+    "storage_bucket": "mycloset-517de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59867261037:android:ad6323dc3178694755f764",
+        "android_client_info": {
+          "package_name": "com.example.mycloset"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59867261037-qk764iqmvjtrkmhra398fhsc4rau31qh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mycloset",
+            "certificate_hash": "9b48202f3f955e736fb2a8f3c52da046ece4078b"
+          }
+        },
+        {
+          "client_id": "59867261037-1502i8vbf2phqmscn6vi4qs3tr1h9kfl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5nw6rXAGwNqCcDkgI-jxhn1F6FhiP5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59867261037-1502i8vbf2phqmscn6vi4qs3tr1h9kfl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

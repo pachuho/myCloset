@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -48,8 +49,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version" // extension
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version" // extension
 
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0' // 레트로핏
-    implementation 'com.google.code.gson:gson:2.8.5' // gson
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0' // 컨버터
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2' // 레트로핏
+    implementation 'com.google.code.gson:gson:2.8.6' // gson
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2' // 컨버터
     implementation "com.kakao.sdk:v2-user:2.0.6" // 카카오 로그인
+    implementation platform('com.google.firebase:firebase-bom:26.1.1')
+    implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
 }
