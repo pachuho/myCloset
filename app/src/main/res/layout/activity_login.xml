@@ -83,20 +83,22 @@
             android:background="@color/greywhite"/>
 
         <Button
-            android:id="@+id/btn_signUpKaKao"
+            android:id="@+id/btn_signUpKakao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/kakao"
-            android:text="카카오톡으로 시작하기"
-            android:textColor="@color/black2"/>
+            app:backgroundTint="@color/kakao"
+            android:text="카카오 계정으로 시작하기"
+            android:textColor="@color/black2"
+            android:drawableLeft="@drawable/kakako_symbol_custom"/>
 
         <Button
             android:id="@+id/btn_signUpFacebook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/facebook"
-            android:text="페이스북으로 시작하기"
-            android:textColor="@color/white"/>
+            app:backgroundTint="@color/white"
+            android:text="구글 계정으로 시작하기"
+            android:textColor="@color/black2"
+            android:drawableLeft="@drawable/google_symbol_custom"/>
 
         <Button
             android:id="@+id/btn_signUpEmail"
@@ -104,7 +106,7 @@
             android:layout_height="wrap_content"
             android:text="이메일로 시작하기"
             android:textColor="@color/black2"
-            android:drawableLeft="@drawable/ic_baseline_alternate_email_24"/>
+            android:drawableLeft="@drawable/email_symbol_custom"/>
 
         <TextView
             android:layout_width="match_parent"

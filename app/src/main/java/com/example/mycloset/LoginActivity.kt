@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 회원가입-카카오톡 버튼
-        btn_signUpKaKao.setOnClickListener {
+        btn_signUpKakao.setOnClickListener {
             val TAG = "카카오"
 
              // 로그인 공통 callback 구성

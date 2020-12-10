@@ -8,10 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="black2">#272727</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="kakao">#F9E000</color>
-    <color name="facebook">#4267B2</color>
+    <color name="kakao">#FEE500</color>
     <color name="green">#619F18</color>
-    <color name="greenWhite">#8BC34A</color>
+    <color name="greenWhite">#A2E15A</color>
     <color name="greenWhite2">#B5DA8B</color>
     <color name="greenBlack">#1E6020</color>
     <color name="whiteBack">#FCFCFC</color>
