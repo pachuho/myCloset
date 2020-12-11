@@ -36,8 +36,13 @@ interface RetrofitService {
     @POST("checkNickName.php")
     fun requestCheckNickName(@Field("nickName") nickName: String) : Call<Success>
 
-    // 카카오 정보 조회
+    // 카카오 계정 조회
     @FormUrlEncoded
     @POST("checkKakaoId.php")
     fun requestCheckKakaoId(@Field("kakaoId") kakaoId: String) : Call<Check>
+
+    // 구글 계정 조회
+    @FormUrlEncoded
+    @POST("checkGoogleId.php")
+    fun requestCheckGoogleId(@Field("googleId") googleId: String) : Call<Check>
 }

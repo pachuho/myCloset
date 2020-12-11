@@ -11,12 +11,23 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mycloset.Retrofit.*
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
@@ -28,10 +39,26 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     var lastBackPressedTime: Long = 0
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private val mGoogleSignInClient: GoogleSignInClient? = null
+    private val RC_SIGN_IN = 9001
+
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                    .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken("59867261037-1502i8vbf2phqmscn6vi4qs3tr1h9kfl.apps.googleusercontent.com")
+                .requestEmail()
+                .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        auth = Firebase.auth
+
 
         // textWatcher 지정
         login_et_email.addTextChangedListener(TextWatcher)
@@ -51,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
             val inputEmail = login_et_email.text.toString()
             val inputPwd = login_et_pwd.text.toString()
 
-            signInService.requestSignIn(inputEmail,inputPwd).enqueue(object: Callback<SignIn> {
+            signInService.requestSignIn(inputEmail, inputPwd).enqueue(object : Callback<SignIn> {
                 // 통신 성공
                 override fun onResponse(call: Call<SignIn>, response: Response<SignIn>) {
                     val signIn = response.body()
@@ -109,14 +136,13 @@ class LoginActivity : AppCompatActivity() {
                     val Service: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
 
                     Service.requestCheckKakaoId(tokenInfo.id.toString()).enqueue(object :
-                        Callback<Check> {
+                            Callback<Check> {
                         override fun onResponse(call: Call<Check>, response: Response<Check>) {
                             if (response.body()?.success == true) { // 회원정보가 있다면
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 intent.putExtra("email", response.body()?.email)
                                 startActivity(intent)
-                            }
-                            else { // 회원 정보가 없다면
+                            } else { // 회원 정보가 없다면
                                 val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
                                 intent.putExtra("kakaoId", tokenInfo.id.toString())
                                 startActivity(intent)
@@ -135,9 +161,14 @@ class LoginActivity : AppCompatActivity() {
 
         // 회원가입-구글 버튼
         btn_signUpGoogle.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            intent.putExtra("googleId", "test")
-            startActivity(intent)
+            // Configure Google Sign In
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+
+
+
+
+
         }
 
         // 회원가입-이메일 버튼
@@ -188,8 +219,64 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val TAG = "아이디 받아오기"
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
+                firebaseAuthWithGoogle(account.idToken!!, account.id!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e)
+                // ...
+            }
+        }
+    }
 
 
+    private fun firebaseAuthWithGoogle(idToken: String, googleId: String) {
+        val TAG = "구글 인증"
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success, $googleId")
 
+                        // 회원 정보 조회
+                        val Service: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+
+                        Service.requestCheckGoogleId(googleId).enqueue(object :
+                                Callback<Check> {
+                            override fun onResponse(call: Call<Check>, response: Response<Check>) {
+                                if (response.body()?.success == true) { // 회원정보가 있다면
+                                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                    intent.putExtra("email", response.body()?.email)
+                                    startActivity(intent)
+                                } else { // 회원 정보가 없다면
+                                    val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+                                    intent.putExtra("googleId", googleId)
+                                    startActivity(intent)
+                                }
+                            }
+
+                            override fun onFailure(call: Call<Check>, t: Throwable) {
+                                Log.e("checkEmail", t.message.toString())
+                                Toast.makeText(this@LoginActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
+                            }
+
+                        })
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    }
+                }
+    }
 }
 

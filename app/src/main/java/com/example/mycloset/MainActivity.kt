@@ -11,5 +11,6 @@ class MainActivity : AppCompatActivity() {
 
         val email : String = intent.getStringExtra("email").toString()
         testEmail.text = email
+
     }
 }
