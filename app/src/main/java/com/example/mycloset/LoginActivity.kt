@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -22,9 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -49,7 +46,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //                    .requestIdToken(getString(R.string.default_web_client_id))
                 .requestIdToken("59867261037-1502i8vbf2phqmscn6vi4qs3tr1h9kfl.apps.googleusercontent.com")
@@ -74,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
 
         // 로그인 버튼
         btn_login.setOnClickListener {
+            LoadingDialog(this).show()
             val signInService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
             val inputEmail = login_et_email.text.toString()
             val inputPwd = login_et_pwd.text.toString()
@@ -101,10 +98,12 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
                 }
             })
+            LoadingDialog(this).dismiss()
         }
 
-        // 회원가입-카카오 버튼
+        // 카카오 계정으로 시작하기
         btn_signUpKakao.setOnClickListener {
+            LoadingDialog(this).show()
             val TAG = "카카오"
 
              // 로그인 공통 callback 구성
@@ -142,10 +141,12 @@ class LoginActivity : AppCompatActivity() {
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 intent.putExtra("email", response.body()?.email)
                                 startActivity(intent)
+                                finish()
                             } else { // 회원 정보가 없다면
                                 val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
                                 intent.putExtra("kakaoId", tokenInfo.id.toString())
                                 startActivity(intent)
+                                finish()
                             }
                         }
 
@@ -157,18 +158,15 @@ class LoginActivity : AppCompatActivity() {
                     })
                 }
             }
+            LoadingDialog(this).dismiss()
         }
 
-        // 회원가입-구글 버튼
+        // 구글 계정으로 시작하기
         btn_signUpGoogle.setOnClickListener {
+            LoadingDialog(this).show()
             // Configure Google Sign In
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
-
-
-
-
-
         }
 
         // 회원가입-이메일 버튼
@@ -259,6 +257,7 @@ class LoginActivity : AppCompatActivity() {
                                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                     intent.putExtra("email", response.body()?.email)
                                     startActivity(intent)
+
                                 } else { // 회원 정보가 없다면
                                     val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
                                     intent.putExtra("googleId", googleId)
@@ -277,6 +276,8 @@ class LoginActivity : AppCompatActivity() {
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
                     }
                 }
+        LoadingDialog(this).cancel()
+        LoadingDialog(this).dismiss()
     }
 }
 
