@@ -2,8 +2,11 @@ package com.example.mycloset
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.widget.Toast
 
 class LoadingDialog constructor(context: Context) : Dialog(context) {
     init {

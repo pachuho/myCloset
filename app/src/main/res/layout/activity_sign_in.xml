@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:hint="이메일 입력"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,6 +117,7 @@
             android:drawableLeft="@drawable/email_symbol_custom"/>
 
         <TextView
+            android:id="@+id/tv_forgot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"

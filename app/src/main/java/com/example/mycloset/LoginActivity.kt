@@ -1,5 +1,6 @@
 package com.example.mycloset
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -37,24 +38,16 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
     var lastBackPressedTime: Long = 0
 
+    private lateinit var loadingDialog: Dialog
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-    private val mGoogleSignInClient: GoogleSignInClient? = null
     private val RC_SIGN_IN = 9001
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                    .requestIdToken(getString(R.string.default_web_client_id))
-                .requestIdToken("59867261037-1502i8vbf2phqmscn6vi4qs3tr1h9kfl.apps.googleusercontent.com")
-                .requestEmail()
-                .build()
-
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-        auth = Firebase.auth
-
+        loadingDialog = LoadingDialog(this)
 
         // textWatcher 지정
         login_et_email.addTextChangedListener(TextWatcher)
@@ -62,15 +55,13 @@ class LoginActivity : AppCompatActivity() {
 
         // editText에서 완료 클릭 시
         login_et_pwd.setOnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
-                btn_login.performClick()
-            }
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) btn_login.performClick()
             true
         }
 
         // 로그인 버튼
         btn_login.setOnClickListener {
-            LoadingDialog(this).show()
+            loadingDialog.show()
             val signInService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
             val inputEmail = login_et_email.text.toString()
             val inputPwd = login_et_pwd.text.toString()
@@ -86,7 +77,6 @@ class LoginActivity : AppCompatActivity() {
                         intent.putExtra("email", inputEmail)
                         startActivity(intent)
                         finish()
-
                     }
                     // 로그인 실패(회원정보 없으면)
                     else Toast.makeText(this@LoginActivity, "회원 정보를 확인해주세요", Toast.LENGTH_SHORT).show()
@@ -98,18 +88,19 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
                 }
             })
-            LoadingDialog(this).dismiss()
+            loadingDialog.dismiss()
         }
 
         // 카카오 계정으로 시작하기
         btn_signUpKakao.setOnClickListener {
-            LoadingDialog(this).show()
+            loadingDialog.show()
             val TAG = "카카오"
 
              // 로그인 공통 callback 구성
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Log.e(TAG, "로그인 실패", error)
+                    Toast.makeText(this@LoginActivity, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show()
                 }
                 else if (token != null) {
                     Log.i(TAG, "로그인 성공 ${token.accessToken}")
@@ -158,15 +149,26 @@ class LoginActivity : AppCompatActivity() {
                     })
                 }
             }
-            LoadingDialog(this).dismiss()
+            loadingDialog.dismiss()
         }
 
         // 구글 계정으로 시작하기
         btn_signUpGoogle.setOnClickListener {
-            LoadingDialog(this).show()
+            loadingDialog.show()
+
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestIdToken("59867261037-1502i8vbf2phqmscn6vi4qs3tr1h9kfl.apps.googleusercontent.com")
+                    .requestEmail()
+                    .build()
+
+            googleSignInClient = GoogleSignIn.getClient(this, gso)
+            auth = Firebase.auth
+
             // Configure Google Sign In
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
+            loadingDialog.dismiss()
         }
 
         // 회원가입-이메일 버튼
@@ -174,6 +176,11 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpEmailActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+        }
+
+        // 회원정보 분실
+        tv_forgot.setOnClickListener {
+            Toast.makeText(this, "업데이트 예정", Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -274,10 +281,9 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
+                        Toast.makeText(this@LoginActivity, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show()
                     }
                 }
-        LoadingDialog(this).cancel()
-        LoadingDialog(this).dismiss()
     }
 }
 
