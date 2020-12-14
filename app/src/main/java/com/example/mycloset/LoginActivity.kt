@@ -72,20 +72,21 @@ class LoginActivity : AppCompatActivity() {
                     val signIn = response.body()
                     // 로그인 성공(회원정보 있으면)
                     if (signIn?.success == true) {
-                        Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         intent.putExtra("email", inputEmail)
                         startActivity(intent)
                         finish()
+                    } else {
+                        // 로그인 실패(회원정보 없으면)
+                        Toast.makeText(this@LoginActivity, getString(R.string.confirm_your_info), Toast.LENGTH_SHORT).show()
                     }
-                    // 로그인 실패(회원정보 없으면)
-                    else Toast.makeText(this@LoginActivity, "회원 정보를 확인해주세요", Toast.LENGTH_SHORT).show()
                 }
 
                 // 통신 실패
                 override fun onFailure(call: Call<SignIn>, t: Throwable) {
                     Log.e("signIn", t.message.toString())
-                    Toast.makeText(this@LoginActivity, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
                     loadingDialog.dismiss()
                 }
             })
@@ -99,12 +100,12 @@ class LoginActivity : AppCompatActivity() {
              // 로그인 공통 callback 구성
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
-                    Log.e(TAG, "로그인 실패", error)
-                    Toast.makeText(this@LoginActivity, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show()
+                    Log.e(TAG, getString(R.string.login_failure), error)
+                    Toast.makeText(this@LoginActivity, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
                     loadingDialog.dismiss()
                 }
                 else if (token != null) {
-                    Log.i(TAG, "로그인 성공 ${token.accessToken}")
+                    Log.i(TAG, getString(R.string.login_success) + token.accessToken)
                 }
             }
 
@@ -118,10 +119,10 @@ class LoginActivity : AppCompatActivity() {
             // 토큰 정보 보기
             UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
                 if (error != null) {
-                    Log.e(TAG, "토큰 정보 보기 실패", error)
+                    Log.e(TAG, getString(R.string.token_failure), error)
                 }
                 else if (tokenInfo != null) {
-                    Log.i(TAG, "토큰 정보 보기 성공" + "\n회원번호: ${tokenInfo.id}" + "\n만료시간: ${tokenInfo.expiresIn} 초")
+                    Log.i(TAG, getString(R.string.token_success) + "\n" + getString(R.string.member_number) + tokenInfo.id)
 
                     // 회원 정보 조회
                     val Service: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
@@ -144,7 +145,7 @@ class LoginActivity : AppCompatActivity() {
 
                         override fun onFailure(call: Call<Check>, t: Throwable) {
                             Log.e("checkEmail", t.message.toString())
-                            Toast.makeText(this@LoginActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginActivity, getString(R.string.confirm_overlap_failure), Toast.LENGTH_SHORT).show()
                             loadingDialog.dismiss()
                         }
 
@@ -180,7 +181,7 @@ class LoginActivity : AppCompatActivity() {
 
         // 회원정보 분실
         tv_forgot.setOnClickListener {
-            Toast.makeText(this, "업데이트 예정", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.will_do_update), Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -225,13 +226,13 @@ class LoginActivity : AppCompatActivity() {
             finish()
         } else {
             lastBackPressedTime = currentTime
-            Toast.makeText(this, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.one_more_touch_end), Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val TAG = "아이디 받아오기"
+        val TAG = getString(R.string.get_id)
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -239,11 +240,11 @@ class LoginActivity : AppCompatActivity() {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
+                Log.d(TAG, getString(R.string.auth_google) + account.id)
                 firebaseAuthWithGoogle(account.idToken!!, account.id!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e)
+                Log.w(TAG, getString(R.string.google_sign_failure), e)
                 loadingDialog.dismiss()
             }
         }
@@ -251,13 +252,13 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun firebaseAuthWithGoogle(idToken: String, googleId: String) {
-        val TAG = "구글 인증"
+        val TAG = getString(R.string.auth_google)
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithCredential:success, $googleId")
+                        Log.d(TAG, getString(R.string.login_success) + googleId)
 
                         // 회원 정보 조회
                         val Service: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
@@ -279,7 +280,7 @@ class LoginActivity : AppCompatActivity() {
 
                             override fun onFailure(call: Call<Check>, t: Throwable) {
                                 Log.e("checkEmail", t.message.toString())
-                                Toast.makeText(this@LoginActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@LoginActivity, getString(R.string.confirm_overlap_failure), Toast.LENGTH_SHORT).show()
                                 loadingDialog.dismiss()
                             }
 
@@ -287,7 +288,7 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        Toast.makeText(this@LoginActivity, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
                         loadingDialog.dismiss()
                     }
                 }
