@@ -24,6 +24,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        // 빌드 단축
+       debug{
+            splits.abi.enable = false // 개발 시 여러 개의 APK 생성 설정 비활성화화
+            splits.density.enable = false // ''
+            aaptOptions.cruncherEnabled = false // PNG 크런칭 비활성화
+            ext.alwaysUpdateBulidId = false // 빌드 아이디 업데이트 비활성화
+
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -40,6 +49,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

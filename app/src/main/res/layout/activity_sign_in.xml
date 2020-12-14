@@ -137,7 +137,7 @@
             android:id="@+id/tv_forgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="내일의 나. All rights reserved"
+            android:text="주호. All rights reserved"
             android:textSize="12sp"
             android:textStyle="bold"/>
     </LinearLayout>

@@ -85,10 +85,10 @@ class LoginActivity : AppCompatActivity() {
                 // 통신 실패
                 override fun onFailure(call: Call<SignIn>, t: Throwable) {
                     Log.e("signIn", t.message.toString())
-                    Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show()
+                    loadingDialog.dismiss()
                 }
             })
-            loadingDialog.dismiss()
         }
 
         // 카카오 계정으로 시작하기
@@ -101,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
                 if (error != null) {
                     Log.e(TAG, "로그인 실패", error)
                     Toast.makeText(this@LoginActivity, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show()
+                    loadingDialog.dismiss()
                 }
                 else if (token != null) {
                     Log.i(TAG, "로그인 성공 ${token.accessToken}")
@@ -144,12 +145,12 @@ class LoginActivity : AppCompatActivity() {
                         override fun onFailure(call: Call<Check>, t: Throwable) {
                             Log.e("checkEmail", t.message.toString())
                             Toast.makeText(this@LoginActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
+                            loadingDialog.dismiss()
                         }
 
                     })
                 }
             }
-            loadingDialog.dismiss()
         }
 
         // 구글 계정으로 시작하기
@@ -168,14 +169,13 @@ class LoginActivity : AppCompatActivity() {
             // Configure Google Sign In
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
-            loadingDialog.dismiss()
         }
 
         // 회원가입-이메일 버튼
         btn_signUpEmail.setOnClickListener {
             val intent = Intent(this, SignUpEmailActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
         }
 
         // 회원정보 분실
@@ -212,6 +212,11 @@ class LoginActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(event)
     }
 
+    override fun onStop() {
+        super.onStop()
+        loadingDialog.dismiss()
+    }
+
     // 뒤로가기
     override fun onBackPressed() {
         val currentTime = System.currentTimeMillis()
@@ -239,7 +244,7 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
-                // ...
+                loadingDialog.dismiss()
             }
         }
     }
@@ -275,6 +280,7 @@ class LoginActivity : AppCompatActivity() {
                             override fun onFailure(call: Call<Check>, t: Throwable) {
                                 Log.e("checkEmail", t.message.toString())
                                 Toast.makeText(this@LoginActivity, "중복확인 실패", Toast.LENGTH_SHORT).show()
+                                loadingDialog.dismiss()
                             }
 
                         })
@@ -282,6 +288,7 @@ class LoginActivity : AppCompatActivity() {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
                         Toast.makeText(this@LoginActivity, "네트워크를 확인해주세요", Toast.LENGTH_SHORT).show()
+                        loadingDialog.dismiss()
                     }
                 }
     }
