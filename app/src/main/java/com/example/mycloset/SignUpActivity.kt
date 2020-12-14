@@ -33,7 +33,11 @@ class SignUpActivity : AppCompatActivity() {
     val symbolNickname: String = "[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝| ]*"
 
     // 입력 여부 확인
+    var kakaoCheck = false
+    var googleCheck = false
     var emailCheck = false
+    var pwdCheck = false
+    var pwdConfirmCheck = false
     var nickNameCheck = false
 
     // 기타 변수 선언
@@ -49,20 +53,58 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        if(intent.hasExtra("kakaoId")) {
-            kakaoId = intent.getStringExtra("kakaoId").toString()
-            Toast.makeText(this, kakaoId, Toast.LENGTH_SHORT).show()
-        } else if (intent.hasExtra("googleId")){
-            googleId = intent.getStringExtra("googleId").toString()
+
+        // 아이디 값이 있다면 받아오기
+        kakaoCheck = intent.hasExtra("kakaoId")
+        googleCheck = intent.hasExtra("googleId")
+
+        if (kakaoCheck or googleCheck) {
+            if (kakaoCheck) kakaoId = intent.getStringExtra("kakaoId").toString()
+            else if (googleCheck) googleId = intent.getStringExtra("googleId").toString()
+
+            // 비밀번호 레이아웃 제거
+            ll_TotalPwd.removeAllViews()
+            // textWatcher 지정
+            et_email.addTextChangedListener(TextWatcher)
+            et_nickName.addTextChangedListener(TextWatcher)
+            btn_birth.addTextChangedListener(TextWatcher)
+        } else {
+            // textWatcher 지정
+            et_email.addTextChangedListener(TextWatcher)
+            et_pwd.addTextChangedListener(TextWatcher)
+            et_pwdConfirm.addTextChangedListener(TextWatcher)
+            et_nickName.addTextChangedListener(TextWatcher)
+            btn_birth.addTextChangedListener(TextWatcher)
+
+            // 비밀번호 입력 시
+            et_pwd.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun afterTextChanged(p0: Editable?) {}
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    addLength(ll_pwdLength, et_pwd, "16")
+                    pwdCheck = addHelper(et_pwd.length() in 1..7, ll_pwd, et_pwd, "비밀번호 8~16자를 입력해주세요")
+
+                    // 비밀번호 확인 입력 후 비밀번호 입력창 입력 시
+                    pwdCheck = addHelper(
+                        et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
+                        ll_pwdConfirm, et_pwd, "비밀번호가 일치하지 않아요"
+                    )
+                }
+            })
+
+            // 비밀번호 확인 입력 시
+            et_pwdConfirm.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun afterTextChanged(p0: Editable?) {}
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    addLength(ll_pwdConfirmLength, et_pwdConfirm, "16")
+                    pwdConfirmCheck = addHelper(
+                        et_pwdConfirm.length() > 0 && et_pwd.text.toString() != et_pwdConfirm.text.toString(),
+                        ll_pwdConfirm, et_pwdConfirm, "비밀번호가 일치하지 않아요"
+                    )
+                }
+            })
         }
-
-        // 비밀번호 레이아웃 제거
-        ll_TotalPwd.removeAllViews()
-
-        // textWatcher 지정
-        et_email.addTextChangedListener(TextWatcher)
-        et_nickName.addTextChangedListener(TextWatcher)
-        btn_birth.addTextChangedListener(TextWatcher)
 
         // 툴바 뒤로가기
         setSupportActionBar(toolbar)
@@ -285,17 +327,18 @@ class SignUpActivity : AppCompatActivity() {
         // 약관동의 시
         cb_all.setOnClickListener {
             onCheckChanged(cb_all)
-            btn_signUp.isEnabled = cb_all.isChecked && emailCheck && nickNameCheck
-//            Toast.makeText(this, "email:$emailCheck \npwd:$pwdCheck \n" +
-//                    "pwdConfirm:$pwdConfirmCheck \nnickName:$nickNameCheck \nbirth:$birthCheck \nprivacy:${cb_privacy.isChecked}\nuse:${cb_use.isChecked}", Toast.LENGTH_SHORT).show()
+            if (!(kakaoCheck or googleCheck)) btn_signUp.isEnabled = cb_all.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck
+            else btn_signUp.isEnabled = cb_all.isChecked && emailCheck && nickNameCheck
         }
         cb_privacy.setOnClickListener {
             onCheckChanged(cb_privacy)
-            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && nickNameCheck
+            if (!(kakaoCheck or googleCheck)) btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck
+            else btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && nickNameCheck
         }
         cb_use.setOnClickListener {
             onCheckChanged(cb_use)
-            btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && nickNameCheck
+            if (!(kakaoCheck or googleCheck)) btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck
+            else btn_signUp.isEnabled = cb_privacy.isChecked && cb_use.isChecked && emailCheck && nickNameCheck
         }
         cb_pushAlarm.setOnClickListener { onCheckChanged(cb_pushAlarm) }
 
@@ -304,10 +347,11 @@ class SignUpActivity : AppCompatActivity() {
             val signUpService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
 
             val email = et_email.text.toString()
-            val pwd = "Null"
+            var pwd = "Null"
             val nickName = et_nickName.text.toString()
             val checkAlarm = cb_pushAlarm.isChecked.toString()
             val signUpDate = signUpTime()
+            if (!(kakaoCheck or googleCheck)) pwd = et_pwd.text.toString()
 
             signUpService.requestSignUp(
                     email, kakaoId, googleId, pwd, nickName, birthday, gender,
@@ -318,12 +362,13 @@ class SignUpActivity : AppCompatActivity() {
                     // 회원가입 성공
                     if (signUp?.success == true) {
                         Toast.makeText(this@SignUpActivity, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                        finish()
-                        // 메인화면으로 전환
-                        val intent = Intent(this@SignUpActivity, MainActivity::class.java)
-                        intent.putExtra("email", email)
-                        startActivity(intent)
-
+                        if (!(kakaoCheck or googleCheck)) finish()
+                        else {
+                            val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                            intent.putExtra("email", email)
+                            startActivity(intent)
+                            finish()
+                        }
                     } else Toast.makeText(this@SignUpActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
                 }
 
@@ -429,7 +474,8 @@ class SignUpActivity : AppCompatActivity() {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable) {
-            btn_signUp.isEnabled = emailCheck && nickNameCheck && cb_privacy.isChecked && cb_use.isChecked
+            if (!(kakaoCheck or googleCheck)) btn_signUp.isEnabled = emailCheck && pwdCheck && pwdConfirmCheck && nickNameCheck && cb_privacy.isChecked && cb_use.isChecked
+            else btn_signUp.isEnabled = emailCheck && nickNameCheck && cb_privacy.isChecked && cb_use.isChecked
         }
     }
 

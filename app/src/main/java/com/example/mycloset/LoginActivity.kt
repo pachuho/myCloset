@@ -100,57 +100,56 @@ class LoginActivity : AppCompatActivity() {
              // 로그인 공통 callback 구성
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
-                    Log.e(TAG, getString(R.string.login_failure), error)
-                    Toast.makeText(this@LoginActivity, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
                     loadingDialog.dismiss()
+                    Log.e(TAG, getString(R.string.login_failure), error)
                 }
                 else if (token != null) {
                     Log.i(TAG, getString(R.string.login_success) + token.accessToken)
+
+                    // 토큰 정보 보기
+                    UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                        if (error != null) {
+                            loadingDialog.dismiss()
+                            Log.e(TAG, getString(R.string.token_failure), error)
+
+                        }
+                        else if (tokenInfo != null) {
+                            Log.i(TAG, getString(R.string.token_success) + "\n" + getString(R.string.member_number) + tokenInfo.id)
+
+                            // 회원 정보 조회
+                            val Service: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+
+                            Service.requestCheckKakaoId(tokenInfo.id.toString()).enqueue(object :
+                                Callback<Check> {
+                                override fun onResponse(call: Call<Check>, response: Response<Check>) {
+                                    if (response.body()?.success == true) { // 회원정보가 있다면
+                                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                        intent.putExtra("email", response.body()?.email)
+                                        startActivity(intent)
+                                        finish()
+                                    } else { // 회원 정보가 없다면
+                                        val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+                                        intent.putExtra("kakaoId", tokenInfo.id.toString())
+                                        startActivity(intent)
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<Check>, t: Throwable) {
+                                    Log.e("checkEmail", t.message.toString())
+                                    Toast.makeText(this@LoginActivity, getString(R.string.confirm_overlap_failure), Toast.LENGTH_SHORT).show()
+                                    loadingDialog.dismiss()
+                                }
+
+                            })
+                        }
+                    }
                 }
             }
-
             // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
             if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
                 LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
             } else {
                 LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
-            }
-
-            // 토큰 정보 보기
-            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-                if (error != null) {
-                    Log.e(TAG, getString(R.string.token_failure), error)
-                }
-                else if (tokenInfo != null) {
-                    Log.i(TAG, getString(R.string.token_success) + "\n" + getString(R.string.member_number) + tokenInfo.id)
-
-                    // 회원 정보 조회
-                    val Service: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
-
-                    Service.requestCheckKakaoId(tokenInfo.id.toString()).enqueue(object :
-                            Callback<Check> {
-                        override fun onResponse(call: Call<Check>, response: Response<Check>) {
-                            if (response.body()?.success == true) { // 회원정보가 있다면
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                intent.putExtra("email", response.body()?.email)
-                                startActivity(intent)
-                                finish()
-                            } else { // 회원 정보가 없다면
-                                val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
-                                intent.putExtra("kakaoId", tokenInfo.id.toString())
-                                startActivity(intent)
-                                finish()
-                            }
-                        }
-
-                        override fun onFailure(call: Call<Check>, t: Throwable) {
-                            Log.e("checkEmail", t.message.toString())
-                            Toast.makeText(this@LoginActivity, getString(R.string.confirm_overlap_failure), Toast.LENGTH_SHORT).show()
-                            loadingDialog.dismiss()
-                        }
-
-                    })
-                }
             }
         }
 
@@ -174,14 +173,23 @@ class LoginActivity : AppCompatActivity() {
 
         // 회원가입-이메일 버튼
         btn_signUpEmail.setOnClickListener {
-            val intent = Intent(this, SignUpEmailActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
         }
 
         // 회원정보 분실
         tv_forgot.setOnClickListener {
-            Toast.makeText(this, getString(R.string.will_do_update), Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, getString(R.string.will_do_update), Toast.LENGTH_SHORT).show()
+            // 연결 끊기
+            UserApiClient.instance.unlink { error ->
+                if (error != null) {
+                    Log.e("test", "연결 끊기 실패", error)
+                }
+                else {
+                    Log.i("test", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+                }
+            }
         }
 
     }
@@ -270,6 +278,7 @@ class LoginActivity : AppCompatActivity() {
                                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                     intent.putExtra("email", response.body()?.email)
                                     startActivity(intent)
+                                    finish()
 
                                 } else { // 회원 정보가 없다면
                                     val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
