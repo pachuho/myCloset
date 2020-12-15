@@ -16,8 +16,6 @@
         android:theme="@style/Theme.MyCloset">
         <activity android:name=".SignUpActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".SignUpActivity"
-            android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".LoginActivity">
             <intent-filter>

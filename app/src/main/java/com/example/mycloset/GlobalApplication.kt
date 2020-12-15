@@ -9,5 +9,4 @@ class GlobalApplication : Application() {
         super.onCreate()
         KakaoSdk.init(this, getString(R.string.kakao_app_key))
     }
-
 }

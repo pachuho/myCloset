@@ -53,6 +53,12 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        // 툴바 뒤로가기
+        setSupportActionBar(signUp_toolbar)
+        val ab = supportActionBar!!
+        ab.setDisplayShowTitleEnabled(false)
+        ab.setDisplayHomeAsUpEnabled(true)
+
 
         // 아이디 값이 있다면 받아오기
         kakaoCheck = intent.hasExtra("kakaoId")
@@ -105,12 +111,6 @@ class SignUpActivity : AppCompatActivity() {
                 }
             })
         }
-
-        // 툴바 뒤로가기
-        setSupportActionBar(toolbar)
-        val ab = supportActionBar!!
-        ab.setDisplayShowTitleEnabled(false)
-        ab.setDisplayHomeAsUpEnabled(true)
 
         // 이메일 입력 시
         et_email.addTextChangedListener(object : TextWatcher {
