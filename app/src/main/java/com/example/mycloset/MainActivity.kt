@@ -17,26 +17,30 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // 툴바 뒤로가기
-        setSupportActionBar(main_toolbar)
+        setSupportActionBar(toolbar)
         val ab = supportActionBar!!
-        ab.setDisplayShowTitleEnabled(false)
-        ab.setDisplayHomeAsUpEnabled(true)
+        ab.setDisplayShowCustomEnabled(true)
+        ab.setDisplayShowTitleEnabled(false) // 기본 제목 삭제
+
+
 //        val email : String = intent.getStringExtra("email").toString()
 
         replaceFragment(HomeFragment())
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationiItemSelectedListener)
     }
 
+    // 툴바 메뉴 버튼을 설정
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_toolbar, menu)
-        return super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
     }
 
+    // 툴바 메뉴 버튼 클릭 시
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.menu_toolbar_home -> Toast.makeText(this, "장바구니, 업데이트 예정", Toast.LENGTH_SHORT).show()
+        when(item!!.itemId){
+            R.id.menu_shopping->{
+                Toast.makeText(this, "업데이트 예정", Toast.LENGTH_SHORT).show()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

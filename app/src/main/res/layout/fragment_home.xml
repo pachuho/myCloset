@@ -1,14 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.HomeFragment">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="home"
-        android:gravity="center"/>
+        android:layout_height="match_parent">
 
-</FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/home_tv_sale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey_1"
+                    android:gravity="center"
+                    android:paddingVertical="15dp"
+                    android:text="@string/sale_string"
+                    android:textColor="@color/red_light"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+
+                <ImageButton
+                    android:id="@+id/home_btn_sale"
+                    android:layout_width="match_parent"
+                    android:layout_height="360dp"
+                    android:layout_marginTop="40dp"
+                    android:backgroundTint="@color/white"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/img_sale"/>
+
+                <TextView
+                    android:text="더 좋아진 세일"
+                    style="@style/CustomTextViewStyle_Bold"/>
+
+                <TextView
+                    android:text="6,000가지 스타일 최대 60% 할인"
+                    style="@style/CustomTextViewStyle"/>
+
+                <Button
+                    android:text="지금 쇼핑하기"
+                    style="@style/CustomButtonViewStyle_basic"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="흔하지 않아 더 의미 있는 선물"
+                    style="@style/CustomTextViewStyle_Bold"/>
+
+                <TextView
+                    android:text="세상에 하나뿐인 피스부터 파인 주얼리, \n디자인 인테리어 소품까지"
+                    style="@style/CustomTextViewStyle"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

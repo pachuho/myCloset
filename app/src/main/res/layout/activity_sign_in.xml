@@ -85,7 +85,7 @@
             android:layout_height="1dp"
             android:layout_gravity="center"
             android:layout_marginVertical="30dp"
-            android:background="@color/greywhite"/>
+            android:background="@color/grey_2"/>
 
         <Button
             android:id="@+id/btn_signUpKakao"

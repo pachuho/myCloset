@@ -15,4 +15,5 @@
     <string name="get_id">아이디 받아오기</string>
     <string name="auth_google">firebaseAuthWithGoogle:</string>
     <string name="google_sign_failure">Google sign in failed</string>
+    <string name="sale_string">세일 | 6,000가지 스타일이 최대 60% 할인</string>
 </resources>
