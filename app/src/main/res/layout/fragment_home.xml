@@ -70,7 +70,12 @@
                     android:text="세상에 하나뿐인 피스부터 파인 주얼리, \n디자인 인테리어 소품까지"
                     style="@style/CustomTextViewStyle"/>
 
-
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:background="#FF0000"
+                    android:orientation="horizontal" />
             </LinearLayout>
 
         </LinearLayout>
