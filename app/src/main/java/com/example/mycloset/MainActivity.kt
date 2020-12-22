@@ -1,6 +1,5 @@
 package com.example.mycloset
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -28,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         replaceFragment(HomeFragment())
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationiItemSelectedListener)
+
     }
 
     // 툴바 메뉴 버튼을 설정

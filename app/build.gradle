@@ -69,7 +69,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.airbnb.android:lottie:3.5.0' // lottie
     implementation "androidx.viewpager2:viewpager2:1.0.0" // viewPager2
-    //glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2' // indicator
 }
