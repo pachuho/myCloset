@@ -6,10 +6,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.mycloset.Fragment.HomeFragment
-import com.example.mycloset.Fragment.MyInfoFragment
-import com.example.mycloset.Fragment.SearchFragment
-import com.example.mycloset.Fragment.WishListFragment
+import com.example.mycloset.fragment.HomeFragment
+import com.example.mycloset.fragment.MyInfoFragment
+import com.example.mycloset.fragment.SearchFragment
+import com.example.mycloset.fragment.WishListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 //        val email : String = intent.getStringExtra("email").toString()
 
         replaceFragment(HomeFragment())
-        bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationiItemSelectedListener)
+        bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
     }
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 네비게이션 클릭
-    private val mOnNavigationiItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.menu_home -> {
                 replaceFragment(HomeFragment())

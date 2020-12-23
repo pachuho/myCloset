@@ -1,4 +1,4 @@
-package com.example.mycloset.Fragment
+package com.example.mycloset.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import com.example.mycloset.R
 
 
-class SearchFragment : Fragment() {
+
+class MyInfoFragment : Fragment() {
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        return inflater.inflate(R.layout.fragment_my_info, container, false)
     }
 }
