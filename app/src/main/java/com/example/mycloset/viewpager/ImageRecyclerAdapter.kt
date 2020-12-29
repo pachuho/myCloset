@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycloset.R
 
-class ImageRecyclerAdapter(val context: Context, private var pageList: ArrayList<PageItem>) : RecyclerView.Adapter<PagerViewHolder>(){
+class ImageRecyclerAdapter(private var pageList: ArrayList<PageItem>) : RecyclerView.Adapter<PagerViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
-        return PagerViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_image_pager_item, parent, false))
+        return PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_image_pager_item, parent, false))
     }
 
     override fun getItemCount(): Int {

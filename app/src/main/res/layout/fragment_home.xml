@@ -36,11 +36,12 @@
 
                 <ImageButton
                     android:id="@+id/home_btn_sale"
-                    android:layout_width="match_parent"
-                    android:layout_height="360dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_width="350dp"
+                    android:layout_height="350dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
                     android:backgroundTint="@color/white"
-                    android:scaleType="centerInside"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/img_sale"/>
 
                 <TextView
@@ -73,26 +74,11 @@
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/image_view_pager"
-                        android:layout_width="300dp"
-                        android:layout_height="300dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="50dp"
                         android:layout_gravity="center"
-                        android:layout_centerInParent="true"
                         />
-<!--                    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator-->
-<!--                        android:id="@+id/dots_indicator"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        app:dotsColor="#F1F1F1"-->
-<!--                        app:dotsCornerRadius="8dp"-->
-<!--                        app:dotsSize="16dp"-->
-<!--                        app:dotsSpacing="4dp"-->
-<!--                        app:dotsWidthFactor="2.5"-->
-<!--                        app:selectedDotColor="#FFC107"-->
-<!--                        app:progressMode="true"-->
-<!--                        android:layout_centerHorizontal="true"-->
-<!--                        android:layout_alignParentBottom="true"-->
-<!--                        android:layout_marginBottom="60dp"-->
-<!--                        />-->
 
             </LinearLayout>
 
