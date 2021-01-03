@@ -3,6 +3,7 @@ package com.example.mycloset.retrofit
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface RetrofitService {
@@ -45,4 +46,8 @@ interface RetrofitService {
     @FormUrlEncoded
     @POST("checkGoogleId.php")
     fun requestCheckGoogleId(@Field("googleId") googleId: String) : Call<Check>
+
+    // 이미지 링크 가져오기
+    @GET("getImageLink.php")
+    fun getImageLink() : Call<List<Dress>>
 }

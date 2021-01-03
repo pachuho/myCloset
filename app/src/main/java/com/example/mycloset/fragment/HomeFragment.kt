@@ -1,50 +1,82 @@
 package com.example.mycloset.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mycloset.R
+import com.example.mycloset.retrofit.Common
+import com.example.mycloset.retrofit.Dress
+import com.example.mycloset.retrofit.RetrofitService
 import com.example.mycloset.viewpager.ImageRecyclerAdapter
-import com.example.mycloset.viewpager.PageItem
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import java.lang.Exception
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeFragment : Fragment(){
 
-    private var pageItemList = ArrayList<PageItem>()
+    private var pageItemListOuter = ArrayList<String>()
+    private var pageItemListTop = ArrayList<String>()
+    private var pageItemListBottom = ArrayList<String>()
+    private var pageItemListShoes = ArrayList<String>()
+    private var pageItemListAccessories = ArrayList<String>()
+
     private lateinit var imageRecyclerAdapter: ImageRecyclerAdapter
-    private lateinit var mContext: Context
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mContext = context
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+
     }
 
     override fun onCreateView(
-
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        pageItemList.add(PageItem(imageSrc = R.drawable.mongsil_1))
-        pageItemList.add(PageItem(imageSrc = R.drawable.mongsil_2))
-        pageItemList.add(PageItem(imageSrc = R.drawable.mongsil_3))
-        pageItemList.add(PageItem(imageSrc = R.drawable.mongsil_4))
-        pageItemList.add(PageItem(imageSrc = R.drawable.mongsil_5))
-        pageItemList.add(PageItem(imageSrc = R.drawable.mongsil_6))
-        pageItemList.add(PageItem(imageSrc = R.drawable.mongsil_7))
+        val getLinkService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+        getLinkService.getImageLink().enqueue(object : Callback<List<Dress>> {
+            // 통신 성공
+            override fun onResponse(call: Call<List<Dress>>, response: Response<List<Dress>>) {
+                val getData = response.body()
 
-        imageRecyclerAdapter = ImageRecyclerAdapter(pageItemList)
+                for (i: Int in 0 until getData?.size!!){
+                    val getPart = getData[i].part
+                    val getLink = getData[i].link
 
-        // 뷰페이저에 설정
-        view.image_view_pager.apply {
-            adapter = imageRecyclerAdapter
-            orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        }
+                    if (getPart == "outer")
+                        pageItemListOuter.add(getLink)
+                }
+
+                // 아우터
+                imageRecyclerAdapter = ImageRecyclerAdapter(pageItemListOuter)
+                view.image_view_pager.apply {
+                    adapter = imageRecyclerAdapter
+                    orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                }
+                Log.i("resultLink", pageItemListOuter.toString())
+                // 상의
+
+                // 하의
+
+                // 신발
+
+                // 악세사리
+
+            }
+
+            // 통신 실패
+            override fun onFailure(call: Call<List<Dress>>, t: Throwable) {
+                Log.e("getImageLink", t.message.toString())
+                Toast.makeText(context, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
+            }
+        })
 
         return view
     }

@@ -21,3 +21,8 @@ data class Check(
     val success : Boolean,
     val email: String
 )
+
+data class Dress(
+    val part : String,
+    val link : String
+)
