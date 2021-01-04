@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -7,12 +9,42 @@
 
     <ImageView
         android:id="@+id/pager_item_image"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_marginTop="90dp"
-        android:layout_marginBottom="20dp"
-        />
+        android:layout_width="380dp"
+        android:layout_height="380dp"
+        app:layout_constraintBottom_toTopOf="@+id/pager_item_brand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pager_item_brand"
+        style="@style/CustomTextViewStyle"
+        android:text="브랜드명"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/pager_item_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pager_item_image" />
+
+    <TextView
+        android:id="@+id/pager_item_name"
+        style="@style/CustomTextViewStyle"
+        android:text="상품명"
+        app:layout_constraintBottom_toTopOf="@id/pager_item_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pager_item_brand" />
+
+    <TextView
+        android:id="@+id/pager_item_price"
+        style="@style/CustomTextViewStyle"
+        android:layout_marginTop="16dp"
+        android:text="상품 가격"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pager_item_name" />
 
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,7 @@ import com.example.mycloset.retrofit.Common
 import com.example.mycloset.retrofit.Dress
 import com.example.mycloset.retrofit.RetrofitService
 import com.example.mycloset.viewpager.ImageRecyclerAdapter
+import com.example.mycloset.viewpager.PageItem
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,20 +22,14 @@ import retrofit2.Response
 
 class HomeFragment : Fragment(){
 
-    private var pageItemListOuter = ArrayList<String>()
-    private var pageItemListTop = ArrayList<String>()
-    private var pageItemListBottom = ArrayList<String>()
-    private var pageItemListShoes = ArrayList<String>()
-    private var pageItemListAccessories = ArrayList<String>()
+    private var pageItemListOuter = ArrayList<PageItem>()
+    private var pageItemListTop = ArrayList<PageItem>()
+    private var pageItemListBottom = ArrayList<PageItem>()
+    private var pageItemListShoes = ArrayList<PageItem>()
+    private var pageItemListAccessories = ArrayList<PageItem>()
 
     private lateinit var imageRecyclerAdapter: ImageRecyclerAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,19 +43,29 @@ class HomeFragment : Fragment(){
 
                 for (i: Int in 0 until getData?.size!!){
                     val getPart = getData[i].part
+                    val getBrand = getData[i].brand
+                    val getName = getData[i].name
+                    val getPrice = getData[i].price
                     val getLink = getData[i].link
 
-                    if (getPart == "outer")
-                        pageItemListOuter.add(getLink)
+                    when(getPart) {
+                        "outer" -> pageItemListOuter.add(PageItem(getBrand, getName, getPrice, getLink))
+                        "top" -> pageItemListTop.add(PageItem(getBrand, getName, getPrice, getLink))
+                        "bottom" -> pageItemListBottom.add(PageItem(getBrand, getName, getPrice, getLink))
+                        "shoes" -> pageItemListShoes.add(PageItem(getBrand, getName, getPrice, getLink))
+                        "accessories" -> pageItemListAccessories.add(PageItem(getBrand, getName, getPrice, getLink))
+                    }
                 }
 
+                // 리사이클러뷰 부착
                 // 아우터
                 imageRecyclerAdapter = ImageRecyclerAdapter(pageItemListOuter)
-                view.image_view_pager.apply {
+                view.image_view_pager_outer.apply {
                     adapter = imageRecyclerAdapter
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                 }
-                Log.i("resultLink", pageItemListOuter.toString())
+//                Log.i("resultLink", pageItemListOuter.toString())
+
                 // 상의
 
                 // 하의

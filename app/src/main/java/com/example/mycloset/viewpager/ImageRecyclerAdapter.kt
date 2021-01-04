@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mycloset.R
 
-class ImageRecyclerAdapter(private var pageList: ArrayList<String>) : RecyclerView.Adapter<PagerViewHolder>(){
+class ImageRecyclerAdapter(private var pageList: ArrayList<PageItem>) : RecyclerView.Adapter<PagerViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {

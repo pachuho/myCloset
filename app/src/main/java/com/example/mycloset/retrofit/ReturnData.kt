@@ -23,6 +23,10 @@ data class Check(
 )
 
 data class Dress(
+    val code : Int,
     val part : String,
+    val brand : String,
+    val name : String,
+    val price : Int,
     val link : String
 )
