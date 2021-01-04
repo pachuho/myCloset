@@ -180,16 +180,17 @@ class LoginActivity : AppCompatActivity() {
 
         // 회원정보 분실
         tv_forgot.setOnClickListener {
-//            Toast.makeText(this, getString(R.string.will_do_update), Toast.LENGTH_SHORT).show()
-            // 연결 끊기
-            UserApiClient.instance.unlink { error ->
-                if (error != null) {
-                    Log.e("test", "연결 끊기 실패", error)
-                }
-                else {
-                    Log.i("test", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
-                }
-            }
+            Toast.makeText(this, getString(R.string.will_do_update), Toast.LENGTH_SHORT).show()
+
+//            // 연결 끊기
+//            UserApiClient.instance.unlink { error ->
+//                if (error != null) {
+//                    Log.e("test", "연결 끊기 실패", error)
+//                }
+//                else {
+//                    Log.i("test", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+//                }
+//            }
         }
 
     }

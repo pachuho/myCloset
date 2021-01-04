@@ -1,5 +1,6 @@
 package com.example.mycloset.viewpager
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val itemName = itemView.pager_item_name
     private val itemPrice = itemView.pager_item_price
 
+    @SuppressLint("SetTextI18n")
     fun bindWithView(pageItem: PageItem){
         Glide.with(itemView.context).load(pageItem.imageLink)
             .override(500, 500)

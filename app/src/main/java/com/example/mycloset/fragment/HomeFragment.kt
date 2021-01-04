@@ -14,6 +14,7 @@ import com.example.mycloset.retrofit.Dress
 import com.example.mycloset.retrofit.RetrofitService
 import com.example.mycloset.viewpager.ImageRecyclerAdapter
 import com.example.mycloset.viewpager.PageItem
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,14 +47,15 @@ class HomeFragment : Fragment(){
                     val getBrand = getData[i].brand
                     val getName = getData[i].name
                     val getPrice = getData[i].price
+                    val getImage = getData[i].image
                     val getLink = getData[i].link
 
                     when(getPart) {
-                        "outer" -> pageItemListOuter.add(PageItem(getBrand, getName, getPrice, getLink))
-                        "top" -> pageItemListTop.add(PageItem(getBrand, getName, getPrice, getLink))
-                        "bottom" -> pageItemListBottom.add(PageItem(getBrand, getName, getPrice, getLink))
-                        "shoes" -> pageItemListShoes.add(PageItem(getBrand, getName, getPrice, getLink))
-                        "accessories" -> pageItemListAccessories.add(PageItem(getBrand, getName, getPrice, getLink))
+                        "outer" -> pageItemListOuter.add(PageItem(getBrand, getName, getPrice, getImage))
+                        "top" -> pageItemListTop.add(PageItem(getBrand, getName, getPrice, getImage))
+                        "bottom" -> pageItemListBottom.add(PageItem(getBrand, getName, getPrice, getImage))
+                        "shoes" -> pageItemListShoes.add(PageItem(getBrand, getName, getPrice, getImage))
+                        "accessories" -> pageItemListAccessories.add(PageItem(getBrand, getName, getPrice, getImage))
                     }
                 }
 
@@ -63,7 +65,11 @@ class HomeFragment : Fragment(){
                 view.image_view_pager_outer.apply {
                     adapter = imageRecyclerAdapter
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    view.indicator_outer.setViewPager2(this)
                 }
+
+
+
 //                Log.i("resultLink", pageItemListOuter.toString())
 
                 // 상의

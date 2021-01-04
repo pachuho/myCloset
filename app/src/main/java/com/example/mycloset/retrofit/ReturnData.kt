@@ -28,5 +28,6 @@ data class Dress(
     val brand : String,
     val name : String,
     val price : Int,
+    val image : String,
     val link : String
 )
