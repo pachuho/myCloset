@@ -3,11 +3,9 @@ package com.example.mycloset.viewpager
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mycloset.R
-import com.example.mycloset.SignUpActivity
 import com.example.mycloset.WebViewActivity
 import kotlinx.android.synthetic.main.layout_image_pager_item.view.*
 

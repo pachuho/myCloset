@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".WebViewActivity">
     <WebView
-        android:id="@+id/webView_main"
+        android:id="@+id/webView_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    var lastBackPressedTime: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -70,5 +72,17 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.container, fragment)
         fragmentTransaction.commit()
         return true
+    }
+
+    // 뒤로가기
+    override fun onBackPressed() {
+        val currentTime = System.currentTimeMillis()
+        val differenceTime = currentTime - lastBackPressedTime
+        if (differenceTime in 0..2000) {
+            finish()
+        } else {
+            lastBackPressedTime = currentTime
+            Toast.makeText(this, getString(R.string.one_more_touch_end), Toast.LENGTH_SHORT).show()
+        }
     }
 }

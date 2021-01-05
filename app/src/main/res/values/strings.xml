@@ -12,6 +12,7 @@
     <string name="confirm_overlap_failure">중복확인 실패</string>
     <string name="will_do_update">업데이트 예정</string>
     <string name="one_more_touch_end">한번 더 누르시면 종료됩니다.</string>
+    <string name="one_more_touch_to_app">한번 더 누르시면 앱으로 전환됩니다.</string>
     <string name="get_id">아이디 받아오기</string>
     <string name="auth_google">firebaseAuthWithGoogle:</string>
     <string name="google_sign_failure">Google sign in failed</string>
