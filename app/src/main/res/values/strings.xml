@@ -17,6 +17,8 @@
     <string name="auth_google">firebaseAuthWithGoogle:</string>
     <string name="google_sign_failure">Google sign in failed</string>
     <string name="sale_string">세일 | 6,000가지 스타일이 최대 60% 할인</string>
+    <string name="yes">예</string>
+    <string name="no">아니요</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
