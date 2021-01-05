@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyCloset"
         android:usesCleartextTraffic="true">
-        <activity android:name=".WebViewActivity"></activity>
+        <activity android:name=".ErrorActivity"></activity>
+        <activity android:name=".WebViewActivity" />
         <activity
             android:name=".SignUpActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -26,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".IntroActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

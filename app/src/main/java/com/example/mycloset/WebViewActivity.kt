@@ -1,5 +1,6 @@
 package com.example.mycloset
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,13 @@ class WebViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_view)
 
-        webView_main.loadUrl("https://store.musinsa.com/app/goods/411209?loc=goods_rank")
+        if (intent.hasExtra("link")) {
+            intent.getStringExtra("link")?.let { webView_main.loadUrl(it) }
+        } else {
+            val intent = Intent(this, ErrorActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 

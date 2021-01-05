@@ -51,11 +51,11 @@ class HomeFragment : Fragment(){
                     val getLink = getData[i].link
 
                     when(getPart) {
-                        "outer" -> pageItemListOuter.add(PageItem(getBrand, getName, getPrice, getImage))
-                        "top" -> pageItemListTop.add(PageItem(getBrand, getName, getPrice, getImage))
-                        "bottom" -> pageItemListBottom.add(PageItem(getBrand, getName, getPrice, getImage))
-                        "shoes" -> pageItemListShoes.add(PageItem(getBrand, getName, getPrice, getImage))
-                        "accessories" -> pageItemListAccessories.add(PageItem(getBrand, getName, getPrice, getImage))
+                        "outer" -> pageItemListOuter.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
+                        "top" -> pageItemListTop.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
+                        "bottom" -> pageItemListBottom.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
+                        "shoes" -> pageItemListShoes.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
+                        "accessories" -> pageItemListAccessories.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
                     }
                 }
 
@@ -67,6 +67,7 @@ class HomeFragment : Fragment(){
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     view.indicator_outer.setViewPager2(this)
                 }
+
 
 
 
@@ -88,6 +89,7 @@ class HomeFragment : Fragment(){
                 Toast.makeText(context, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
             }
         })
+
 
         return view
     }
