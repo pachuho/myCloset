@@ -21,4 +21,7 @@
     <string name="no">아니요</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="brand_name">브랜드명</string>
+    <string name="product_name">상품명</string>
+    <string name="product_price">상품 가격</string>
 </resources>

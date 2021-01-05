@@ -16,26 +16,38 @@ class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val itemBrand = itemView.pager_item_brand
     private val itemName = itemView.pager_item_name
     private val itemPrice = itemView.pager_item_price
-
+    private var favoriteCheck : Boolean = false
 
     @SuppressLint("SetTextI18n")
     fun bindWithView(pageItem: PageItem){
         Glide.with(itemView.context).load(pageItem.image)
             .override(500, 500)
             .thumbnail(0.1f)
-            .error(R.drawable.mongsil_7)
+            .error(R.drawable.img_error)
             .into(itemImage)
 
         itemBrand.text = pageItem.imageBrand
         itemName.text = pageItem.imageName
         itemPrice.text = "₩" + pageItem.imagePrice.toString()
 
+        // 아이템 클릭 시
         itemView.setOnClickListener {
             val intent = Intent(itemView.context, WebViewActivity::class.java)
             intent.putExtra("link", pageItem.imageLink)
             itemView.context.startActivity(intent)
 
 //            Toast.makeText(itemView.context, pageItem.imageLink, Toast.LENGTH_SHORT).show()
+        }
+
+        // 별 클릭 시
+        itemView.pager_item_star.setOnClickListener {
+            if (favoriteCheck) {
+                itemView.pager_item_star.setImageResource(R.drawable.img_star_outline)
+                favoriteCheck = false
+            } else {
+                itemView.pager_item_star.setImageResource(R.drawable.img_star_fill)
+                favoriteCheck = true
+            }
         }
     }
 
