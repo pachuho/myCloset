@@ -9,3 +9,13 @@ object Common {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 }
+
+object Profile {
+    lateinit var UserName: String
+    lateinit var UserPwd: String
+    lateinit var UserBirthday: String
+    lateinit var UserGender: String
+    var UserAlarm: Boolean = false
+    var UserGoogle: Boolean = false
+    var UserKakao: Boolean = false
+}
