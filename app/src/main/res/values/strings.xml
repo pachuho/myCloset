@@ -24,4 +24,5 @@
     <string name="brand_name">브랜드명</string>
     <string name="product_name">상품명</string>
     <string name="product_price">상품 가격</string>
+    <string name="my_info_3"><u>이용 방법을 확인해보세요.</u></string>
 </resources>

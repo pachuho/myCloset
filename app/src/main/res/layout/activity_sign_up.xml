@@ -211,7 +211,7 @@
                 android:layout_marginBottom="30dp"
                 app:backgroundTint="@null"
                 android:background="@drawable/btn_custom"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down"
                 android:paddingRight="10dp"
                 android:gravity="center_vertical"
                 android:text="생년월일 입력"

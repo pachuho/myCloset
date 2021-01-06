@@ -15,7 +15,8 @@
     <color name="greenBlack">#1E6020</color>
     <color name="whiteBack">#FCFCFC</color>
     <color name="grey">#919191</color>
-    <color name="grey_1">#EAEAEA</color>
+    <color name="grey_0">#C8C8C8</color>
+    <color name="grey_1">#F0F0F0</color>
     <color name="grey_2">#E1E1E1</color>
     <color name="red">#FF2121</color>
     <color name="red_light">#EC7979</color>
