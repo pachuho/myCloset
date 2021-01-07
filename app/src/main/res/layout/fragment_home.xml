@@ -51,12 +51,12 @@
 
                 <TextView
                     android:text="6,000가지 스타일 최대 60% 할인"
-                    style="@style/CustomTextViewStyle"/>
+                    style="@style/CustomTextViewStyle_basic"/>
 
                 <Button
                     android:id="@+id/tv_shopping_main"
                     android:text="지금 쇼핑하기"
-                    style="@style/CustomButtonViewStyle_basic"/>
+                    style="@style/CustomButtonViewStyle"/>
 
                 <TextView
                     android:text="흔하지 않아 더 의미 있는 선물"
@@ -64,7 +64,7 @@
 
                 <TextView
                     android:text="새로운 스타일을 만나보세요.\n오직 고객님만을 위해 준비했어요."
-                    style="@style/CustomTextViewStyle"/>
+                    style="@style/CustomTextViewStyle_basic"/>
             </LinearLayout>
 
 
@@ -106,7 +106,7 @@
                 <Button
                     android:id="@+id/tv_shopping_outer"
                     android:text="지금 쇼핑하기"
-                    style="@style/CustomButtonViewStyle_basic"/>
+                    style="@style/CustomButtonViewStyle"/>
 
             </LinearLayout>
 

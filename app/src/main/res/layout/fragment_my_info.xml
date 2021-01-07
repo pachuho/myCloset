@@ -84,6 +84,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="30dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,50 +92,215 @@
                 android:layout_marginHorizontal="25dp">
 
                 <TextView
-                    android:text="내 계정"
+                    android:text="@string/my_account"
                     style="@style/Info_TextViewStyle_Bold" />
 
                 <TextView
-                    android:text="주문 \u0026 반품"
-                    style="@style/Info_TextViewStyle_basic"
-                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right"
-                    android:background="@drawable/ripple_white"
-                    android:clickable="true"/>
+                    android:text="@string/order_return"
+                    style="@style/Info_TextViewStyle_basic" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/grey_1"/>
+                <View style="@style/DivisionLine"/>
 
                 <TextView
-                    android:text="로그인 정보 \u0026 비밀번호"
-                    style="@style/Info_TextViewStyle_basic"
-                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right"
-                    android:background="@drawable/ripple_white"
-                    android:clickable="true"/>
+                    android:text="@string/login_info_pwd"
+                    style="@style/Info_TextViewStyle_basic" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/grey_1"/>
+                <View style="@style/DivisionLine"/>
 
                 <TextView
-                    android:text="주소록"
-                    style="@style/Info_TextViewStyle_basic"
-                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right"
-                    android:background="@drawable/ripple_white"
-                    android:clickable="true"/>
+                    android:text="@string/address"
+                    style="@style/Info_TextViewStyle_basic" />
+
+                <View style="@style/DivisionLine"/>
+
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/grey_1"/>
+                    android:layout_height="20dp"/>
 
 
+                <TextView
+                    android:text="@string/my_local"
+                    style="@style/Info_TextViewStyle_Bold" />
+
+                <TextView
+                    android:text="@string/KRW"
+                    style="@style/Info_TextViewStyle_basic"
+                    android:drawableStart="@drawable/drawable_left_image_customise"
+                    android:drawablePadding="10dp"/>
+
+                <View style="@style/DivisionLine"/>
+
+                <TextView
+                    android:text="@string/info_explanation_1"
+                    style="@style/Info_TextViewStyle_small"/>
 
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
 
 
+                <TextView
+                    android:text="@string/shopping_gender"
+                    style="@style/Info_TextViewStyle_Bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+
+
+                <RadioButton
+                    android:id="@+id/info_gender_men"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/info_men"
+                    android:checked="true"/>
+
+                <View style="@style/DivisionLine"/>
+
+                <RadioButton
+                    android:id="@+id/info_gender_women"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/info_women"
+                    android:clickable="false"/>
+
+                <View style="@style/DivisionLine"/>
+
+                <TextView
+                    android:text="@string/info_explanation_2"
+                    style="@style/Info_TextViewStyle_small"/>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
+
+
+                <TextView
+                    android:text="@string/info_setting"
+                    style="@style/Info_TextViewStyle_Bold" />
+
+                <TextView
+                    android:text="@string/info_alarm_email"
+                    style="@style/Info_TextViewStyle_basic"/>
+
+                <View style="@style/DivisionLine"/>
+
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/info_fingerPrint"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
+
+
+                <TextView
+                    android:text="@string/info_support"
+                    style="@style/Info_TextViewStyle_Bold" />
+
+                <TextView
+                    android:text="@string/info_introduce"
+                    style="@style/Info_TextViewStyle_basic"/>
+
+                <View style="@style/DivisionLine"/>
+
+                <TextView
+                    android:text="@string/info_terms"
+                    style="@style/Info_TextViewStyle_basic"/>
+
+                <View style="@style/DivisionLine"/>
+
+                <TextView
+                    android:text="@string/info_private"
+                    style="@style/Info_TextViewStyle_basic"/>
+
+                <View style="@style/DivisionLine"/>
+
+                <TextView
+                    android:text="@string/info_question_guide"
+                    style="@style/Info_TextViewStyle_basic"/>
+
+                <View style="@style/DivisionLine"/>
+
+                <TextView
+                    android:text="@string/info_partner"
+                    style="@style/Info_TextViewStyle_basic"/>
+
+                <View style="@style/DivisionLine"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/info_service_center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:paddingVertical="20dp"/>
+
+                <View style="@style/DivisionLine" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:drawableTop="@drawable/ic_baseline_call"
+                        android:drawablePadding="8dp"
+                        android:text="전화번호"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:paddingVertical="15dp"
+                        android:background="@drawable/ripple_white"
+                        android:clickable="true"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:drawableTop="@drawable/ic_outline_email"
+                        android:drawablePadding="8dp"
+                        android:text="이메일"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:paddingVertical="15dp"
+                        android:background="@drawable/ripple_white"
+                        android:clickable="true"/>
+
+                </LinearLayout>
+
+                <View style="@style/DivisionLine" />
+
+                <TextView
+                    android:text="@string/info_explaination_3"
+                    android:gravity="center"
+                    style="@style/Info_TextViewStyle_small"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/info_logout"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:paddingVertical="10dp"/>
 
             </LinearLayout>
 

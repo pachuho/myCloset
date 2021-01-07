@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/pager_item_brand"
-        style="@style/CustomTextViewStyle"
+        style="@style/CustomTextViewStyle_basic"
         android:text="@string/brand_name"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/pager_item_name"
-        style="@style/CustomTextViewStyle"
+        style="@style/CustomTextViewStyle_basic"
         android:text="@string/product_name"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/pager_item_price"
@@ -38,7 +38,7 @@
 
     <TextView
         android:id="@+id/pager_item_price"
-        style="@style/CustomTextViewStyle"
+        style="@style/CustomTextViewStyle_basic"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/product_price"
