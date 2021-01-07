@@ -27,12 +27,12 @@
 
     <!-- inactive tab icon style -->
     <style name="TextAppearance.BottomNavigationView.Inactive">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <!-- active tab icon style -->
     <style name="TextAppearance.BottomNavigationView.Active">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="CustomTextViewStyle_Bold"  parent="@android:style/Widget.TextView">
