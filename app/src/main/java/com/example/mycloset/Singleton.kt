@@ -21,3 +21,4 @@ object Profile {
     var UserKakao: Boolean = false
     var favoriteImage = ArrayList<PageItem>()
 }
+

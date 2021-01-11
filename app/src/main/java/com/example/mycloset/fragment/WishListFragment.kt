@@ -26,7 +26,7 @@ class WishListFragment : Fragment() {
         view.wishList_image.apply {
             adapter = wishImageRecyclerAdapter
             layoutManager = GridLayoutManager(view.context, 2)
-
+//            addItemDecoration(DividerItemDecoration(view.context, LinearLayoutManager.VERTICAL))
         }
 
 

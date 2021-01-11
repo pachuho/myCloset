@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item!!.itemId){
             R.id.menu_shopping->{
-                Toast.makeText(this, "업데이트 예정", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "장바구니", Toast.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)

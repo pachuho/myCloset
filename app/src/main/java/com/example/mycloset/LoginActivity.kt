@@ -80,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         // 로그인 실패(회원정보 없으면)
                         Toast.makeText(this@LoginActivity, getString(R.string.confirm_your_info), Toast.LENGTH_SHORT).show()
+                        loadingDialog.dismiss()
                     }
                 }
 

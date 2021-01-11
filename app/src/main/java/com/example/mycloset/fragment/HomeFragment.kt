@@ -1,5 +1,7 @@
 package com.example.mycloset.fragment
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,8 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.example.mycloset.R
 import com.example.mycloset.Common
+import com.example.mycloset.R
+import com.example.mycloset.WebViewActivity
 import com.example.mycloset.retrofit.Dress
 import com.example.mycloset.retrofit.RetrofitService
 import com.example.mycloset.viewpager.HomeImageRecyclerAdapter
@@ -35,8 +38,7 @@ class HomeFragment : Fragment(){
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         val getLinkService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
@@ -45,7 +47,7 @@ class HomeFragment : Fragment(){
             override fun onResponse(call: Call<List<Dress>>, response: Response<List<Dress>>) {
                 val getData = response.body()
 
-                for (i: Int in 0 until getData?.size!!){
+                for (i: Int in 0 until getData?.size!!) {
                     val getPart = getData[i].part
                     val getBrand = getData[i].brand
                     val getName = getData[i].name
@@ -53,7 +55,7 @@ class HomeFragment : Fragment(){
                     val getImage = getData[i].image
                     val getLink = getData[i].link
 
-                    when(getPart) {
+                    when (getPart) {
                         "outer" -> pageItemListOuter.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
                         "top" -> pageItemListTop.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
                         "bottom" -> pageItemListBottom.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
@@ -70,8 +72,6 @@ class HomeFragment : Fragment(){
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     view.indicator_outer.setViewPager2(this)
                 }
-
-
 
 
 //                Log.i("resultLink", pageItemListOuter.toString())
@@ -93,8 +93,20 @@ class HomeFragment : Fragment(){
             }
         })
 
+        view.home_tv_sale.setOnClickListener(commonLink)
+        view.home_btn_sale.setOnClickListener(commonLink)
+        view.tv_shopping_main.setOnClickListener(commonLink)
+
 
         return view
     }
+
+    private val commonLink : View.OnClickListener = View.OnClickListener {
+        val intent = Intent(view?.context, WebViewActivity::class.java)
+        intent.putExtra("link", "https://store.musinsa.com/app/?gclid=EAIaIQobChMI96ORvvWI6wIVDXZgCh1rDApGEAAYASAAEgL7DfD_BwE")
+        startActivity(intent)
+    }
+
+
 
 }
