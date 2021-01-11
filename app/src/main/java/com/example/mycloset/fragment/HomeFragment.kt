@@ -9,12 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mycloset.R
-import com.example.mycloset.retrofit.Common
+import com.example.mycloset.Common
 import com.example.mycloset.retrofit.Dress
 import com.example.mycloset.retrofit.RetrofitService
-import com.example.mycloset.viewpager.ImageRecyclerAdapter
+import com.example.mycloset.viewpager.HomeImageRecyclerAdapter
 import com.example.mycloset.viewpager.PageItem
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,8 +28,12 @@ class HomeFragment : Fragment(){
     private var pageItemListShoes = ArrayList<PageItem>()
     private var pageItemListAccessories = ArrayList<PageItem>()
 
-    private lateinit var imageRecyclerAdapter: ImageRecyclerAdapter
+    private lateinit var homeImageRecyclerAdapter: HomeImageRecyclerAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,9 +64,9 @@ class HomeFragment : Fragment(){
 
                 // 리사이클러뷰 부착
                 // 아우터
-                imageRecyclerAdapter = ImageRecyclerAdapter(pageItemListOuter)
+                homeImageRecyclerAdapter = HomeImageRecyclerAdapter(pageItemListOuter)
                 view.image_view_pager_outer.apply {
-                    adapter = imageRecyclerAdapter
+                    adapter = homeImageRecyclerAdapter
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     view.indicator_outer.setViewPager2(this)
                 }

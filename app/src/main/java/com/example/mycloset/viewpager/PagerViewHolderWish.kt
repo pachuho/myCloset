@@ -9,21 +9,20 @@ import com.bumptech.glide.Glide
 import com.example.mycloset.Profile
 import com.example.mycloset.R
 import com.example.mycloset.WebViewActivity
-import kotlinx.android.synthetic.main.layout_home_image_item.view.*
+import kotlinx.android.synthetic.main.layout_wish_image_item.view.*
 
 
-class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class PagerViewHolderWish(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val itemImage = itemView.pager_item_image
-    private val itemBrand = itemView.pager_item_brand
-    private val itemName = itemView.pager_item_name
-    private val itemPrice = itemView.pager_item_price
-    private var favoriteCheck : Boolean = false
+    private val itemImage = itemView.wish_item_image
+    private val itemBrand = itemView.wish_item_brand
+    private val itemName = itemView.wish_item_name
+    private val itemPrice = itemView.wish_item_price
 
     @SuppressLint("SetTextI18n")
     fun bindWithView(pageItem: PageItem){
         Glide.with(itemView.context).load(pageItem.image)
-            .override(500, 500)
+            .override(400, 400)
             .thumbnail(0.1f)
             .error(R.drawable.img_error)
             .into(itemImage)
@@ -41,17 +40,9 @@ class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 //            Toast.makeText(itemView.context, pageItem.imageLink, Toast.LENGTH_SHORT).show()
         }
 
-        // 별 클릭 시
-        itemView.pager_item_star.setOnClickListener {
-            if (favoriteCheck) {
-                itemView.pager_item_star.setImageResource(R.drawable.img_star_outline)
-                favoriteCheck = false
-                Profile.favoriteImage.remove(pageItem)
-            } else {
-                itemView.pager_item_star.setImageResource(R.drawable.img_star_fill)
-                favoriteCheck = true
-                Profile.favoriteImage.add(pageItem)
-            }
+        // 닫기 클릭 시
+        itemView.wish_item_close.setOnClickListener {
+            Toast.makeText(itemView.context, "닫기", Toast.LENGTH_SHORT).show()
         }
     }
 }

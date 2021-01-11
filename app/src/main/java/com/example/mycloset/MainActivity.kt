@@ -1,5 +1,6 @@
 package com.example.mycloset
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 네비게이션 클릭
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.menu_home -> {

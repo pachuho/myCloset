@@ -1,5 +1,6 @@
-package com.example.mycloset.retrofit
+package com.example.mycloset
 
+import com.example.mycloset.viewpager.PageItem
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -18,4 +19,5 @@ object Profile {
     var UserAlarm: Boolean = false
     var UserGoogle: Boolean = false
     var UserKakao: Boolean = false
+    var favoriteImage = ArrayList<PageItem>()
 }

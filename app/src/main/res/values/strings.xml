@@ -48,4 +48,7 @@
     <string name="info_fingerPrint">지문</string>
     <string name="info_men">MEN</string>
     <string name="info_women">WOMEN</string>
+    <string name="toolbar_title_home">PARPETCH</string>
+    <string name="toolbar_title_search">검색</string>
+    <string name="toolbar_title_wish">위시리스트</string>
 </resources>
