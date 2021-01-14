@@ -3,6 +3,8 @@ package com.example.mycloset.viewpager
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,13 +12,13 @@ import com.example.mycloset.Profile
 import com.example.mycloset.R
 import com.example.mycloset.WebViewActivity
 
-
 class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val itemImage = itemView.pager_item_image
-    private val itemBrand = itemView.pager_item_brand
-    private val itemName = itemView.pager_item_name
-    private val itemPrice = itemView.pager_item_price
+    private val itemImage = itemView.findViewById<ImageView>(R.id.pager_item_image)
+    private val itemBrand = itemView.findViewById<TextView>(R.id.pager_item_brand)
+    private val itemName = itemView.findViewById<TextView>(R.id.pager_item_name)
+    private val itemPrice = itemView.findViewById<TextView>(R.id.pager_item_price)
+    private val itemStar = itemView.findViewById<ImageView>(R.id.pager_item_star)
     private var favoriteCheck : Boolean = false
 
     @SuppressLint("SetTextI18n")
@@ -41,13 +43,13 @@ class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         // 별 클릭 시
-        itemView.pager_item_star.setOnClickListener {
+        itemStar.setOnClickListener {
             if (favoriteCheck) {
-                itemView.pager_item_star.setImageResource(R.drawable.img_star_outline)
+                itemStar.setImageResource(R.drawable.img_star_outline)
                 favoriteCheck = false
                 Profile.favoriteImage.remove(pageItem)
             } else {
-                itemView.pager_item_star.setImageResource(R.drawable.img_star_fill)
+                itemStar.setImageResource(R.drawable.img_star_fill)
                 favoriteCheck = true
                 Profile.favoriteImage.add(pageItem)
             }
