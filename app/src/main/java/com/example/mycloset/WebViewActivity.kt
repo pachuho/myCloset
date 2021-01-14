@@ -1,8 +1,6 @@
 package com.example.mycloset
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.http.SslError
@@ -13,17 +11,24 @@ import android.view.ViewGroup
 import android.webkit.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_web_view.*
+import com.example.mycloset.databinding.ActivityWebViewBinding
 
 
 class WebViewActivity : AppCompatActivity() {
+    private var mBinding: ActivityWebViewBinding? = null
+    private val binding get() = mBinding!!
+
     var lastBackPressedTime: Long = 0
     lateinit var loadingDialog: LoadingDialog
+
+    val webView_product = binding.webViewProduct
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_web_view)
+        mBinding = ActivityWebViewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         loadingDialog = LoadingDialog(this)
 
         webView_product.apply {
@@ -134,5 +139,10 @@ class WebViewActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.one_more_touch_to_app), Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

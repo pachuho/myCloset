@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.example.mycloset.Profile
 import com.example.mycloset.R
 import com.example.mycloset.WebViewActivity
-import kotlinx.android.synthetic.main.layout_home_image_item.view.*
 
 
 class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -1,6 +1,5 @@
 package com.example.mycloset.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -13,17 +12,20 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.mycloset.Common
 import com.example.mycloset.R
 import com.example.mycloset.WebViewActivity
+import com.example.mycloset.databinding.FragmentHomeBinding
 import com.example.mycloset.retrofit.Dress
 import com.example.mycloset.retrofit.RetrofitService
 import com.example.mycloset.viewpager.HomeImageRecyclerAdapter
 import com.example.mycloset.viewpager.PageItem
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
 class HomeFragment : Fragment(){
+
+    private var mBinding: FragmentHomeBinding? = null
+    private val binding get() = mBinding!!
 
     private var pageItemListOuter = ArrayList<PageItem>()
     private var pageItemListTop = ArrayList<PageItem>()
@@ -33,13 +35,10 @@ class HomeFragment : Fragment(){
 
     private lateinit var homeImageRecyclerAdapter: HomeImageRecyclerAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+
+//        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         val getLinkService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
         getLinkService.getImageLink().enqueue(object : Callback<List<Dress>> {
@@ -67,10 +66,10 @@ class HomeFragment : Fragment(){
                 // 리사이클러뷰 부착
                 // 아우터
                 homeImageRecyclerAdapter = HomeImageRecyclerAdapter(pageItemListOuter)
-                view.image_view_pager_outer.apply {
+                binding.imageViewPagerOuter.apply {
                     adapter = homeImageRecyclerAdapter
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
-                    view.indicator_outer.setViewPager2(this)
+                    binding.indicatorOuter.setViewPager2(this)
                 }
 
 
@@ -93,12 +92,11 @@ class HomeFragment : Fragment(){
             }
         })
 
-        view.home_tv_sale.setOnClickListener(commonLink)
-        view.home_btn_sale.setOnClickListener(commonLink)
-        view.tv_shopping_main.setOnClickListener(commonLink)
+        binding.homeTvSale.setOnClickListener(commonLink)
+        binding.homeBtnSale.setOnClickListener(commonLink)
+        binding.tvShoppingMain.setOnClickListener(commonLink)
 
-
-        return view
+        return binding.root
     }
 
     private val commonLink : View.OnClickListener = View.OnClickListener {
@@ -107,6 +105,8 @@ class HomeFragment : Fragment(){
         startActivity(intent)
     }
 
-
-
+    override fun onDestroyView() {
+        mBinding = null
+        super.onDestroyView()
+    }
 }

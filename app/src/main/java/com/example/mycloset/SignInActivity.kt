@@ -17,6 +17,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mycloset.databinding.ActivitySignInBinding
 import com.example.mycloset.retrofit.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -29,13 +30,15 @@ import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
-import kotlinx.android.synthetic.main.activity_sign_in.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class LoginActivity : AppCompatActivity() {
+class SignInActivity : AppCompatActivity() {
+    private var mBinding: ActivitySignInBinding? = null
+    private val binding get() = mBinding!!
+
     var lastBackPressedTime: Long = 0
 
     private lateinit var loadingDialog: Dialog
@@ -46,25 +49,27 @@ class LoginActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        mBinding = ActivitySignInBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         loadingDialog = LoadingDialog(this)
 
         // textWatcher 지정
-        login_et_email.addTextChangedListener(TextWatcher)
-        login_et_pwd.addTextChangedListener(TextWatcher)
+        binding.loginEtEmail.addTextChangedListener(TextWatcher)
+        binding.loginEtPwd.addTextChangedListener(TextWatcher)
 
         // editText에서 완료 클릭 시
-        login_et_pwd.setOnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) btn_login.performClick()
+        binding.loginEtPwd.setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) binding.btnLogin.performClick()
             true
         }
 
         // 로그인 버튼
-        btn_login.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             loadingDialog.show()
             val signInService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
-            val inputEmail = login_et_email.text.toString()
-            val inputPwd = login_et_pwd.text.toString()
+            val inputEmail = binding.loginEtEmail.text.toString()
+            val inputPwd = binding.loginEtPwd.text.toString()
 
             signInService.requestSignIn(inputEmail, inputPwd).enqueue(object : Callback<SignIn> {
                 // 통신 성공
@@ -72,14 +77,14 @@ class LoginActivity : AppCompatActivity() {
                     val signIn = response.body()
                     // 로그인 성공(회원정보 있으면)
                     if (signIn?.success == true) {
-                        Toast.makeText(this@LoginActivity, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        Toast.makeText(this@SignInActivity, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@SignInActivity, MainActivity::class.java)
                         intent.putExtra("email", inputEmail)
                         startActivity(intent)
                         finish()
                     } else {
                         // 로그인 실패(회원정보 없으면)
-                        Toast.makeText(this@LoginActivity, getString(R.string.confirm_your_info), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignInActivity, getString(R.string.confirm_your_info), Toast.LENGTH_SHORT).show()
                         loadingDialog.dismiss()
                     }
                 }
@@ -87,14 +92,14 @@ class LoginActivity : AppCompatActivity() {
                 // 통신 실패
                 override fun onFailure(call: Call<SignIn>, t: Throwable) {
                     Log.e("signIn", t.message.toString())
-                    Toast.makeText(this@LoginActivity, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignInActivity, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
                     loadingDialog.dismiss()
                 }
             })
         }
 
         // 카카오 계정으로 시작하기
-        btn_signUpKakao.setOnClickListener {
+        binding.btnSignUpKakao.setOnClickListener {
             loadingDialog.show()
             val TAG = "카카오"
 
@@ -124,12 +129,12 @@ class LoginActivity : AppCompatActivity() {
                                 Callback<Check> {
                                 override fun onResponse(call: Call<Check>, response: Response<Check>) {
                                     if (response.body()?.success == true) { // 회원정보가 있다면
-                                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                        val intent = Intent(this@SignInActivity, MainActivity::class.java)
                                         intent.putExtra("email", response.body()?.email)
                                         startActivity(intent)
                                         finish()
                                     } else { // 회원 정보가 없다면
-                                        val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+                                        val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
                                         intent.putExtra("kakaoId", tokenInfo.id.toString())
                                         startActivity(intent)
                                     }
@@ -137,7 +142,7 @@ class LoginActivity : AppCompatActivity() {
 
                                 override fun onFailure(call: Call<Check>, t: Throwable) {
                                     Log.e("checkEmail", t.message.toString())
-                                    Toast.makeText(this@LoginActivity, getString(R.string.confirm_overlap_failure), Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@SignInActivity, getString(R.string.confirm_overlap_failure), Toast.LENGTH_SHORT).show()
                                     loadingDialog.dismiss()
                                 }
 
@@ -155,7 +160,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 구글 계정으로 시작하기
-        btn_signUpGoogle.setOnClickListener {
+        binding.btnSignUpGoogle.setOnClickListener {
             loadingDialog.show()
 
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -173,14 +178,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 회원가입-이메일 버튼
-        btn_signUpEmail.setOnClickListener {
+        binding.btnSignUpEmail.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
         }
 
         // 회원정보 분실
-        tv_forgot.setOnClickListener {
+        binding.tvForgot.setOnClickListener {
             Toast.makeText(this, getString(R.string.will_do_update), Toast.LENGTH_SHORT).show()
 
 //            // 연결 끊기
@@ -201,7 +206,7 @@ class LoginActivity : AppCompatActivity() {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable) {
-            btn_login.isEnabled = !login_et_email.text.isNullOrEmpty() && !login_et_pwd.text.isNullOrEmpty()
+            binding.btnLogin.isEnabled = !binding.loginEtEmail.text.isNullOrEmpty() && !binding.loginEtPwd.text.isNullOrEmpty()
         }
     }
 
@@ -277,13 +282,13 @@ class LoginActivity : AppCompatActivity() {
                                 Callback<Check> {
                             override fun onResponse(call: Call<Check>, response: Response<Check>) {
                                 if (response.body()?.success == true) { // 회원정보가 있다면
-                                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                    val intent = Intent(this@SignInActivity, MainActivity::class.java)
                                     intent.putExtra("email", response.body()?.email)
                                     startActivity(intent)
                                     finish()
 
                                 } else { // 회원 정보가 없다면
-                                    val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+                                    val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
                                     intent.putExtra("googleId", googleId)
                                     startActivity(intent)
                                 }
@@ -291,7 +296,7 @@ class LoginActivity : AppCompatActivity() {
 
                             override fun onFailure(call: Call<Check>, t: Throwable) {
                                 Log.e("checkEmail", t.message.toString())
-                                Toast.makeText(this@LoginActivity, getString(R.string.confirm_overlap_failure), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@SignInActivity, getString(R.string.confirm_overlap_failure), Toast.LENGTH_SHORT).show()
                                 loadingDialog.dismiss()
                             }
 
@@ -299,10 +304,15 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        Toast.makeText(this@LoginActivity, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignInActivity, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
                         loadingDialog.dismiss()
                     }
                 }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }
 

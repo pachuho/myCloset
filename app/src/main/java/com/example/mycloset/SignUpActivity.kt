@@ -1,5 +1,6 @@
 package com.example.mycloset
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -17,9 +18,8 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.mycloset.databinding.ActivitySignUpBinding
 import com.example.mycloset.retrofit.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
-import kotlinx.android.synthetic.main.dialog_datepicker.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +29,9 @@ import java.util.*
 
 
 class SignUpActivity : AppCompatActivity() {
+    private var mBinding: ActivitySignUpBinding? = null
+    private val binding get() = mBinding!!
+
     // 정규식
     val symbolNickname: String = "[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝| ]*"
 
@@ -49,16 +52,49 @@ class SignUpActivity : AppCompatActivity() {
     var kakaoId = "Null"
     var googleId = "Null"
 
+    // 바인딩 받아오기
+    lateinit var rg_gender : RadioGroup
+    lateinit var cb_all : CheckBox
+    lateinit var cb_privacy : CheckBox
+    lateinit var cb_pushAlarm : CheckBox
+    lateinit var cb_use : CheckBox
+
+    lateinit var btn_birth : Button
+    lateinit var btn_signUp : Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        mBinding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // 툴바 뒤로가기
-        setSupportActionBar(signUp_toolbar)
+        setSupportActionBar(binding.signUpToolbar)
         val ab = supportActionBar!!
         ab.setDisplayShowTitleEnabled(false)
         ab.setDisplayHomeAsUpEnabled(true)
 
+        // 바인딩 받아오기
+        val et_email = binding.etEmail
+        val et_pwd = binding.etPwd
+        val et_pwdConfirm = binding.etPwdConfirm
+        val et_nickName = binding.etNickName
+
+        val ll_email = binding.llEmail
+        val ll_nickName = binding.llNickName
+        val ll_nickNameLength = binding.llNickNameLength
+        val ll_pwd = binding.llPwd
+        val ll_pwdConfirm = binding.llPwdConfirm
+        val ll_pwdConfirmLength = binding.llPwdConfirmLength
+        val ll_pwdLength = binding.llPwdLength
+
+        rg_gender = binding.rgGender
+        cb_all = binding.cbAll
+        cb_privacy = binding.cbPrivacy
+        cb_pushAlarm = binding.cbPushAlarm
+        cb_use = binding.cbUse
+
+        btn_birth = binding.btnBirth
+        btn_signUp = binding.btnSignUp
 
         // 아이디 값이 있다면 받아오기
         kakaoCheck = intent.hasExtra("kakaoId")
@@ -69,11 +105,11 @@ class SignUpActivity : AppCompatActivity() {
             else if (googleCheck) googleId = intent.getStringExtra("googleId").toString()
 
             // 비밀번호 레이아웃 제거
-            ll_TotalPwd.removeAllViews()
+            binding.llTotalPwd.removeAllViews()
             // textWatcher 지정
-            et_email.addTextChangedListener(TextWatcher)
-            et_nickName.addTextChangedListener(TextWatcher)
-            btn_birth.addTextChangedListener(TextWatcher)
+            binding.etEmail.addTextChangedListener(TextWatcher)
+            binding.etNickName.addTextChangedListener(TextWatcher)
+            binding.btnBirth.addTextChangedListener(TextWatcher)
         } else {
             // textWatcher 지정
             et_email.addTextChangedListener(TextWatcher)
@@ -562,6 +598,11 @@ class SignUpActivity : AppCompatActivity() {
 
         val date = Date()
         return dateFormat.format(date)
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }
 

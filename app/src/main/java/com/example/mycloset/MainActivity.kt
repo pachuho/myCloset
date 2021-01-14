@@ -1,26 +1,30 @@
 package com.example.mycloset
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.mycloset.databinding.ActivityMainBinding
 import com.example.mycloset.fragment.HomeFragment
 import com.example.mycloset.fragment.MyInfoFragment
 import com.example.mycloset.fragment.SearchFragment
 import com.example.mycloset.fragment.WishListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private var mBinding: ActivityMainBinding? = null
+    private val binding get() = mBinding!!
+
     var lastBackPressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbar)
         val ab = supportActionBar!!
         ab.setDisplayShowCustomEnabled(true)
         ab.setDisplayShowTitleEnabled(false) // 기본 제목 삭제
@@ -29,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 //        val email : String = intent.getStringExtra("email").toString()
 
         replaceFragment(HomeFragment())
-        bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
     }
 
@@ -86,5 +90,10 @@ class MainActivity : AppCompatActivity() {
             lastBackPressedTime = currentTime
             Toast.makeText(this, getString(R.string.one_more_touch_end), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

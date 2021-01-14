@@ -6,18 +6,20 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.mycloset.Profile
 import com.example.mycloset.R
 import com.example.mycloset.WebViewActivity
-import kotlinx.android.synthetic.main.layout_wish_image_item.view.*
+import com.example.mycloset.databinding.LayoutWishImageItemBinding
 
 
 class PagerViewHolderWish(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val itemImage = itemView.wish_item_image
-    private val itemBrand = itemView.wish_item_brand
-    private val itemName = itemView.wish_item_name
-    private val itemPrice = itemView.wish_item_price
+    private var mBinding: LayoutWishImageItemBinding? = null
+    private val binding get() = mBinding!!
+
+    private val itemImage = binding.wishItemImage
+    private val itemBrand = binding.wishItemBrand
+    private val itemName = binding.wishItemName
+    private val itemPrice = binding.wishItemPrice
 
     @SuppressLint("SetTextI18n")
     fun bindWithView(pageItem: PageItem){
@@ -41,8 +43,10 @@ class PagerViewHolderWish(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         // 닫기 클릭 시
-        itemView.wish_item_close.setOnClickListener {
+        binding.wishItemClose.setOnClickListener {
             Toast.makeText(itemView.context, "닫기", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 }
