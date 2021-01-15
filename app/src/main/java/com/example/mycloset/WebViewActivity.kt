@@ -21,7 +21,7 @@ class WebViewActivity : AppCompatActivity() {
     var lastBackPressedTime: Long = 0
     lateinit var loadingDialog: LoadingDialog
 
-    val webView_product = binding.webViewProduct
+    lateinit var webViewProduct : WebView
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,8 @@ class WebViewActivity : AppCompatActivity() {
 
         loadingDialog = LoadingDialog(this)
 
-        webView_product.apply {
+        webViewProduct = binding.webViewProduct
+        webViewProduct.apply {
             webViewClient = WebViewClientClass() // 클릭 시 새창 안뜨도록
             webChromeClient = object : WebChromeClient() {
                 override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
@@ -72,7 +73,7 @@ class WebViewActivity : AppCompatActivity() {
             settings.displayZoomControls = true
 
             if (intent.hasExtra("link")) {
-                intent.getStringExtra("link")?.let { webView_product.loadUrl(it) }
+                intent.getStringExtra("link")?.let { webViewProduct.loadUrl(it) }
             } else {
                 val intent = Intent(this@WebViewActivity, ErrorActivity::class.java)
                 startActivity(intent)
@@ -92,13 +93,13 @@ class WebViewActivity : AppCompatActivity() {
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
             loadingDialog.show()
-            webView_product.visibility = View.INVISIBLE
+            webViewProduct.visibility = View.INVISIBLE
         }
 
         override fun onPageCommitVisible(view: WebView?, url: String?) {
             super.onPageCommitVisible(view, url)
             loadingDialog.dismiss()
-            webView_product.visibility = View.VISIBLE
+            webViewProduct.visibility = View.VISIBLE
         }
 
         override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
@@ -126,8 +127,8 @@ class WebViewActivity : AppCompatActivity() {
 
     // 뒤로가기
     override fun onBackPressed() {
-        if (webView_product.canGoBack()) {
-            webView_product.goBack()
+        if (webViewProduct.canGoBack()) {
+            webViewProduct.goBack()
         } else {
             val currentTime = System.currentTimeMillis()
             val differenceTime = currentTime - lastBackPressedTime

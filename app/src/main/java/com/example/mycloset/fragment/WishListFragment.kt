@@ -8,21 +8,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mycloset.Profile
 import com.example.mycloset.databinding.FragmentWishListBinding
-import com.example.mycloset.viewpager.WishImageRecyclerAdapter
+import com.example.mycloset.viewpager.ImageRecyclerAdapterWish
 
 
 class WishListFragment : Fragment() {
     private var mBinding: FragmentWishListBinding? = null
     private val binding get() = mBinding!!
-    private lateinit var wishImageRecyclerAdapter: WishImageRecyclerAdapter
+    private lateinit var imageRecyclerAdapterWish: ImageRecyclerAdapterWish
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentWishListBinding.inflate(inflater, container, false)
 
-        wishImageRecyclerAdapter = WishImageRecyclerAdapter(Profile.favoriteImage)
+        imageRecyclerAdapterWish = ImageRecyclerAdapterWish(Profile.favoriteImage)
 
 
         binding.wishListImage.apply {
-            adapter = wishImageRecyclerAdapter
+            adapter = imageRecyclerAdapterWish
             layoutManager = GridLayoutManager(context, 2)
 //            addItemDecoration(DividerItemDecoration(view.context, LinearLayoutManager.VERTICAL))
         }

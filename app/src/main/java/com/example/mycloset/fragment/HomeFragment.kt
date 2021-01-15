@@ -15,7 +15,7 @@ import com.example.mycloset.WebViewActivity
 import com.example.mycloset.databinding.FragmentHomeBinding
 import com.example.mycloset.retrofit.Dress
 import com.example.mycloset.retrofit.RetrofitService
-import com.example.mycloset.viewpager.HomeImageRecyclerAdapter
+import com.example.mycloset.viewpager.ImageRecyclerAdapterHome
 import com.example.mycloset.viewpager.PageItem
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,7 +33,7 @@ class HomeFragment : Fragment(){
     private var pageItemListShoes = ArrayList<PageItem>()
     private var pageItemListAccessories = ArrayList<PageItem>()
 
-    private lateinit var homeImageRecyclerAdapter: HomeImageRecyclerAdapter
+    private lateinit var imageRecyclerAdapterHome: ImageRecyclerAdapterHome
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -65,9 +65,9 @@ class HomeFragment : Fragment(){
 
                 // 리사이클러뷰 부착
                 // 아우터
-                homeImageRecyclerAdapter = HomeImageRecyclerAdapter(pageItemListOuter)
+                imageRecyclerAdapterHome = ImageRecyclerAdapterHome(pageItemListOuter)
                 binding.imageViewPagerOuter.apply {
-                    adapter = homeImageRecyclerAdapter
+                    adapter = imageRecyclerAdapterHome
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     binding.indicatorOuter.setViewPager2(this)
                 }
