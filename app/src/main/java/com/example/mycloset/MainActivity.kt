@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.mycloset.databinding.ActivityMainBinding
 import com.example.mycloset.fragment.HomeFragment
 import com.example.mycloset.fragment.MyInfoFragment
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
 //        val email : String = intent.getStringExtra("email").toString()
 
-        replaceFragment(HomeFragment())
+        setFragment("home", HomeFragment())
         binding.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
     }
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     // 툴바 메뉴 버튼 클릭 시
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item!!.itemId){
+        when(item.itemId){
             R.id.menu_shopping->{
                 Toast.makeText(this, "장바구니", Toast.LENGTH_SHORT).show()
             }
@@ -58,25 +59,49 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.menu_home -> {
-                replaceFragment(HomeFragment())
+                setFragment("home", HomeFragment())
             }
             R.id.menu_search -> {
-                replaceFragment(SearchFragment())
+                setFragment("search", SearchFragment())
             }
             R.id.menu_wishList -> {
-                replaceFragment(WishListFragment())
+                setFragment("wish", WishListFragment())
             }
             R.id.menu_myInfo -> {
-                replaceFragment(MyInfoFragment())
+                setFragment("info", MyInfoFragment())
             }
             else -> false
         }
     }
 
-    private fun replaceFragment(fragment: Fragment): Boolean {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.container, fragment)
-        fragmentTransaction.commit()
+    private fun setFragment(tag: String, fragment: Fragment): Boolean {
+        val manager: FragmentManager = supportFragmentManager
+        val ft = manager.beginTransaction()
+
+        if (manager.findFragmentByTag(tag) == null) {
+            ft.add(R.id.container, fragment, tag)
+        }
+
+        val home = manager.findFragmentByTag("home")
+        val search = manager.findFragmentByTag("search")
+        val wish = manager.findFragmentByTag("wish")
+        val info = manager.findFragmentByTag("info")
+
+        // 프래그먼트 hide
+        if(home != null) ft.hide(home)
+        if(search != null) ft.hide(search)
+        if(wish != null) ft.hide(wish)
+        if(info != null) ft.hide(info)
+
+        // 프래그먼트 show
+        if (tag == "home" && home != null) ft.show(home)
+        if (tag == "search" && search != null) ft.show(search)
+        if (tag == "wish" && wish != null) ft.show(wish)
+        if (tag == "info" && info != null) ft.show(info)
+
+        ft.commitAllowingStateLoss()
+//        ft.replace(R.id.container, fragment)
+//        ft.commit()
         return true
     }
 
