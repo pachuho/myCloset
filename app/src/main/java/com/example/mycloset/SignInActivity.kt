@@ -3,6 +3,7 @@ package com.example.mycloset
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
@@ -49,6 +50,7 @@ class SignInActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         mBinding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -77,9 +79,10 @@ class SignInActivity : AppCompatActivity() {
                     val signIn = response.body()
                     // 로그인 성공(회원정보 있으면)
                     if (signIn?.success == true) {
-                        Toast.makeText(this@SignInActivity, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@SignInActivity, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@SignInActivity, MainActivity::class.java)
                         intent.putExtra("email", inputEmail)
+                        App.prefs.userEmail = signIn.email
                         startActivity(intent)
                         finish()
                     } else {

@@ -12,6 +12,7 @@ object Common {
 }
 
 object Profile {
+    lateinit var UserEmail: String
     lateinit var UserName: String
     lateinit var UserPwd: String
     lateinit var UserBirthday: String

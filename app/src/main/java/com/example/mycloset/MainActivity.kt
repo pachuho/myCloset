@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         ab.setDisplayShowCustomEnabled(true)
         ab.setDisplayShowTitleEnabled(false) // 기본 제목 삭제
 
-
+        Toast.makeText(this, App.prefs.userEmail, Toast.LENGTH_SHORT).show()
 //        val email : String = intent.getStringExtra("email").toString()
 
         setFragment("home", HomeFragment())
