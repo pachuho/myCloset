@@ -79,10 +79,9 @@ class SignInActivity : AppCompatActivity() {
                     val signIn = response.body()
                     // 로그인 성공(회원정보 있으면)
                     if (signIn?.success == true) {
+                        App.prefs.userEmail = signIn.email
 //                        Toast.makeText(this@SignInActivity, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@SignInActivity, MainActivity::class.java)
-                        intent.putExtra("email", inputEmail)
-                        App.prefs.userEmail = signIn.email
                         startActivity(intent)
                         finish()
                     } else {
@@ -132,8 +131,8 @@ class SignInActivity : AppCompatActivity() {
                                 Callback<Check> {
                                 override fun onResponse(call: Call<Check>, response: Response<Check>) {
                                     if (response.body()?.success == true) { // 회원정보가 있다면
+                                        App.prefs.userEmail = response.body()?.email
                                         val intent = Intent(this@SignInActivity, MainActivity::class.java)
-                                        intent.putExtra("email", response.body()?.email)
                                         startActivity(intent)
                                         finish()
                                     } else { // 회원 정보가 없다면
@@ -285,8 +284,8 @@ class SignInActivity : AppCompatActivity() {
                                 Callback<Check> {
                             override fun onResponse(call: Call<Check>, response: Response<Check>) {
                                 if (response.body()?.success == true) { // 회원정보가 있다면
+                                    App.prefs.userEmail = response.body()?.email
                                     val intent = Intent(this@SignInActivity, MainActivity::class.java)
-                                    intent.putExtra("email", response.body()?.email)
                                     startActivity(intent)
                                     finish()
 

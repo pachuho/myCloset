@@ -38,8 +38,6 @@ class HomeFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
-//        val view = inflater.inflate(R.layout.fragment_home, container, false)
-
         val getLinkService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
         getLinkService.getImageLink().enqueue(object : Callback<List<Dress>> {
             // 통신 성공
@@ -47,6 +45,7 @@ class HomeFragment : Fragment(){
                 val getData = response.body()
 
                 for (i: Int in 0 until getData?.size!!) {
+                    val getCode = getData[i].code
                     val getPart = getData[i].part
                     val getBrand = getData[i].brand
                     val getName = getData[i].name
@@ -55,11 +54,11 @@ class HomeFragment : Fragment(){
                     val getLink = getData[i].link
 
                     when (getPart) {
-                        "outer" -> pageItemListOuter.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
-                        "top" -> pageItemListTop.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
-                        "bottom" -> pageItemListBottom.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
-                        "shoes" -> pageItemListShoes.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
-                        "accessories" -> pageItemListAccessories.add(PageItem(getBrand, getName, getPrice, getImage, getLink))
+                        "outer" -> pageItemListOuter.add(PageItem(getCode, getBrand, getName, getPrice, getImage, getLink))
+                        "top" -> pageItemListTop.add(PageItem(getCode, getBrand, getName, getPrice, getImage, getLink))
+                        "bottom" -> pageItemListBottom.add(PageItem(getCode, getBrand, getName, getPrice, getImage, getLink))
+                        "shoes" -> pageItemListShoes.add(PageItem(getCode, getBrand, getName, getPrice, getImage, getLink))
+                        "accessories" -> pageItemListAccessories.add(PageItem(getCode, getBrand, getName, getPrice, getImage, getLink))
                     }
                 }
 

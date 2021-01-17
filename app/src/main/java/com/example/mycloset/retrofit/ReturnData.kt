@@ -31,3 +31,7 @@ data class Dress(
     val image : String,
     val link : String
 )
+
+data class Favorite(
+        val code : Int
+)
