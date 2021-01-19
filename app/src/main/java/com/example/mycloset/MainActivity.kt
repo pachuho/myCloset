@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import com.example.mycloset.databinding.ActivityMainBinding
 import com.example.mycloset.fragment.HomeFragment
 import com.example.mycloset.fragment.MyInfoFragment
@@ -30,31 +33,14 @@ class MainActivity : AppCompatActivity() {
         ab.setDisplayShowCustomEnabled(true)
         ab.setDisplayShowTitleEnabled(false) // 기본 제목 삭제
 
-        Toast.makeText(this, App.prefs.userEmail, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, App.prefs.userEmail, Toast.LENGTH_SHORT).show()
 
         setFragment("home", HomeFragment())
         binding.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
     }
 
-    // 툴바 메뉴 버튼을 설정
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    // 툴바 메뉴 버튼 클릭 시
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.menu_shopping->{
-                Toast.makeText(this, "장바구니", Toast.LENGTH_SHORT).show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     // 네비게이션 클릭
-
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.menu_home -> {
@@ -98,10 +84,32 @@ class MainActivity : AppCompatActivity() {
         if (tag == "wish" && wish != null) ft.show(wish)
         if (tag == "info" && info != null) ft.show(info)
 
+
         ft.commitAllowingStateLoss()
 //        ft.replace(R.id.container, fragment)
 //        ft.commit()
         return true
+    }
+
+    // AAC ViewModel
+    class MyViewModel : ViewModel(){
+
+    }
+
+    // 툴바 메뉴 버튼을 설정
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    // 툴바 메뉴 버튼 클릭 시
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_shopping->{
+                Toast.makeText(this, "장바구니", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // 뒤로가기

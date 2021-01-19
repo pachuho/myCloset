@@ -1,6 +1,7 @@
 package com.example.mycloset
 
 import android.app.Application
+import androidx.lifecycle.MutableLiveData
 import com.kakao.sdk.common.KakaoSdk
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

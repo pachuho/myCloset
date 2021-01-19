@@ -82,6 +82,7 @@ class HomeFragment : Fragment(){
                 }
 
 
+
 //                Log.i("resultLink", pageItemListOuter.toString())
 
                 // 상의

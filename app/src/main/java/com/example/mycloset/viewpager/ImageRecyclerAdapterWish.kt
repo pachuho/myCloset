@@ -1,6 +1,7 @@
 package com.example.mycloset.viewpager
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.mycloset.App
 import com.example.mycloset.Profile
 import com.example.mycloset.R
 import com.example.mycloset.WebViewActivity
+import com.example.mycloset.retrofit.RetrofitService
+import com.example.mycloset.retrofit.Success
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ImageRecyclerAdapterWish(private var pageList: ArrayList<PageItem>) : RecyclerView.Adapter<ImageRecyclerAdapterWish.PagerViewHolder>(){
 
@@ -34,12 +41,10 @@ class ImageRecyclerAdapterWish(private var pageList: ArrayList<PageItem>) : Recy
         private val itemBrand = itemView.findViewById<TextView>(R.id.wish_item_brand)
         private val itemName = itemView.findViewById<TextView>(R.id.wish_item_name)
         private val itemPrice = itemView.findViewById<TextView>(R.id.wish_item_price)
-        //    private val itemStar = itemView.findViewById<ImageView>(R.id.pager_item_star)
         private val itemClose = itemView.findViewById<ImageView>(R.id.wish_item_close)
 
-
-
         fun holder(pageItem: PageItem){
+            // 이미지 넣기
             Glide.with(itemView.context).load(pageItem.image)
                     .override(400, 400)
                     .thumbnail(0.1f)
@@ -61,9 +66,29 @@ class ImageRecyclerAdapterWish(private var pageList: ArrayList<PageItem>) : Recy
 
             // 닫기 클릭 시
             itemClose.setOnClickListener {
-//            itemStar.setImageResource(R.drawable.img_star_outline)
-                Profile.favoriteImage.remove(pageItem)
+                deleteFavorite(pageItem)
             }
         }
+
+        // 선호상품 삭제
+        private fun deleteFavorite(pageItem: PageItem){
+            val retrofitService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
+            App.prefs.userEmail?.let {
+                retrofitService.deleteFavorite(it, pageItem.imageCode).enqueue(object : Callback<Success> {
+                    // 통신 성공
+                    override fun onResponse(call: Call<Success>, response: Response<Success>) {
+                        if(response.body()?.success == true){
+                            Toast.makeText(itemView.context, "삭제", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    // 통신 실패
+                    override fun onFailure(call: Call<Success>, t: Throwable) {
+                        Log.e("code", t.message.toString())
+                    }
+                })
+            }
+        }
+
+
     }
 }

@@ -51,10 +51,16 @@ interface RetrofitService {
     @GET("getImageLink.php")
     fun getImageLink() : Call<List<Dress>>
 
-    // 좋아요 가져오기
+    // 선호상품 가져오기
     @FormUrlEncoded
     @POST("getFavorite.php")
     fun getFavorite(@Field("email") email: String) : Call<List<Favorite>>
+
+
+    // 선호상품 가져오기 - 위시리스트
+    @FormUrlEncoded
+    @POST("getWishList.php")
+    fun getWishList(@Field("email") email: String) : Call<List<Dress>>
 
     // 선호 상품 추가
     @FormUrlEncoded
