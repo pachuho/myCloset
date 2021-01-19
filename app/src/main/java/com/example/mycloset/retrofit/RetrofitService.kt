@@ -55,4 +55,16 @@ interface RetrofitService {
     @FormUrlEncoded
     @POST("getFavorite.php")
     fun getFavorite(@Field("email") email: String) : Call<List<Favorite>>
+
+    // 선호 상품 추가
+    @FormUrlEncoded
+    @POST("addFavorite.php")
+    fun addFavorite(@Field("email") email: String,
+                    @Field("code") code: Int) : Call<Success>
+
+    // 선호 상품 삭제
+    @FormUrlEncoded
+    @POST("deleteFavorite.php")
+    fun deleteFavorite(@Field("email") email: String,
+                       @Field("code") code: Int) : Call<Success>
 }

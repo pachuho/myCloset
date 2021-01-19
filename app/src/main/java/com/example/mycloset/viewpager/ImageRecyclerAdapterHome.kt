@@ -7,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mycloset.*
-import com.example.mycloset.retrofit.Dress
 import com.example.mycloset.retrofit.Favorite
 import com.example.mycloset.retrofit.RetrofitService
 import com.example.mycloset.retrofit.SignIn
+import com.example.mycloset.retrofit.Success
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,15 +42,9 @@ class ImageRecyclerAdapterHome(private var pageList: ArrayList<PageItem>) : Recy
         private var favoriteCheck : Boolean = false
 
         fun holder(pageItem: PageItem) {
-            val code: List<Int> = favoriteCode()
-            Log.i("codeResult", code.toString())
 
-            // 별 넣기
-            if (pageItem.imageCode in code){ // 포함되어 있다면
-                itemStar.setImageResource(R.drawable.img_star_fill)
-            } else{ // 아니라면
-                itemStar.setImageResource(R.drawable.img_star_outline)
-            }
+            // 별 체크
+            getFavorite(pageItem)
 
             // 이미지 넣기
             Glide.with(itemView.context).load(pageItem.image)
@@ -76,18 +69,16 @@ class ImageRecyclerAdapterHome(private var pageList: ArrayList<PageItem>) : Recy
             // 별 클릭 시
             itemStar.setOnClickListener {
                 if (favoriteCheck) {
-                    itemStar.setImageResource(R.drawable.img_star_outline)
-                    favoriteCheck = false
-                    Profile.favoriteImage.removeAt(0)
+                    deleteFavorite(pageItem)
                 } else {
-                    itemStar.setImageResource(R.drawable.img_star_fill)
-                    favoriteCheck = true
-                    Profile.favoriteImage.add(pageItem)
+                    addFavorite(pageItem)
                 }
             }
         }
-        private fun favoriteCode(): List<Int>{
-            val temp: ArrayList<Int> = ArrayList()
+
+        // 선호상품 체크
+        private fun getFavorite(pageItem: PageItem){
+            val code: ArrayList<Int> = ArrayList()
             val getFavoriteService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
             App.prefs.userEmail?.let {
                 getFavoriteService.getFavorite(it).enqueue(object : Callback<List<Favorite>> {
@@ -95,18 +86,65 @@ class ImageRecyclerAdapterHome(private var pageList: ArrayList<PageItem>) : Recy
                     override fun onResponse(call: Call<List<Favorite>>, response: Response<List<Favorite>>) {
                         val getData = response.body()
                         for (i: Int in 0 until getData?.size!!) {
-                            Log.i("code", getData[i].code.toString())
-                            temp.add(getData[i].code)
+                            code.add(getData[i].code)
                         }
-                        Log.i("temp", temp.toString())
+                        Log.i("code", code.toString())
+
+                        // 별 넣기
+                        if (pageItem.imageCode in code){ // 포함되어 있다면
+                            itemStar.setImageResource(R.drawable.img_star_fill)
+                            favoriteCheck = true
+                        } else{ // 아니라면
+                            itemStar.setImageResource(R.drawable.img_star_outline)
+                            favoriteCheck = false
+                        }
                     }
                     // 통신 실패
                     override fun onFailure(call: Call<List<Favorite>>, t: Throwable) {
-
+                        Log.e("code", t.message.toString())
                     }
                 })
             }
-            return temp
+        }
+
+        // 선호상품 추가
+        private fun addFavorite(pageItem: PageItem){
+            val retrofitService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
+            App.prefs.userEmail?.let {
+                retrofitService.addFavorite(it, pageItem.imageCode).enqueue(object : Callback<Success> {
+                    // 통신 성공
+                    override fun onResponse(call: Call<Success>, response: Response<Success>) {
+                        if(response.body()?.success == true){
+                            itemStar.setImageResource(R.drawable.img_star_fill)
+                            favoriteCheck = true
+                        }
+                    }
+                    // 통신 실패
+                    override fun onFailure(call: Call<Success>, t: Throwable) {
+                        Log.e("code", t.message.toString())
+                    }
+                })
+            }
+        }
+
+        // 선호상품 삭제
+        private fun deleteFavorite(pageItem: PageItem){
+            val retrofitService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
+            App.prefs.userEmail?.let {
+                retrofitService.deleteFavorite(it, pageItem.imageCode).enqueue(object : Callback<Success> {
+                    // 통신 성공
+                    override fun onResponse(call: Call<Success>, response: Response<Success>) {
+                        if(response.body()?.success == true){
+                            itemStar.setImageResource(R.drawable.img_star_outline)
+                            favoriteCheck = false
+                        }
+                    }
+                    // 통신 실패
+                    override fun onFailure(call: Call<Success>, t: Throwable) {
+                        Log.e("code", t.message.toString())
+                    }
+                })
+            }
         }
     }
 }

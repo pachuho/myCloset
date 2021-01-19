@@ -37,7 +37,17 @@ class HomeFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        getImageData()
 
+        binding.homeTvSale.setOnClickListener(commonLink)
+        binding.homeBtnSale.setOnClickListener(commonLink)
+        binding.tvShoppingMain.setOnClickListener(commonLink)
+
+        return binding.root
+    }
+
+    // 이미지 정보 가져오기
+    private fun getImageData(){
         val getLinkService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
         getLinkService.getImageLink().enqueue(object : Callback<List<Dress>> {
             // 통신 성공
@@ -90,13 +100,8 @@ class HomeFragment : Fragment(){
                 Toast.makeText(context, getString(R.string.confirm_network), Toast.LENGTH_SHORT).show()
             }
         })
-
-        binding.homeTvSale.setOnClickListener(commonLink)
-        binding.homeBtnSale.setOnClickListener(commonLink)
-        binding.tvShoppingMain.setOnClickListener(commonLink)
-
-        return binding.root
     }
+
 
     private val commonLink : View.OnClickListener = View.OnClickListener {
         val intent = Intent(view?.context, WebViewActivity::class.java)
