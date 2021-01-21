@@ -58,21 +58,32 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'com.google.android.material:material:1.2.1' // 메테리얼 추가
+    // material
+    implementation 'com.google.android.material:material:1.2.1'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2' // retrofit2
-    implementation 'com.google.code.gson:gson:2.8.6' // gson
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.2' // converter
-    implementation "com.kakao.sdk:v2-user:2.0.6" // kakao
+    // retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+
+    // kakao login
+    implementation "com.kakao.sdk:v2-user:2.0.6"
 
     // google login
     implementation platform('com.google.firebase:firebase-bom:26.1.1')
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
-    implementation 'com.airbnb.android:lottie:3.5.0' // lottie
-    implementation "androidx.viewpager2:viewpager2:1.0.0" // viewPager2
+    // lottie
+    implementation 'com.airbnb.android:lottie:3.5.0'
+
+    // viewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2' // indicator
+
+    // indicator
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 }
