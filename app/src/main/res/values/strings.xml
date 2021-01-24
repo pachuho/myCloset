@@ -53,4 +53,5 @@
     <string name="toolbar_title_wish">위시리스트</string>
     <string name="no_wish_list">위시리스트에 담긴 상품이 없습니다.</string>
     <string name="wish_advice">☆을 클릭하고 눈여겨본 상품을 저장해보세요.</string>
+    <string name="search_editText">상품 및 브랜드</string>
 </resources>

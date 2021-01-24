@@ -101,4 +101,16 @@
         <item name="android:background">@color/grey_1</item>
     </style>
 
+    <style name="Search_TextViewStyle"  parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding" tools:targetApi="o">20dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:drawableEnd">@drawable/ic_baseline_keyboard_arrow_right</item>
+        <item name="android:background">@drawable/ripple_white</item>
+        <item name="android:clickable">true</item>
+    </style>
+
 </resources>

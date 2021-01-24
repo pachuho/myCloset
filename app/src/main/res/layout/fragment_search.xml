@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.SearchFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.SearchFragment"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="30dp"
+        android:background="@drawable/custom_background_search"
+        android:backgroundTint="@null"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="5dp"
+        android:hint="@string/search_editText"
+        android:padding="5dp"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="search"
-        android:gravity="center"/>
+        android:id="@+id/textView2"
+        style="@style/Search_TextViewStyle"
+        android:text="디자이너" />
 
-</FrameLayout>
+    <View
+        style="@style/DivisionLine"
+        android:layout_marginHorizontal="20dp"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        style="@style/Search_TextViewStyle"
+        android:text="카테고리" />
+
+
+</LinearLayout>

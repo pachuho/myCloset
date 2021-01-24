@@ -43,6 +43,7 @@ class WishListFragment : Fragment() {
 //                            Toast.makeText(context, "테스트", Toast.LENGTH_SHORT).show()
                 wishItem.removeAt(position)
                 imageRecyclerAdapterWish.notifyItemRemoved(position)
+
             }
 
         })

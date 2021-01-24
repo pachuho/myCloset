@@ -126,8 +126,8 @@
                 <TextView
                     android:text="@string/KRW"
                     style="@style/Info_TextViewStyle_basic"
-                    android:drawableStart="@drawable/drawable_left_image_customise"
-                    android:drawablePadding="10dp"/>
+                    android:drawablePadding="10dp"
+                    app:drawableStartCompat="@drawable/drawable_left_image_customise" />
 
                 <View style="@style/DivisionLine"/>
 
