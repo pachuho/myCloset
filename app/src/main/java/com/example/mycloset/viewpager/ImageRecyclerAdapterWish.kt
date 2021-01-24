@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mycloset.App
-import com.example.mycloset.Profile
 import com.example.mycloset.R
 import com.example.mycloset.WebViewActivity
 import com.example.mycloset.retrofit.RetrofitService
@@ -22,6 +21,18 @@ import retrofit2.Response
 
 class ImageRecyclerAdapterWish(private var pageList: ArrayList<PageItem>) : RecyclerView.Adapter<ImageRecyclerAdapterWish.PagerViewHolder>(){
 
+    interface OnItemClickListener {
+        fun onItemClick(v: View?, position: Int)
+    }
+
+    // 리스너 객체 참조를 저장하는 변수
+    private var mListener: OnItemClickListener? = null
+
+    // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
+    fun setOnItemDeleteClickListener(listener: OnItemClickListener?) {
+        mListener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
         return PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_wish_image_item, parent, false))
     }
@@ -30,13 +41,14 @@ class ImageRecyclerAdapterWish(private var pageList: ArrayList<PageItem>) : Recy
 
     override fun onBindViewHolder(holderWish: PagerViewHolder, position: Int) {
         val pageItem = pageList[position]
-
         holderWish.apply {
             holder(pageItem)
         }
     }
 
-    class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         private val itemImage = itemView.findViewById<ImageView>(R.id.wish_item_image)
         private val itemBrand = itemView.findViewById<TextView>(R.id.wish_item_brand)
         private val itemName = itemView.findViewById<TextView>(R.id.wish_item_name)
@@ -67,20 +79,28 @@ class ImageRecyclerAdapterWish(private var pageList: ArrayList<PageItem>) : Recy
             // 닫기 클릭 시
             itemClose.setOnClickListener {
                 deleteFavorite(pageItem)
+                val pos = adapterPosition
+                if (pos != RecyclerView.NO_POSITION) {
+                    mListener?.onItemClick(it, pos)
+                }
             }
+
+
         }
 
         // 선호상품 삭제
         private fun deleteFavorite(pageItem: PageItem){
             val retrofitService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
             App.prefs.userEmail?.let {
-                retrofitService.deleteFavorite(it, pageItem.imageCode).enqueue(object : Callback<Success> {
+                retrofitService.deleteFavorite(it, pageItem.imageCode).enqueue(object :
+                    Callback<Success> {
                     // 통신 성공
                     override fun onResponse(call: Call<Success>, response: Response<Success>) {
-                        if(response.body()?.success == true){
-                            Toast.makeText(itemView.context, "삭제", Toast.LENGTH_SHORT).show()
+                        if (response.body()?.success == true) {
+//                            Toast.makeText(itemView.context, "삭제", Toast.LENGTH_SHORT).show()
                         }
                     }
+
                     // 통신 실패
                     override fun onFailure(call: Call<Success>, t: Throwable) {
                         Log.e("code", t.message.toString())

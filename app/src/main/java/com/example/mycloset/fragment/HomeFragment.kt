@@ -37,11 +37,14 @@ class HomeFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
-        getImageData()
+
 
         binding.homeTvSale.setOnClickListener(commonLink)
         binding.homeBtnSale.setOnClickListener(commonLink)
         binding.tvShoppingMain.setOnClickListener(commonLink)
+
+        imageRecyclerAdapterHome = ImageRecyclerAdapterHome(pageItemListOuter)
+        getImageData()
 
         return binding.root
     }
@@ -74,12 +77,15 @@ class HomeFragment : Fragment(){
 
                 // 리사이클러뷰 부착
                 // 아우터
-                imageRecyclerAdapterHome = ImageRecyclerAdapterHome(pageItemListOuter)
+
                 binding.imageViewPagerOuter.apply {
                     adapter = imageRecyclerAdapterHome
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     binding.indicatorOuter.setViewPager2(this)
+                    imageRecyclerAdapterHome.notifyDataSetChanged()
                 }
+
+
 
 
 
