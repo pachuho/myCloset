@@ -40,9 +40,17 @@ class WishListFragment : Fragment() {
         // 아이템 삭제 클릭 이벤트
         imageRecyclerAdapterWish.setOnItemDeleteClickListener(object : ImageRecyclerAdapterWish.OnItemClickListener {
             override fun onItemClick(v: View?, position: Int) {
-//                            Toast.makeText(context, "테스트", Toast.LENGTH_SHORT).show()
+
                 wishItem.removeAt(position)
                 imageRecyclerAdapterWish.notifyItemRemoved(position)
+
+                if (wishItem.isEmpty()){
+                    binding.layoutWishList.visibility = View.VISIBLE
+                } else {
+                    binding.layoutWishList.visibility = View.INVISIBLE
+                }
+
+
 
             }
 
