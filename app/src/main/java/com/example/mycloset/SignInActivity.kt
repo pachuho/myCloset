@@ -3,7 +3,6 @@ package com.example.mycloset
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +19,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mycloset.databinding.ActivitySignInBinding
 import com.example.mycloset.retrofit.*
+import com.example.mycloset.utils.App
+import com.example.mycloset.utils.LoadingDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -57,8 +58,8 @@ class SignInActivity : AppCompatActivity() {
         loadingDialog = LoadingDialog(this)
 
         // textWatcher 지정
-        binding.loginEtEmail.addTextChangedListener(TextWatcher)
-        binding.loginEtPwd.addTextChangedListener(TextWatcher)
+        binding.loginEtEmail.addTextChangedListener(textWatcher)
+        binding.loginEtPwd.addTextChangedListener(textWatcher)
 
         // editText에서 완료 클릭 시
         binding.loginEtPwd.setOnKeyListener { v, keyCode, event ->
@@ -204,7 +205,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     // 회원가입 버튼 활성화
-    private val TextWatcher: TextWatcher = object : TextWatcher {
+    private val textWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable) {

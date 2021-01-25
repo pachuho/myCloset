@@ -12,6 +12,7 @@ import android.webkit.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mycloset.databinding.ActivityWebViewBinding
+import com.example.mycloset.utils.LoadingDialog
 
 
 class WebViewActivity : AppCompatActivity() {

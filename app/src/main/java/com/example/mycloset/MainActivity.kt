@@ -1,8 +1,13 @@
 package com.example.mycloset
 
+import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -122,6 +127,24 @@ class MainActivity : AppCompatActivity() {
             lastBackPressedTime = currentTime
             Toast.makeText(this, getString(R.string.one_more_touch_end), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    // EditText에서 외부 클릭 시 포커스 해제
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm: InputMethodManager =
+                            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
     override fun onDestroy() {

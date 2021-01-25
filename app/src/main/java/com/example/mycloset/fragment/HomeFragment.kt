@@ -49,7 +49,7 @@ class HomeFragment : Fragment(){
         return binding.root
     }
 
-    // 이미지 정보 가져오기
+    // 상품 정보 가져오기
     private fun getImageData(){
         val getLinkService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
         getLinkService.getImageLink().enqueue(object : Callback<List<Dress>> {

@@ -1,12 +1,10 @@
-package com.example.mycloset
+package com.example.mycloset.utils
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
-import android.widget.Toast
+import com.example.mycloset.R
 
 class LoadingDialog constructor(context: Context) : Dialog(context) {
     init {

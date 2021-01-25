@@ -1,40 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.SearchFragment"
-    android:orientation="vertical">
+    tools:context=".fragment.SearchFragment">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/search_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="30dp"
+
         android:background="@drawable/custom_background_search"
         android:backgroundTint="@null"
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="5dp"
         android:hint="@string/search_editText"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
         android:padding="5dp"
         android:textSize="14sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textView2"
-        style="@style/Search_TextViewStyle"
-        android:text="디자이너" />
-
-    <View
-        style="@style/DivisionLine"
-        android:layout_marginHorizontal="20dp"/>
-
-    <TextView
-        android:id="@+id/textView5"
-        style="@style/Search_TextViewStyle"
-        android:text="카테고리" />
+        android:textStyle="bold"
 
 
-</LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_editText" />
+
+    <LinearLayout
+        android:id="@+id/search_ll_classification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_editText">
+
+        <TextView
+            android:id="@+id/textView5"
+            style="@style/Search_TextViewStyle"
+            android:layout_marginTop="30dp"
+            android:text="디자이너"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_editText" />
+
+        <View
+            style="@style/DivisionLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView5" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/Search_TextViewStyle"
+
+            android:text="카테고리"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView5" />
+
+        <View
+            style="@style/DivisionLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

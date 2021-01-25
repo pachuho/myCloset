@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.mycloset.App
+import com.example.mycloset.utils.App
 import com.example.mycloset.R
 import com.example.mycloset.WebViewActivity
 import com.example.mycloset.retrofit.RetrofitService

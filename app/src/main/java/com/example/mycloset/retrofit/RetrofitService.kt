@@ -47,7 +47,7 @@ interface RetrofitService {
     @POST("checkGoogleId.php")
     fun requestCheckGoogleId(@Field("googleId") googleId: String) : Call<Check>
 
-    // 이미지 링크 가져오기
+    // 상품 정보 가져오기
     @GET("getImageLink.php")
     fun getImageLink() : Call<List<Dress>>
 
@@ -56,6 +56,10 @@ interface RetrofitService {
     @POST("getFavorite.php")
     fun getFavorite(@Field("email") email: String) : Call<List<Favorite>>
 
+    // 상품 검색
+    @FormUrlEncoded
+    @POST("searchItem.php")
+    fun searchItem(@Field("keyWord") keyWord: String) : Call<List<Dress>>
 
     // 선호상품 가져오기 - 위시리스트
     @FormUrlEncoded

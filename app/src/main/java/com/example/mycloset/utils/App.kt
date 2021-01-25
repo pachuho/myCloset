@@ -1,7 +1,7 @@
-package com.example.mycloset
+package com.example.mycloset.utils
 
 import android.app.Application
-import androidx.lifecycle.MutableLiveData
+import com.example.mycloset.R
 import com.kakao.sdk.common.KakaoSdk
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

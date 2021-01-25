@@ -9,36 +9,39 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.mycloset.*
+import com.example.mycloset.utils.App
+import com.example.mycloset.R
+import com.example.mycloset.WebViewActivity
 import com.example.mycloset.retrofit.Favorite
 import com.example.mycloset.retrofit.RetrofitService
 import com.example.mycloset.retrofit.Success
-import com.example.mycloset.utils.App
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ImageRecyclerAdapterHome(private var pageList: ArrayList<PageItem>) : RecyclerView.Adapter<ImageRecyclerAdapterHome.PagerViewHolder>(){
+class ImageRecyclerAdapterSearch(private var pageList: ArrayList<PageItem>) : RecyclerView.Adapter<ImageRecyclerAdapterSearch.PagerViewHolder>(){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
-        return PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_home_image_item, parent, false))
+        return PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_search_image_item, parent, false))
     }
 
-    override fun getItemCount(): Int = pageList.size
+    override fun getItemCount(): Int =pageList.size
 
-    override fun onBindViewHolder(holderHome: PagerViewHolder, position: Int) {
+    override fun onBindViewHolder(holderWish: PagerViewHolder, position: Int) {
         val pageItem = pageList[position]
-
-        holderHome.apply {
+        holderWish.apply {
             holder(pageItem)
         }
     }
 
-    class  PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val itemImage = itemView.findViewById<ImageView>(R.id.pager_item_image)
-        private val itemBrand = itemView.findViewById<TextView>(R.id.pager_item_brand)
-        private val itemName = itemView.findViewById<TextView>(R.id.pager_item_name)
-        private val itemPrice = itemView.findViewById<TextView>(R.id.pager_item_price)
-        private val itemStar = itemView.findViewById<ImageView>(R.id.pager_item_star)
+
+    inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val itemImage = itemView.findViewById<ImageView>(R.id.search_item_image)
+        private val itemBrand = itemView.findViewById<TextView>(R.id.search_item_brand)
+        private val itemName = itemView.findViewById<TextView>(R.id.search_item_name)
+        private val itemPrice = itemView.findViewById<TextView>(R.id.search_item_price)
+        private val itemStar = itemView.findViewById<ImageView>(R.id.search_item_star)
         private var favoriteCheck : Boolean = false
 
         fun holder(pageItem: PageItem) {
@@ -48,7 +51,7 @@ class ImageRecyclerAdapterHome(private var pageList: ArrayList<PageItem>) : Recy
 
             // 이미지 넣기
             Glide.with(itemView.context).load(pageItem.image)
-                    .override(500, 500)
+                    .override(400, 400)
                     .thumbnail(0.1f)
                     .error(R.drawable.img_error)
                     .into(itemImage)
