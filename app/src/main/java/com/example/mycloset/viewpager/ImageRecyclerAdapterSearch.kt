@@ -20,7 +20,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ImageRecyclerAdapterSearch(private var pageList: ArrayList<PageItem>) : RecyclerView.Adapter<ImageRecyclerAdapterSearch.PagerViewHolder>(){
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
         return PagerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_search_image_item, parent, false))
     }
@@ -36,7 +35,6 @@ class ImageRecyclerAdapterSearch(private var pageList: ArrayList<PageItem>) : Re
 
 
     inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val itemImage = itemView.findViewById<ImageView>(R.id.search_item_image)
         private val itemBrand = itemView.findViewById<TextView>(R.id.search_item_brand)
         private val itemName = itemView.findViewById<TextView>(R.id.search_item_name)

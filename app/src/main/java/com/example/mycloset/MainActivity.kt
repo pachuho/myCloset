@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
 //        Toast.makeText(this, App.prefs.userEmail, Toast.LENGTH_SHORT).show()
 
-        setFragment("home", HomeFragment())
+        replaceFragment(HomeFragment())
         binding.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
     }
@@ -49,56 +49,27 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
             R.id.menu_home -> {
-                setFragment("home", HomeFragment())
+                replaceFragment(HomeFragment())
             }
             R.id.menu_search -> {
-                setFragment("search", SearchFragment())
+                replaceFragment(SearchFragment())
             }
             R.id.menu_wishList -> {
-                setFragment("wish", WishListFragment())
+                replaceFragment(WishListFragment())
             }
             R.id.menu_myInfo -> {
-                setFragment("info", MyInfoFragment())
+                replaceFragment(MyInfoFragment())
             }
             else -> false
         }
     }
 
-    private fun setFragment(tag: String, fragment: Fragment): Boolean {
-        val manager: FragmentManager = supportFragmentManager
-        val ft = manager.beginTransaction()
-
-        if (manager.findFragmentByTag(tag) == null) {
-            ft.add(R.id.container, fragment, tag)
-        }
-
-        val home = manager.findFragmentByTag("home")
-        val search = manager.findFragmentByTag("search")
-        val wish = manager.findFragmentByTag("wish")
-        val info = manager.findFragmentByTag("info")
-
-        // 프래그먼트 hide
-        if(home != null) ft.hide(home)
-        if(search != null) ft.hide(search)
-        if(wish != null) ft.hide(wish)
-        if(info != null) ft.hide(info)
-
-        // 프래그먼트 show
-        if (tag == "home" && home != null) ft.show(home)
-        if (tag == "search" && search != null) ft.show(search)
-        if (tag == "wish" && wish != null) ft.show(wish)
-        if (tag == "info" && info != null) ft.show(info)
-
-
-        ft.commitAllowingStateLoss()
-//        ft.replace(R.id.container, fragment)
-//        ft.commit()
+    // 프래그먼트 변경
+    private fun replaceFragment(fragment: Fragment): Boolean {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.commit()
         return true
-    }
-
-    // AAC ViewModel
-    class MyViewModel : ViewModel(){
-
     }
 
     // 툴바 메뉴 버튼을 설정

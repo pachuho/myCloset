@@ -111,7 +111,173 @@
             </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:text="상의"
+                    style="@style/CustomTextViewStyle_Bold"/>
+
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/image_view_pager_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginVertical="25dp"
+                    android:layout_gravity="center" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/indicator_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:dotsColor="@color/black2"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="8dp"
+                    app:dotsSpacing="3dp"
+                    app:dotsWidthFactor="2.5"
+                    app:selectedDotColor="@color/black"
+                    app:progressMode="true"
+                    />
+
+                <Button
+                    android:id="@+id/tv_shopping_top"
+                    android:text="지금 쇼핑하기"
+                    style="@style/CustomButtonViewStyle"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:text="하의"
+                    style="@style/CustomTextViewStyle_Bold"/>
+
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/image_view_pager_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginVertical="25dp"
+                    android:layout_gravity="center" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/indicator_bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:dotsColor="@color/black2"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="8dp"
+                    app:dotsSpacing="3dp"
+                    app:dotsWidthFactor="2.5"
+                    app:selectedDotColor="@color/black"
+                    app:progressMode="true"
+                    />
+
+                <Button
+                    android:id="@+id/tv_shopping_bottom"
+                    android:text="지금 쇼핑하기"
+                    style="@style/CustomButtonViewStyle"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:text="신발"
+                    style="@style/CustomTextViewStyle_Bold"/>
+
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/image_view_pager_shoes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginVertical="25dp"
+                    android:layout_gravity="center" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/indicator_shoes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:dotsColor="@color/black2"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="8dp"
+                    app:dotsSpacing="3dp"
+                    app:dotsWidthFactor="2.5"
+                    app:selectedDotColor="@color/black"
+                    app:progressMode="true"
+                    />
+
+                <Button
+                    android:id="@+id/tv_shopping_shoes"
+                    android:text="지금 쇼핑하기"
+                    style="@style/CustomButtonViewStyle"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:text="악세사리"
+                    style="@style/CustomTextViewStyle_Bold"/>
+
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/image_view_pager_accessories"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginVertical="25dp"
+                    android:layout_gravity="center" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/indicator_accessories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:dotsColor="@color/black2"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="8dp"
+                    app:dotsSpacing="3dp"
+                    app:dotsWidthFactor="2.5"
+                    app:selectedDotColor="@color/black"
+                    app:progressMode="true"
+                    />
+
+                <Button
+                    android:id="@+id/tv_shopping_accessories"
+                    android:text="지금 쇼핑하기"
+                    style="@style/CustomButtonViewStyle"/>
+
+            </LinearLayout>
 
 
         </LinearLayout>

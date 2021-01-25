@@ -76,8 +76,8 @@ class HomeFragment : Fragment(){
                 }
 
                 // 리사이클러뷰 부착
-                // 아우터
 
+                // 아우터
                 binding.imageViewPagerOuter.apply {
                     adapter = imageRecyclerAdapterHome
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -85,19 +85,38 @@ class HomeFragment : Fragment(){
                     imageRecyclerAdapterHome.notifyDataSetChanged()
                 }
 
-
-
-
-
-//                Log.i("resultLink", pageItemListOuter.toString())
-
                 // 상의
+                binding.imageViewPagerTop.apply {
+                    imageRecyclerAdapterHome = ImageRecyclerAdapterHome(pageItemListTop)
+                    adapter = imageRecyclerAdapterHome
+                    orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    binding.indicatorTop.setViewPager2(this)
+                    imageRecyclerAdapterHome.notifyDataSetChanged()
+                }
 
                 // 하의
+                binding.imageViewPagerBottom.apply {
+                    adapter = imageRecyclerAdapterHome
+                    orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    binding.indicatorBottom.setViewPager2(this)
+                    imageRecyclerAdapterHome.notifyDataSetChanged()
+                }
 
                 // 신발
+                binding.imageViewPagerShoes.apply {
+                    adapter = imageRecyclerAdapterHome
+                    orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    binding.indicatorShoes.setViewPager2(this)
+                    imageRecyclerAdapterHome.notifyDataSetChanged()
+                }
 
                 // 악세사리
+                binding.imageViewPagerAccessories.apply {
+                    adapter = imageRecyclerAdapterHome
+                    orientation = ViewPager2.ORIENTATION_HORIZONTAL
+                    binding.indicatorAccessories.setViewPager2(this)
+                    imageRecyclerAdapterHome.notifyDataSetChanged()
+                }
 
             }
 

@@ -1,16 +1,13 @@
 package com.example.mycloset.fragment
 
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.KeyEvent.KEYCODE_ENTER
-import android.view.KeyEvent.KEYCODE_SEARCH
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mycloset.Common
@@ -29,7 +26,7 @@ class SearchFragment : Fragment() {
     private var mBinding: FragmentSearchBinding? = null
     private val binding get() = mBinding!!
 
-    private var searchItem = ArrayList<PageItem>()
+    private var searchItemList = ArrayList<PageItem>()
     lateinit var searchEditText: EditText
 
     private lateinit var imageRecyclerAdapterSearch: ImageRecyclerAdapterSearch
@@ -39,7 +36,7 @@ class SearchFragment : Fragment() {
         searchEditText = binding.searchEditText
 
         // 리사이클러뷰 초기화
-        imageRecyclerAdapterSearch = ImageRecyclerAdapterSearch(searchItem)
+        imageRecyclerAdapterSearch = ImageRecyclerAdapterSearch(searchItemList)
 
         searchEditText.setOnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
@@ -50,10 +47,10 @@ class SearchFragment : Fragment() {
                     binding.searchLlClassification.visibility = View.VISIBLE
                 } else {
                     // 키보드 내리기
+                    val mInputMethodManager = context!!.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    mInputMethodManager.hideSoftInputFromWindow(searchEditText.windowToken, 0)
 
-
-
-                    searchItem.clear()
+//                    searchItem.clear()
                     Log.i("검색", "입력 텍스트:" + searchEditText.text.toString())
                     getImageData(searchEditText.text.toString())
                     binding.searchImage.visibility = View.VISIBLE
@@ -84,17 +81,8 @@ class SearchFragment : Fragment() {
                     val getImage = getData[i].image
                     val getLink = getData[i].link
 
-                    searchItem.add(
-                        PageItem(
-                            getCode,
-                            getBrand,
-                            getName,
-                            getPrice,
-                            getImage,
-                            getLink
-                        )
-                    )
-                    Log.i("검색", "아이템 : $searchItem")
+                    searchItemList.add(PageItem(getCode, getBrand, getName, getPrice, getImage, getLink))
+                    Log.i("검색", "아이템 : " + searchItemList[0].image)
                 }
 
                 // 리사이클러뷰 부착
