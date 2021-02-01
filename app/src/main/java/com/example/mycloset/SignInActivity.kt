@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.MotionEvent
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -62,9 +63,13 @@ class SignInActivity : AppCompatActivity() {
         binding.loginEtPwd.addTextChangedListener(textWatcher)
 
         // editText에서 완료 클릭 시
-        binding.loginEtPwd.setOnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) binding.btnLogin.performClick()
-            true
+        binding.loginEtPwd.setOnEditorActionListener { v, actionId, event ->
+            var handled = false
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding.btnLogin.performClick()
+                handled = true
+            }
+            handled
         }
 
         // 로그인 버튼

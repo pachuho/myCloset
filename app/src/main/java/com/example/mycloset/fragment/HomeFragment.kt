@@ -27,23 +27,28 @@ class HomeFragment : Fragment(){
     private var mBinding: FragmentHomeBinding? = null
     private val binding get() = mBinding!!
 
+    // 카테고리별 리스트 생성
     private var pageItemListOuter = ArrayList<PageItem>()
     private var pageItemListTop = ArrayList<PageItem>()
     private var pageItemListBottom = ArrayList<PageItem>()
     private var pageItemListShoes = ArrayList<PageItem>()
     private var pageItemListAccessories = ArrayList<PageItem>()
 
+    // 리사이클러 어댑터 선언
     private lateinit var imageRecyclerAdapterHome: ImageRecyclerAdapterHome
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
-
+        // 버튼 클릭 이벤트
         binding.homeTvSale.setOnClickListener(commonLink)
         binding.homeBtnSale.setOnClickListener(commonLink)
         binding.tvShoppingMain.setOnClickListener(commonLink)
 
+        // 리사이클러 어댑터 초기화
         imageRecyclerAdapterHome = ImageRecyclerAdapterHome(pageItemListOuter)
+
+        // 상품 정보 가져오기
         getImageData()
 
         return binding.root
