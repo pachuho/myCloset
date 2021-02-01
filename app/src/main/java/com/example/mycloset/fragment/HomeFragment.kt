@@ -34,8 +34,7 @@ class HomeFragment : Fragment(){
     private var pageItemListShoes = ArrayList<PageItem>()
     private var pageItemListAccessories = ArrayList<PageItem>()
 
-    // 리사이클러 어댑터 선언
-    private lateinit var imageRecyclerAdapterHome: ImageRecyclerAdapterHome
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -46,7 +45,7 @@ class HomeFragment : Fragment(){
         binding.tvShoppingMain.setOnClickListener(commonLink)
 
         // 리사이클러 어댑터 초기화
-        imageRecyclerAdapterHome = ImageRecyclerAdapterHome(pageItemListOuter)
+
 
         // 상품 정보 가져오기
         getImageData()
@@ -84,43 +83,48 @@ class HomeFragment : Fragment(){
 
                 // 아우터
                 binding.imageViewPagerOuter.apply {
-                    adapter = imageRecyclerAdapterHome
+                    // 리사이클러 어댑터 선언
+                    val imageRecyclerAdapterOuter = ImageRecyclerAdapterHome(pageItemListOuter)
+                    adapter = imageRecyclerAdapterOuter
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     binding.indicatorOuter.setViewPager2(this)
-                    imageRecyclerAdapterHome.notifyDataSetChanged()
+                    imageRecyclerAdapterOuter.notifyDataSetChanged()
                 }
 
                 // 상의
                 binding.imageViewPagerTop.apply {
-                    imageRecyclerAdapterHome = ImageRecyclerAdapterHome(pageItemListTop)
-                    adapter = imageRecyclerAdapterHome
+                    val imageRecyclerAdapterTop = ImageRecyclerAdapterHome(pageItemListTop)
+                    adapter = imageRecyclerAdapterTop
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     binding.indicatorTop.setViewPager2(this)
-                    imageRecyclerAdapterHome.notifyDataSetChanged()
+                    imageRecyclerAdapterTop.notifyDataSetChanged()
                 }
 
                 // 하의
                 binding.imageViewPagerBottom.apply {
-                    adapter = imageRecyclerAdapterHome
+                    val imageRecyclerAdapterBottom = ImageRecyclerAdapterHome(pageItemListBottom)
+                    adapter = imageRecyclerAdapterBottom
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     binding.indicatorBottom.setViewPager2(this)
-                    imageRecyclerAdapterHome.notifyDataSetChanged()
+                    imageRecyclerAdapterBottom.notifyDataSetChanged()
                 }
 
                 // 신발
                 binding.imageViewPagerShoes.apply {
-                    adapter = imageRecyclerAdapterHome
+                    val imageRecyclerAdapterShoes = ImageRecyclerAdapterHome(pageItemListShoes)
+                    adapter = imageRecyclerAdapterShoes
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     binding.indicatorShoes.setViewPager2(this)
-                    imageRecyclerAdapterHome.notifyDataSetChanged()
+                    imageRecyclerAdapterShoes.notifyDataSetChanged()
                 }
 
                 // 악세사리
                 binding.imageViewPagerAccessories.apply {
-                    adapter = imageRecyclerAdapterHome
+                    val imageRecyclerAdapterAccessories = ImageRecyclerAdapterHome(pageItemListAccessories)
+                    adapter = imageRecyclerAdapterAccessories
                     orientation = ViewPager2.ORIENTATION_HORIZONTAL
                     binding.indicatorAccessories.setViewPager2(this)
-                    imageRecyclerAdapterHome.notifyDataSetChanged()
+                    imageRecyclerAdapterAccessories.notifyDataSetChanged()
                 }
 
             }

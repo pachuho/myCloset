@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/pager_item_image"
-        android:layout_width="380dp"
-        android:layout_height="380dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         app:layout_constraintBottom_toTopOf="@+id/pager_item_brand"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
