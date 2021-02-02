@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestListener
 import com.example.mycloset.*
 import com.example.mycloset.retrofit.Favorite
 import com.example.mycloset.retrofit.RetrofitService
@@ -48,8 +49,8 @@ class ImageRecyclerAdapterHome(private var pageList: ArrayList<PageItem>) : Recy
 
             // 이미지 넣기
             Glide.with(itemView.context).load(pageItem.image)
+                    .placeholder(R.drawable.image_preview)
                     .override(500, 500)
-                    .thumbnail(0.1f)
                     .error(R.drawable.img_error)
                     .into(itemImage)
 
