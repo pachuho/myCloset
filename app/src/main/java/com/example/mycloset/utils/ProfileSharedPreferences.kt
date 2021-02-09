@@ -10,5 +10,4 @@ class ProfileSharedPreferences(context: Context) {
     var userEmail: String?
         get() = prefs.getString("userEmail", "")
         set(value) = prefs.edit().putString("userEmail", value).apply()
-
 }
