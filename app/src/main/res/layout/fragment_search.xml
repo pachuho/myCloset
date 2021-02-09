@@ -17,6 +17,8 @@
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="5dp"
         android:hint="@string/search_editText"
+        android:lines="1"
+        android:inputType="text"
         android:imeOptions="actionSearch"
         android:padding="5dp"
         android:textSize="14sp"
@@ -76,11 +78,22 @@
 
     </LinearLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@id/search_editText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
+        <TextView
+            android:id="@+id/search_tv_none"
+            style="@style/CustomTextViewStyle_basic"
+            android:text="@string/search_none"
+            android:textSize="15sp"
+            tools:ignore="MissingConstraints"
+            android:visibility="invisible"/>
 
-
-
-
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

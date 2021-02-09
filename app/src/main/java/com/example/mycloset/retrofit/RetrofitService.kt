@@ -1,4 +1,4 @@
-package com.example.mycloset.retrofit
+package com.hochupa.mycloset.retrofit
 
 import retrofit2.Call
 import retrofit2.http.Field

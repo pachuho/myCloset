@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:59867261037:android:ad6323dc3178694755f764",
+        "mobilesdk_app_id": "1:59867261037:android:75a310f1da55fa5f55f764",
         "android_client_info": {
-          "package_name": "com.example.mycloset"
+          "package_name": "com.hochupa.mycloset"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "59867261037-qk764iqmvjtrkmhra398fhsc4rau31qh.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.mycloset",
-            "certificate_hash": "9b48202f3f955e736fb2a8f3c52da046ece4078b"
-          }
-        },
         {
           "client_id": "59867261037-1502i8vbf2phqmscn6vi4qs3tr1h9kfl.apps.googleusercontent.com",
           "client_type": 3

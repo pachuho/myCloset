@@ -1,4 +1,4 @@
-package com.example.mycloset.fragment
+package com.hochupa.mycloset.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.mycloset.utils.App
-import com.example.mycloset.Common
-import com.example.mycloset.R
-import com.example.mycloset.databinding.FragmentWishListBinding
-import com.example.mycloset.retrofit.Dress
-import com.example.mycloset.retrofit.RetrofitService
-import com.example.mycloset.viewpager.ImageRecyclerAdapterWish
-import com.example.mycloset.viewpager.PageItem
+import com.hochupa.mycloset.utils.App
+import com.hochupa.mycloset.R
+import com.hochupa.mycloset.databinding.FragmentWishListBinding
+import com.hochupa.mycloset.retrofit.Dress
+import com.hochupa.mycloset.retrofit.RetrofitService
+import com.hochupa.mycloset.viewpager.ImageRecyclerAdapterWish
+import com.hochupa.mycloset.viewpager.PageItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -65,7 +64,7 @@ class WishListFragment : Fragment() {
 
     // 이미지 정보 가져오기
     private fun getImageData() {
-        val retrofitService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+        val retrofitService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
         App.prefs.userEmail?.let {
             retrofitService.getWishList(it).enqueue(object : Callback<List<Dress>> {
                 // 통신 성공

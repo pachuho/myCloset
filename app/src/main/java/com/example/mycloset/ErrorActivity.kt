@@ -1,4 +1,4 @@
-package com.example.mycloset
+package com.hochupa.mycloset
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

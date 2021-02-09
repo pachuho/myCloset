@@ -1,4 +1,4 @@
-package com.example.mycloset.retrofit
+package com.hochupa.mycloset.retrofit
 
 data class SignIn(
     val success : Boolean,

@@ -1,7 +1,7 @@
-package com.example.mycloset.utils
+package com.hochupa.mycloset.utils
 
 import android.app.Application
-import com.example.mycloset.R
+import com.hochupa.mycloset.R
 import com.kakao.sdk.common.KakaoSdk
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

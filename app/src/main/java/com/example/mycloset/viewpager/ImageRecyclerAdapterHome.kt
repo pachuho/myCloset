@@ -1,4 +1,4 @@
-package com.example.mycloset.viewpager
+package com.hochupa.mycloset.viewpager
 
 import android.content.Intent
 import android.util.Log
@@ -10,11 +10,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestListener
-import com.example.mycloset.*
-import com.example.mycloset.retrofit.Favorite
-import com.example.mycloset.retrofit.RetrofitService
-import com.example.mycloset.retrofit.Success
-import com.example.mycloset.utils.App
+import com.hochupa.mycloset.*
+import com.hochupa.mycloset.retrofit.Favorite
+import com.hochupa.mycloset.retrofit.RetrofitService
+import com.hochupa.mycloset.retrofit.Success
+import com.hochupa.mycloset.utils.App
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

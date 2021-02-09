@@ -1,10 +1,10 @@
-package com.example.mycloset.utils
+package com.hochupa.mycloset.utils
 
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import com.example.mycloset.R
+import com.hochupa.mycloset.R
 
 class LoadingDialog constructor(context: Context) : Dialog(context) {
     init {

@@ -1,22 +1,24 @@
-package com.example.mycloset.fragment
+package com.hochupa.mycloset.fragment
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.KeyEvent.KEYCODE_ENTER
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.mycloset.Common
-import com.example.mycloset.R
-import com.example.mycloset.databinding.FragmentSearchBinding
-import com.example.mycloset.retrofit.Dress
-import com.example.mycloset.retrofit.RetrofitService
-import com.example.mycloset.viewpager.ImageRecyclerAdapterSearch
-import com.example.mycloset.viewpager.PageItem
+import com.hochupa.mycloset.R
+import com.hochupa.mycloset.databinding.FragmentSearchBinding
+import com.hochupa.mycloset.retrofit.Dress
+import com.hochupa.mycloset.retrofit.RetrofitService
+import com.hochupa.mycloset.utils.App
+import com.hochupa.mycloset.viewpager.ImageRecyclerAdapterSearch
+import com.hochupa.mycloset.viewpager.PageItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,18 +30,25 @@ class SearchFragment : Fragment() {
 
     private var searchItemList = ArrayList<PageItem>()
     lateinit var searchEditText: EditText
+    lateinit var noneResultText: TextView
 
     private lateinit var imageRecyclerAdapterSearch: ImageRecyclerAdapterSearch
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentSearchBinding.inflate(inflater, container, false)
         searchEditText = binding.searchEditText
+        noneResultText = binding.searchTvNone
 
         // 리사이클러뷰 초기화
         imageRecyclerAdapterSearch = ImageRecyclerAdapterSearch(searchItemList)
 
-        searchEditText.setOnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+        searchEditText.setOnEditorActionListener { v, actionId, event ->
+            var handled = false
+            if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+                handled = true
+
+                // "검색결과가 없음" invisible
+                noneResultText.visibility = View.INVISIBLE
 
                 if (searchEditText.text.isNullOrEmpty()) {
                     Toast.makeText(context, "검색어를 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -57,7 +66,7 @@ class SearchFragment : Fragment() {
                     binding.searchLlClassification.visibility = View.INVISIBLE
                 }
             }
-            true
+            handled
         }
 
 
@@ -67,7 +76,7 @@ class SearchFragment : Fragment() {
 
     // 상품 정보 가져오기
     private fun getImageData(query: String){
-        val getItemService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+        val getItemService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
         getItemService.searchItem(query).enqueue(object : Callback<List<Dress>> {
             // 통신 성공
             override fun onResponse(call: Call<List<Dress>>, response: Response<List<Dress>>) {
@@ -83,6 +92,10 @@ class SearchFragment : Fragment() {
 
                     searchItemList.add(PageItem(getCode, getBrand, getName, getPrice, getImage, getLink))
                     Log.i("검색", "아이템 : " + searchItemList[0].image)
+                }
+
+                if (searchItemList.size == 0) {
+                    noneResultText.visibility = View.VISIBLE
                 }
 
                 // 리사이클러뷰 부착

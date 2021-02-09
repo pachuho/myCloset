@@ -1,4 +1,4 @@
-package com.example.mycloset
+package com.hochupa.mycloset
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -18,8 +18,9 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.mycloset.databinding.ActivitySignUpBinding
-import com.example.mycloset.retrofit.*
+import com.hochupa.mycloset.databinding.ActivitySignUpBinding
+import com.hochupa.mycloset.retrofit.*
+import com.hochupa.mycloset.utils.App
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -380,7 +381,7 @@ class SignUpActivity : AppCompatActivity() {
 
         // 회원가입 버튼 클릭 시
         btn_signUp.setOnClickListener {
-            val signUpService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+            val signUpService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
 
             val email = et_email.text.toString()
             var pwd = "Null"
@@ -523,7 +524,7 @@ class SignUpActivity : AppCompatActivity() {
             inputText1: String?,
             inputText2: String?
     ) {
-        val checkEmailService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+        val checkEmailService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
 
         checkEmailService.requestCheckEmail(target.text.toString()).enqueue(object :
                 Callback<Success> {
@@ -560,7 +561,7 @@ class SignUpActivity : AppCompatActivity() {
             inputText1: String?,
             inputText2: String?
     ) {
-        val checkNicknameService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+        val checkNicknameService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
 
         checkNicknameService.requestCheckNickName(target.text.toString()).enqueue(object :
                 Callback<Success> {

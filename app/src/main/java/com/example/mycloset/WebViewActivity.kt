@@ -1,4 +1,4 @@
-package com.example.mycloset
+package com.hochupa.mycloset
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import android.webkit.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mycloset.databinding.ActivityWebViewBinding
-import com.example.mycloset.utils.LoadingDialog
+import com.hochupa.mycloset.databinding.ActivityWebViewBinding
+import com.hochupa.mycloset.utils.LoadingDialog
 
 
 class WebViewActivity : AppCompatActivity() {

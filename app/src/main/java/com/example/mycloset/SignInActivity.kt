@@ -1,4 +1,4 @@
-package com.example.mycloset
+package com.hochupa.mycloset
 
 import android.app.Dialog
 import android.content.Context
@@ -18,10 +18,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mycloset.databinding.ActivitySignInBinding
-import com.example.mycloset.retrofit.*
-import com.example.mycloset.utils.App
-import com.example.mycloset.utils.LoadingDialog
+import com.hochupa.mycloset.databinding.ActivitySignInBinding
+import com.hochupa.mycloset.retrofit.*
+import com.hochupa.mycloset.utils.App
+import com.hochupa.mycloset.utils.LoadingDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -75,7 +75,7 @@ class SignInActivity : AppCompatActivity() {
         // 로그인 버튼
         binding.btnLogin.setOnClickListener {
             loadingDialog.show()
-            val signInService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+            val signInService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
             val inputEmail = binding.loginEtEmail.text.toString()
             val inputPwd = binding.loginEtPwd.text.toString()
 
@@ -131,7 +131,7 @@ class SignInActivity : AppCompatActivity() {
                             Log.i(TAG, getString(R.string.token_success) + "\n" + getString(R.string.member_number) + tokenInfo.id)
 
                             // 회원 정보 조회
-                            val Service: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+                            val Service: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
 
                             Service.requestCheckKakaoId(tokenInfo.id.toString()).enqueue(object :
                                 Callback<Check> {
@@ -284,7 +284,7 @@ class SignInActivity : AppCompatActivity() {
                         Log.d(TAG, getString(R.string.login_success) + googleId)
 
                         // 회원 정보 조회
-                        val Service: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+                        val Service: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
 
                         Service.requestCheckGoogleId(googleId).enqueue(object :
                                 Callback<Check> {

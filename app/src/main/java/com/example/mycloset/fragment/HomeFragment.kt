@@ -1,4 +1,4 @@
-package com.example.mycloset.fragment
+package com.hochupa.mycloset.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,14 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.example.mycloset.Common
-import com.example.mycloset.R
-import com.example.mycloset.WebViewActivity
-import com.example.mycloset.databinding.FragmentHomeBinding
-import com.example.mycloset.retrofit.Dress
-import com.example.mycloset.retrofit.RetrofitService
-import com.example.mycloset.viewpager.ImageRecyclerAdapterHome
-import com.example.mycloset.viewpager.PageItem
+import com.hochupa.mycloset.R
+import com.hochupa.mycloset.WebViewActivity
+import com.hochupa.mycloset.databinding.FragmentHomeBinding
+import com.hochupa.mycloset.retrofit.Dress
+import com.hochupa.mycloset.retrofit.RetrofitService
+import com.hochupa.mycloset.utils.App
+import com.hochupa.mycloset.viewpager.ImageRecyclerAdapterHome
+import com.hochupa.mycloset.viewpager.PageItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,7 +55,7 @@ class HomeFragment : Fragment(){
 
     // 상품 정보 가져오기
     private fun getImageData(){
-        val getLinkService: RetrofitService = Common.retrofit.create(RetrofitService::class.java)
+        val getLinkService: RetrofitService = App.Common.retrofit.create(RetrofitService::class.java)
         getLinkService.getImageLink().enqueue(object : Callback<List<Dress>> {
             // 통신 성공
             override fun onResponse(call: Call<List<Dress>>, response: Response<List<Dress>>) {

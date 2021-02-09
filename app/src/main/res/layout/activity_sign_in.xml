@@ -16,8 +16,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="내일의 코디"
-            android:textSize="30sp"
+            android:text="@string/app_name"
+            android:textSize="40sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
     </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.mycloset.utils
+package com.hochupa.mycloset.utils
 
 import android.content.Context
 import android.content.SharedPreferences

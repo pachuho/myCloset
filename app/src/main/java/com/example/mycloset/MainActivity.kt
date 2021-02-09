@@ -1,4 +1,4 @@
-package com.example.mycloset
+package com.hochupa.mycloset
 
 import android.content.Context
 import android.graphics.Rect
@@ -11,15 +11,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import com.example.mycloset.databinding.ActivityMainBinding
-import com.example.mycloset.fragment.HomeFragment
-import com.example.mycloset.fragment.MyInfoFragment
-import com.example.mycloset.fragment.SearchFragment
-import com.example.mycloset.fragment.WishListFragment
+import com.hochupa.mycloset.databinding.ActivityMainBinding
+import com.hochupa.mycloset.fragment.HomeFragment
+import com.hochupa.mycloset.fragment.MyInfoFragment
+import com.hochupa.mycloset.fragment.SearchFragment
+import com.hochupa.mycloset.fragment.WishListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
