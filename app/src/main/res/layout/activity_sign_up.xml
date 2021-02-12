@@ -177,7 +177,8 @@
                 android:hint="특수문자 제외 2~8자"
                 android:maxLength="8"
                 android:minHeight="40dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:lines="1"/>
 
             <LinearLayout
                 android:id="@+id/ll_nickNameLength"

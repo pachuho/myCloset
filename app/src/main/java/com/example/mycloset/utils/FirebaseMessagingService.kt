@@ -15,7 +15,7 @@ import com.hochupa.mycloset.MainActivity
 import com.hochupa.mycloset.R
 
 
-class MyFirebaseMessagingService : FirebaseMessagingService()  {
+class FirebaseMessagingService : FirebaseMessagingService()  {
     private val TAG = "FirebaseService"
 
     // FirebaseInstanceIdService는 이제 사라짐. 이제 이걸 사용함

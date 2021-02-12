@@ -49,7 +49,7 @@ class ImageRecyclerAdapterHome(private var pageList: ArrayList<PageItem>) : Recy
 
             // 이미지 넣기
             Glide.with(itemView.context).load(pageItem.image)
-                    .placeholder(R.drawable.image_preview)
+                    .thumbnail(0.1f)
                     .override(500, 500)
                     .error(R.drawable.img_error)
                     .into(itemImage)

@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.nfc.Tag
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -150,7 +151,7 @@ class SignInActivity : AppCompatActivity() {
 
                                 override fun onFailure(call: Call<Check>, t: Throwable) {
                                     Log.e("checkEmail", t.message.toString())
-                                    Toast.makeText(this@SignInActivity, getString(R.string.confirm_overlap_failure), Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@SignInActivity, getString(R.string.login_failure), Toast.LENGTH_SHORT).show()
                                     loadingDialog.dismiss()
                                 }
 
@@ -170,19 +171,24 @@ class SignInActivity : AppCompatActivity() {
         // 구글 계정으로 시작하기
         binding.btnSignUpGoogle.setOnClickListener {
             loadingDialog.show()
+            val TAG = "구글"
 
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestIdToken("59867261037-1502i8vbf2phqmscn6vi4qs3tr1h9kfl.apps.googleusercontent.com")
-                    .requestEmail()
-                    .build()
+            try {
+                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+    //                    .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestIdToken("59867261037-1502i8vbf2phqmscn6vi4qs3tr1h9kfl.apps.googleusercontent.com")
+                        .requestEmail()
+                        .build()
 
-            googleSignInClient = GoogleSignIn.getClient(this, gso)
-            auth = Firebase.auth
+                googleSignInClient = GoogleSignIn.getClient(this, gso)
+                auth = Firebase.auth
 
-            // Configure Google Sign In
-            val signInIntent = googleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
+                // Configure Google Sign In
+                val signInIntent = googleSignInClient.signInIntent
+                startActivityForResult(signInIntent, RC_SIGN_IN)
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+            }
         }
 
         // 회원가입-이메일 버튼
@@ -255,7 +261,7 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val TAG = getString(R.string.get_id)
+        val TAG = "구글"
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -275,7 +281,7 @@ class SignInActivity : AppCompatActivity() {
 
 
     private fun firebaseAuthWithGoogle(idToken: String, googleId: String) {
-        val TAG = getString(R.string.auth_google)
+        val TAG = "구글"
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
