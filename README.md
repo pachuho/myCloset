@@ -50,11 +50,16 @@ Etc Tool: Putty, Postman
 
 
 # ScreenShots
+- Screen Layouts
 ![Home](https://user-images.githubusercontent.com/52353492/107740008-76531d80-6d4d-11eb-9950-c884282bf58f.jpg)
 ![Search](https://user-images.githubusercontent.com/52353492/107739997-73f0c380-6d4d-11eb-84c6-5b722bc62b49.jpg)
 ![WishList](https://user-images.githubusercontent.com/52353492/107740004-75ba8700-6d4d-11eb-8173-399ee7ea0df6.jpg)
 ![MyInfo](https://user-images.githubusercontent.com/52353492/107740010-76ebb400-6d4d-11eb-9b7e-cdc357b4d79a.jpg)
 ![SignIn](https://user-images.githubusercontent.com/52353492/107740000-7521f080-6d4d-11eb-9183-eff286dbda56.jpg)
 ![SignUp](https://user-images.githubusercontent.com/52353492/107740002-7521f080-6d4d-11eb-8ed5-3d2b0c3be0b4.jpg)
+
+- GooglePlay Store
 ![캡처](https://user-images.githubusercontent.com/52353492/107740317-2d4f9900-6d4e-11eb-806b-e5f8a69c94b0.PNG)
+
+- FCM Test
 ![KakaoTalk_20210214_003833011](https://user-images.githubusercontent.com/52353492/107854172-80fcd800-6e5d-11eb-94d8-bbb6a07d8e14.jpg)
