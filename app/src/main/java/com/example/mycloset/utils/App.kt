@@ -32,29 +32,29 @@ class App : Application() {
     override fun onCreate() {
         prefs = ProfileSharedPreferences(applicationContext)
 
-        getHashKey()
+//        getHashKey() // HashKey 생성
         // 카카오 앱 키
         KakaoSdk.init(this, getString(R.string.kakao_app_key))
         super.onCreate()
     }
 
-    // HashKey 생성(Debug)
-    private fun getHashKey() {
-        var packageInfo: PackageInfo? = null
-        try {
-            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-        if (packageInfo == null) Log.e("KeyHash", "KeyHash:null")
-        for (signature in packageInfo!!.signatures) {
-            try {
-                val md: MessageDigest = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT))
-            } catch (e: NoSuchAlgorithmException) {
-                Log.e("KeyHash", "Unable to get MessageDigest. signature=$signature", e)
-            }
-        }
-    }
+//    // HashKey 생성(Debug)
+//    private fun getHashKey() {
+//        var packageInfo: PackageInfo? = null
+//        try {
+//            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+//        } catch (e: PackageManager.NameNotFoundException) {
+//            e.printStackTrace()
+//        }
+//        if (packageInfo == null) Log.e("KeyHash", "KeyHash:null")
+//        for (signature in packageInfo!!.signatures) {
+//            try {
+//                val md: MessageDigest = MessageDigest.getInstance("SHA")
+//                md.update(signature.toByteArray())
+//                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+//            } catch (e: NoSuchAlgorithmException) {
+//                Log.e("KeyHash", "Unable to get MessageDigest. signature=$signature", e)
+//            }
+//        }
+//    }
 }

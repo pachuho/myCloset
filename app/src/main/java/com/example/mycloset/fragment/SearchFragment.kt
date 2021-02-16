@@ -60,7 +60,7 @@ class SearchFragment : Fragment() {
                     mInputMethodManager.hideSoftInputFromWindow(searchEditText.windowToken, 0)
 
 //                    searchItem.clear()
-                    Log.i("검색", "입력 텍스트:" + searchEditText.text.toString())
+//                    Log.i("검색", "입력 텍스트:" + searchEditText.text.toString())
                     getImageData(searchEditText.text.toString())
                     binding.searchImage.visibility = View.VISIBLE
                     binding.searchLlClassification.visibility = View.INVISIBLE
@@ -94,6 +94,7 @@ class SearchFragment : Fragment() {
                     Log.i("검색", "아이템 : " + searchItemList[0].image)
                 }
 
+                // 검색한 상품이 없다면
                 if (searchItemList.size == 0) {
                     noneResultText.visibility = View.VISIBLE
                 }
