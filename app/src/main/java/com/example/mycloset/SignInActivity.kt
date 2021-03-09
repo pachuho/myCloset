@@ -40,12 +40,18 @@ import retrofit2.Response
 
 
 class SignInActivity : AppCompatActivity() {
+
+    // 데이터 바인딩
     private var mBinding: ActivitySignInBinding? = null
     private val binding get() = mBinding!!
 
+    // 뒤로가기 시간
     var lastBackPressedTime: Long = 0
 
+    // 로딩 다이얼로그 선언
     private lateinit var loadingDialog: Dialog
+
+    // 구글 로그인
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 9001
@@ -54,9 +60,11 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 데이터 바인딩
         mBinding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 다이얼로그 초기화
         loadingDialog = LoadingDialog(this)
 
         // textWatcher 지정
