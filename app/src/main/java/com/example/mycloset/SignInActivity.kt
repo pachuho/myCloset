@@ -38,7 +38,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class SignInActivity : AppCompatActivity() {
     private var mBinding: ActivitySignInBinding? = null
     private val binding get() = mBinding!!
