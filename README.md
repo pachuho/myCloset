@@ -28,7 +28,7 @@ Server : AWS EC2
 
 IDE : Android Studio 4.1
 
-Language : Java, PHP 7.4
+Language : Kotlin, PHP 7.4
 
 DB : Maria DB 10.2
 
